@@ -29,10 +29,6 @@ public final class UserVersionMessage {
     ReqUserVersion(0, 100202),
     /**
      * <code>ResUserVersion = 100102;</code>
-     *
-     * <pre>
-     * 100  101  100表示大模块  1 表示服务端发送  01 表示具体子模块
-     * </pre>
      */
     ResUserVersion(1, 100102),
     ;
@@ -47,10 +43,6 @@ public final class UserVersionMessage {
     public static final int ReqUserVersion_VALUE = 100202;
     /**
      * <code>ResUserVersion = 100102;</code>
-     *
-     * <pre>
-     * 100  101  100表示大模块  1 表示服务端发送  01 表示具体子模块
-     * </pre>
      */
     public static final int ResUserVersion_VALUE = 100102;
 
@@ -115,9 +107,9 @@ public final class UserVersionMessage {
   public interface ReqUserVersionMessageOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
-    // required .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];
+    // optional .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];
     /**
-     * <code>required .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
+     * <code>optional .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
      *
      * <pre>
      * 消息ID,虽然是optional,但必须定义default枚举值
@@ -125,13 +117,13 @@ public final class UserVersionMessage {
      */
     boolean hasMsgID();
     /**
-     * <code>required .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
+     * <code>optional .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
      *
      * <pre>
      * 消息ID,虽然是optional,但必须定义default枚举值
      * </pre>
      */
-        com.game.proto.UserVersionMessage.Protos getMsgID();
+    com.game.proto.UserVersionMessage.Protos getMsgID();
 
     // optional int64 sendFrom = 2;
     /**
@@ -240,7 +232,7 @@ public final class UserVersionMessage {
             }
             case 8: {
               int rawValue = input.readEnum();
-                        com.game.proto.UserVersionMessage.Protos value = com.game.proto.UserVersionMessage.Protos.valueOf(rawValue);
+              com.game.proto.UserVersionMessage.Protos value = com.game.proto.UserVersionMessage.Protos.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(1, rawValue);
               } else {
@@ -304,11 +296,11 @@ public final class UserVersionMessage {
     }
 
     private int bitField0_;
-    // required .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];
+    // optional .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];
     public static final int MSGID_FIELD_NUMBER = 1;
     private com.game.proto.UserVersionMessage.Protos msgID_;
     /**
-     * <code>required .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
+     * <code>optional .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
      *
      * <pre>
      * 消息ID,虽然是optional,但必须定义default枚举值
@@ -318,7 +310,7 @@ public final class UserVersionMessage {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
+     * <code>optional .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
      *
      * <pre>
      * 消息ID,虽然是optional,但必须定义default枚举值
@@ -411,10 +403,6 @@ public final class UserVersionMessage {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
 
-      if (!hasMsgID()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       if (!hasVersion()) {
         memoizedIsInitialized = 0;
         return false;
@@ -549,12 +537,12 @@ public final class UserVersionMessage {
        implements com.game.proto.UserVersionMessage.ReqUserVersionMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return  com.game.proto.UserVersionMessage.internal_static_com_game_proto_ReqUserVersionMessage_descriptor;
+        return com.game.proto.UserVersionMessage.internal_static_com_game_proto_ReqUserVersionMessage_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return  com.game.proto.UserVersionMessage.internal_static_com_game_proto_ReqUserVersionMessage_fieldAccessorTable
+        return com.game.proto.UserVersionMessage.internal_static_com_game_proto_ReqUserVersionMessage_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.game.proto.UserVersionMessage.ReqUserVersionMessage.class, com.game.proto.UserVersionMessage.ReqUserVersionMessage.Builder.class);
       }
@@ -596,15 +584,15 @@ public final class UserVersionMessage {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return  com.game.proto.UserVersionMessage.internal_static_com_game_proto_ReqUserVersionMessage_descriptor;
+        return com.game.proto.UserVersionMessage.internal_static_com_game_proto_ReqUserVersionMessage_descriptor;
       }
 
       public com.game.proto.UserVersionMessage.ReqUserVersionMessage getDefaultInstanceForType() {
-        return  com.game.proto.UserVersionMessage.ReqUserVersionMessage.getDefaultInstance();
+        return com.game.proto.UserVersionMessage.ReqUserVersionMessage.getDefaultInstance();
       }
 
       public com.game.proto.UserVersionMessage.ReqUserVersionMessage build() {
-                com.game.proto.UserVersionMessage.ReqUserVersionMessage result = buildPartial();
+        com.game.proto.UserVersionMessage.ReqUserVersionMessage result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -612,7 +600,7 @@ public final class UserVersionMessage {
       }
 
       public com.game.proto.UserVersionMessage.ReqUserVersionMessage buildPartial() {
-                com.game.proto.UserVersionMessage.ReqUserVersionMessage result = new com.game.proto.UserVersionMessage.ReqUserVersionMessage(this);
+        com.game.proto.UserVersionMessage.ReqUserVersionMessage result = new com.game.proto.UserVersionMessage.ReqUserVersionMessage(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -664,10 +652,6 @@ public final class UserVersionMessage {
       }
 
       public final boolean isInitialized() {
-        if (!hasMsgID()) {
-          
-          return false;
-        }
         if (!hasVersion()) {
           
           return false;
@@ -679,7 +663,7 @@ public final class UserVersionMessage {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-                com.game.proto.UserVersionMessage.ReqUserVersionMessage parsedMessage = null;
+        com.game.proto.UserVersionMessage.ReqUserVersionMessage parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -694,10 +678,10 @@ public final class UserVersionMessage {
       }
       private int bitField0_;
 
-      // required .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];
+      // optional .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];
       private com.game.proto.UserVersionMessage.Protos msgID_ = com.game.proto.UserVersionMessage.Protos.ReqUserVersion;
       /**
-       * <code>required .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
+       * <code>optional .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
        *
        * <pre>
        * 消息ID,虽然是optional,但必须定义default枚举值
@@ -707,7 +691,7 @@ public final class UserVersionMessage {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
+       * <code>optional .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
        *
        * <pre>
        * 消息ID,虽然是optional,但必须定义default枚举值
@@ -717,7 +701,7 @@ public final class UserVersionMessage {
         return msgID_;
       }
       /**
-       * <code>required .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
+       * <code>optional .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
        *
        * <pre>
        * 消息ID,虽然是optional,但必须定义default枚举值
@@ -733,7 +717,7 @@ public final class UserVersionMessage {
         return this;
       }
       /**
-       * <code>required .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
+       * <code>optional .com.game.proto.Protos msgID = 1 [default = ReqUserVersion];</code>
        *
        * <pre>
        * 消息ID,虽然是optional,但必须定义default枚举值
@@ -907,9 +891,9 @@ public final class UserVersionMessage {
   public interface ResUserVersionMessageOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
-    // required .com.game.proto.Protos msgID = 1 [default = ResUserVersion];
+    // optional .com.game.proto.Protos msgID = 1 [default = ResUserVersion];
     /**
-     * <code>required .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
+     * <code>optional .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
      *
      * <pre>
      * 消息ID,虽然是optional,但必须定义default枚举值
@@ -917,13 +901,13 @@ public final class UserVersionMessage {
      */
     boolean hasMsgID();
     /**
-     * <code>required .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
+     * <code>optional .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
      *
      * <pre>
      * 消息ID,虽然是optional,但必须定义default枚举值
      * </pre>
      */
-        com.game.proto.UserVersionMessage.Protos getMsgID();
+    com.game.proto.UserVersionMessage.Protos getMsgID();
 
     // optional int64 sendFrom = 2;
     /**
@@ -1024,7 +1008,7 @@ public final class UserVersionMessage {
             }
             case 8: {
               int rawValue = input.readEnum();
-                        com.game.proto.UserVersionMessage.Protos value = com.game.proto.UserVersionMessage.Protos.valueOf(rawValue);
+              com.game.proto.UserVersionMessage.Protos value = com.game.proto.UserVersionMessage.Protos.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(1, rawValue);
               } else {
@@ -1088,11 +1072,11 @@ public final class UserVersionMessage {
     }
 
     private int bitField0_;
-    // required .com.game.proto.Protos msgID = 1 [default = ResUserVersion];
+    // optional .com.game.proto.Protos msgID = 1 [default = ResUserVersion];
     public static final int MSGID_FIELD_NUMBER = 1;
     private com.game.proto.UserVersionMessage.Protos msgID_;
     /**
-     * <code>required .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
+     * <code>optional .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
      *
      * <pre>
      * 消息ID,虽然是optional,但必须定义default枚举值
@@ -1102,7 +1086,7 @@ public final class UserVersionMessage {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
+     * <code>optional .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
      *
      * <pre>
      * 消息ID,虽然是optional,但必须定义default枚举值
@@ -1187,10 +1171,6 @@ public final class UserVersionMessage {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
 
-      if (!hasMsgID()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       if (!hasPstrIP()) {
         memoizedIsInitialized = 0;
         return false;
@@ -1325,12 +1305,12 @@ public final class UserVersionMessage {
        implements com.game.proto.UserVersionMessage.ResUserVersionMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return  com.game.proto.UserVersionMessage.internal_static_com_game_proto_ResUserVersionMessage_descriptor;
+        return com.game.proto.UserVersionMessage.internal_static_com_game_proto_ResUserVersionMessage_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return  com.game.proto.UserVersionMessage.internal_static_com_game_proto_ResUserVersionMessage_fieldAccessorTable
+        return com.game.proto.UserVersionMessage.internal_static_com_game_proto_ResUserVersionMessage_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.game.proto.UserVersionMessage.ResUserVersionMessage.class, com.game.proto.UserVersionMessage.ResUserVersionMessage.Builder.class);
       }
@@ -1372,15 +1352,15 @@ public final class UserVersionMessage {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return  com.game.proto.UserVersionMessage.internal_static_com_game_proto_ResUserVersionMessage_descriptor;
+        return com.game.proto.UserVersionMessage.internal_static_com_game_proto_ResUserVersionMessage_descriptor;
       }
 
       public com.game.proto.UserVersionMessage.ResUserVersionMessage getDefaultInstanceForType() {
-        return  com.game.proto.UserVersionMessage.ResUserVersionMessage.getDefaultInstance();
+        return com.game.proto.UserVersionMessage.ResUserVersionMessage.getDefaultInstance();
       }
 
       public com.game.proto.UserVersionMessage.ResUserVersionMessage build() {
-                com.game.proto.UserVersionMessage.ResUserVersionMessage result = buildPartial();
+        com.game.proto.UserVersionMessage.ResUserVersionMessage result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -1388,7 +1368,7 @@ public final class UserVersionMessage {
       }
 
       public com.game.proto.UserVersionMessage.ResUserVersionMessage buildPartial() {
-                com.game.proto.UserVersionMessage.ResUserVersionMessage result = new com.game.proto.UserVersionMessage.ResUserVersionMessage(this);
+        com.game.proto.UserVersionMessage.ResUserVersionMessage result = new com.game.proto.UserVersionMessage.ResUserVersionMessage(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1440,10 +1420,6 @@ public final class UserVersionMessage {
       }
 
       public final boolean isInitialized() {
-        if (!hasMsgID()) {
-          
-          return false;
-        }
         if (!hasPstrIP()) {
           
           return false;
@@ -1455,7 +1431,7 @@ public final class UserVersionMessage {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-                com.game.proto.UserVersionMessage.ResUserVersionMessage parsedMessage = null;
+        com.game.proto.UserVersionMessage.ResUserVersionMessage parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -1470,10 +1446,10 @@ public final class UserVersionMessage {
       }
       private int bitField0_;
 
-      // required .com.game.proto.Protos msgID = 1 [default = ResUserVersion];
+      // optional .com.game.proto.Protos msgID = 1 [default = ResUserVersion];
       private com.game.proto.UserVersionMessage.Protos msgID_ = com.game.proto.UserVersionMessage.Protos.ResUserVersion;
       /**
-       * <code>required .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
+       * <code>optional .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
        *
        * <pre>
        * 消息ID,虽然是optional,但必须定义default枚举值
@@ -1483,7 +1459,7 @@ public final class UserVersionMessage {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
+       * <code>optional .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
        *
        * <pre>
        * 消息ID,虽然是optional,但必须定义default枚举值
@@ -1493,7 +1469,7 @@ public final class UserVersionMessage {
         return msgID_;
       }
       /**
-       * <code>required .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
+       * <code>optional .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
        *
        * <pre>
        * 消息ID,虽然是optional,但必须定义default枚举值
@@ -1509,7 +1485,7 @@ public final class UserVersionMessage {
         return this;
       }
       /**
-       * <code>required .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
+       * <code>optional .com.game.proto.Protos msgID = 1 [default = ResUserVersion];</code>
        *
        * <pre>
        * 消息ID,虽然是optional,但必须定义default枚举值
@@ -1685,10 +1661,10 @@ public final class UserVersionMessage {
     java.lang.String[] descriptorData = {
       "\n\030UserVersionMessage.proto\022\016com.game.pro" +
       "to\"\201\001\n\025ReqUserVersionMessage\0225\n\005msgID\030\001 " +
-      "\002(\0162\026.com.game.proto.Protos:\016ReqUserVers" +
+      "\001(\0162\026.com.game.proto.Protos:\016ReqUserVers" +
       "ion\022\020\n\010sendFrom\030\002 \001(\003\022\016\n\006sendTo\030\003 \001(\003\022\017\n" +
       "\007version\030\004 \002(\005\"\200\001\n\025ResUserVersionMessage" +
-      "\0225\n\005msgID\030\001 \002(\0162\026.com.game.proto.Protos:" +
+      "\0225\n\005msgID\030\001 \001(\0162\026.com.game.proto.Protos:" +
       "\016ResUserVersion\022\020\n\010sendFrom\030\002 \001(\003\022\016\n\006sen" +
       "dTo\030\003 \001(\003\022\016\n\006pstrIP\030\004 \002(\005*4\n\006Protos\022\024\n\016R" +
       "eqUserVersion\020\352\216\006\022\024\n\016ResUserVersion\020\206\216\006"
