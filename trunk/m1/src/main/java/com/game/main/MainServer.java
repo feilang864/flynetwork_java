@@ -2,6 +2,9 @@ package com.game.main;
 
 import com.game.myconst.ConstHelper;
 import com.game.proto.LoginMessage;
+import com.game.proto.UserVersionMessage;
+import com.google.protobuf.Descriptors;
+import com.google.protobuf.Message;
 import java.net.InetSocketAddress;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder;
@@ -125,24 +128,41 @@ class ChatProtocolHandler implements IoHandler {
 
     @Override
     public void messageReceived(IoSession session, Object o) throws Exception {
-        
-        System.out.println("socket数据接收" + session + " :: " + o);
 
-        LoginMessage.ReqLoginMessage login = (LoginMessage.ReqLoginMessage) o;
+        if (o instanceof Message) {
+            Message message = (Message) o;
+            Descriptors.EnumValueDescriptor field = (Descriptors.EnumValueDescriptor) message.getField(message.getDescriptorForType().findFieldByNumber(1));
+            int msgID = field.getNumber(); // 100201
 
-        LoginMessage.ResLoginMessage resLoginMessage = null;
-        {
-            LoginMessage.ResLoginMessage.Builder newBuilder = LoginMessage.ResLoginMessage.newBuilder();            
-            newBuilder.setUsername(login.getUsername());
-            newBuilder.setPassword("123456");
-            resLoginMessage = newBuilder.build();
+            System.out.println("socket数据接收" + session + " :: " + msgID);
+
+            switch (msgID) {
+                case LoginMessage.Protos.ReqLogin_VALUE:
+                    break;
+                case UserVersionMessage.Protos.ReqUserVersion_VALUE:
+                    UserVersionMessage.ResUserVersionMessage.Builder newBuilder = UserVersionMessage.ResUserVersionMessage.newBuilder();
+                    newBuilder.setPstrIP(msgID);
+                    break;
+            }
+        } else {
+            System.out.println("!!!!!!!!!!");
         }
-        
-        if (resLoginMessage != null) {
-            // messageSent(session, resLoginMessage);
-            session.write(resLoginMessage);
-        }
-        
+
+//
+//        LoginMessage.ReqLoginMessage login = (LoginMessage.ReqLoginMessage) o;
+//
+//        LoginMessage.ResLoginMessage resLoginMessage = null;
+//        {
+//            LoginMessage.ResLoginMessage.Builder newBuilder = LoginMessage.ResLoginMessage.newBuilder();            
+//            newBuilder.setUsername(login.getUsername());
+//            newBuilder.setPassword("123456");
+//            resLoginMessage = newBuilder.build();
+//        }
+//        
+//        if (resLoginMessage != null) {
+//            // messageSent(session, resLoginMessage);
+//            session.write(resLoginMessage);
+//        }
     }
 
     @Override

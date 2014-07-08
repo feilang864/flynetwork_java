@@ -1,5 +1,6 @@
 package com.game.main;
 
+import com.game.main.msgaction.MsgAction;
 import com.game.proto.LoginMessage;
 import com.google.protobuf.Message;
 import org.apache.mina.core.buffer.IoBuffer;
@@ -80,27 +81,16 @@ public class ServerProtocolDecoder
                 contextBuff.compact();
                 break;
             }
-           
-            
+
             // 反序列化Message
             int msgID = contextBuff.getInt();
             byte[] bytes = new byte[length - 4];
             contextBuff.get(bytes);
-            
-            Message protoMessage = null;
-            switch (msgID) {
-                case 100201:
-                    protoMessage = LoginMessage.ReqLoginMessage.newBuilder().mergeFrom(bytes).build();
-                    break;
-                case 100101:
-                    protoMessage = LoginMessage.ResLoginMessage.newBuilder().mergeFrom(bytes).build();
-                    break;
-            }
-            
+            Message protoMessage = MsgAction.BufferNewMessage(msgID, bytes);
             if (protoMessage != null) {
                 out.write(protoMessage);
             }
-            
+
             if (contextBuff.remaining() == 0) {
                 contextBuff.clear();
                 break;
