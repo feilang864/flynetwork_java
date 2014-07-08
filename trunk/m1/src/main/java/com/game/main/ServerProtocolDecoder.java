@@ -1,6 +1,7 @@
 package com.game.main;
 
 import com.game.main.msgaction.MsgAction;
+import com.game.myconst.ConstHelper;
 import com.game.proto.LoginMessage;
 import com.google.protobuf.Message;
 import org.apache.mina.core.buffer.IoBuffer;
@@ -86,6 +87,7 @@ public class ServerProtocolDecoder
             int msgID = contextBuff.getInt();
             byte[] bytes = new byte[length - 4];
             contextBuff.get(bytes);
+            ConstHelper.AddLoggerInfo("收到消息ID：" + msgID);
             Message protoMessage = MsgAction.BufferNewMessage(msgID, bytes);
             if (protoMessage != null) {
                 out.write(protoMessage);

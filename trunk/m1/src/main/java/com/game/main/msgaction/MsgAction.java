@@ -5,10 +5,13 @@
  */
 package com.game.main.msgaction;
 
+import com.game.myconst.ConstHelper;
 import com.game.proto.LoginMessage;
 import com.game.proto.UserVersionMessage;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,23 +25,27 @@ public class MsgAction {
      * @param msgID 消息ID
      * @param bytes 数据流
      * @return 返回实例对象
-     * @throws com.google.protobuf.InvalidProtocolBufferException
      */
-    public static Message BufferNewMessage(int msgID, byte[] bytes) throws InvalidProtocolBufferException {
+    public static Message BufferNewMessage(int msgID, byte[] bytes) {
         Message protoMessage = null;
-        switch (msgID) {
-            case LoginMessage.Protos.ReqLogin_VALUE:
-                protoMessage = LoginMessage.ReqLoginMessage.newBuilder().mergeFrom(bytes).build();
-                break;
-            case LoginMessage.Protos.ResLogin_VALUE:
-                protoMessage = LoginMessage.ResLoginMessage.newBuilder().mergeFrom(bytes).build();
-                break;
-            case UserVersionMessage.Protos.ReqUserVersion_VALUE:
-                protoMessage = UserVersionMessage.ReqUserVersionMessage.newBuilder().mergeFrom(bytes).build();
-                break;
-            case UserVersionMessage.Protos.ResUserVersion_VALUE:
-                protoMessage = UserVersionMessage.ResUserVersionMessage.newBuilder().mergeFrom(bytes).build();
-                break;
+        try {
+            switch (msgID) {
+                case LoginMessage.Protos.ReqLogin_VALUE:
+                    protoMessage = LoginMessage.ReqLoginMessage.newBuilder().mergeFrom(bytes).build();
+                    break;
+                case LoginMessage.Protos.ResLogin_VALUE:
+                    protoMessage = LoginMessage.ResLoginMessage.newBuilder().mergeFrom(bytes).build();
+                    break;
+                case UserVersionMessage.Protos.ReqUserVersion_VALUE:
+                    protoMessage = UserVersionMessage.ReqUserVersionMessage.newBuilder().mergeFrom(bytes).build();
+                    break;
+                case UserVersionMessage.Protos.ResUserVersion_VALUE:
+                    protoMessage = UserVersionMessage.ResUserVersionMessage.newBuilder().mergeFrom(bytes).build();
+                    break;
+            }
+
+        } catch (InvalidProtocolBufferException ex) {
+            ConstHelper.AddLoggerInfo(ex.toString());
         }
         return protoMessage;
     }
