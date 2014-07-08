@@ -131,11 +131,11 @@ class ChatProtocolHandler implements IoHandler {
 
         if (o instanceof Message) {
             Message message = (Message) o;
+            ///找到序号为1的属性，取值
             Descriptors.EnumValueDescriptor field = (Descriptors.EnumValueDescriptor) message.getField(message.getDescriptorForType().findFieldByNumber(1));
             int msgID = field.getNumber(); // 100201
 
             System.out.println("socket数据接收" + session + " :: " + msgID);
-
             switch (msgID) {
                 case LoginMessage.Protos.ReqLogin_VALUE:
                     break;
