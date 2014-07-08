@@ -9,18 +9,19 @@ enum Protos {
 }
 
 message ReqUserVersionMessage {  
-    optional Protos msgID = 1 [default = ReqUserVersion]; // 消息ID,虽然是optional,但必须定义default枚举值
+    required Protos msgID = 1 [default = ReqUserVersion]; // 消息ID,虽然是optional,但必须定义default枚举值
     optional int64 sendFrom = 2; // 消息发送者
     optional int64 sendTo = 3; // 消息接受者,允许多个接收者
-	repeated int32 version = 4;//版本号
 
-    
+    required int32 version = 4;//版本号
+
 }
 
 message ResUserVersionMessage {
-    optional Protos msgID = 1 [default = ResUserVersion]; // 消息ID,虽然是optional,但必须定义default枚举值
+    required Protos msgID = 1 [default = ResUserVersion]; // 消息ID,虽然是optional,但必须定义default枚举值
     optional int64 sendFrom = 2; // 消息发送者
     optional int64 sendTo = 3; // 消息接受者,允许多个接收者
 
-    repeated int32 pstrIP = 4; 
+    required int32 pstrIP = 4; 
+
 }
