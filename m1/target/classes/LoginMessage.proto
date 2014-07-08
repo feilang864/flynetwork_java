@@ -1,0 +1,27 @@
+package com.game.proto;
+
+// 枚举类型
+// Req 2xx 客户端请求服务器
+// Res 1xx 服务器相应客户端
+enum Protos {
+    ReqLogin = 100201; // 100  201  100表示大模块  2 表示客户端发送  01 表示具体子模块
+    ResLogin = 100101; // 100  101  100表示大模块  1 表示服务端发送  01 表示具体子模块
+}
+
+message ReqLoginMessage {  
+    optional Protos msgID = 1 [default = ReqLogin]; // 消息ID,虽然是optional,但必须定义default枚举值
+    optional int64 sendFrom = 2; // 消息发送者
+    repeated int64 sendTo = 3; // 消息接受者,允许多个接收者
+
+    required string username = 4; // 帐号   
+    required string password = 5; // 密码   
+}
+
+message ResLoginMessage {
+    optional Protos msgID = 1 [default = ResLogin]; // 消息ID,虽然是optional,但必须定义default枚举值
+    optional int64 sendFrom = 2; // 消息发送者
+    repeated int64 sendTo = 3; // 消息接受者,允许多个接收者
+
+    required string username = 4; // 帐号   
+    required string password = 5; // 密码  
+}
