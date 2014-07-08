@@ -11,7 +11,7 @@ enum Protos {
 message ReqLogOutMessage {  
     optional Protos msgID = 1 [default = ReqLogin]; // 消息ID,虽然是optional,但必须定义default枚举值
     optional int64 sendFrom = 2; // 消息发送者
-    repeated int64 sendTo = 3; // 消息接受者,允许多个接收者
+    optional int64 sendTo = 3; // 消息接受者,允许多个接收者
 
     required string username = 4; // 帐号   
     required string password = 5; // 密码   
@@ -20,7 +20,7 @@ message ReqLogOutMessage {
 message ResLogOutMessage {
     optional Protos msgID = 1 [default = ResLogin]; // 消息ID,虽然是optional,但必须定义default枚举值
     optional int64 sendFrom = 2; // 消息发送者
-    repeated int64 sendTo = 3; // 消息接受者,允许多个接收者
+    optional int64 sendTo = 3; // 消息接受者,允许多个接收者
 
     required string username = 4; // 帐号   
     required string password = 5; // 密码  
