@@ -135,13 +135,16 @@ class ChatProtocolHandler implements IoHandler {
             Descriptors.EnumValueDescriptor field = (Descriptors.EnumValueDescriptor) message.getField(message.getDescriptorForType().findFieldByNumber(1));
             int msgID = field.getNumber(); // 100201
 
-            System.out.println("socket数据接收" + session + " :: " + msgID);
+            ConstHelper.AddLoggerInfo("socket数据接收" + session + " :: " + msgID);
             switch (msgID) {
                 case LoginMessage.Protos.ReqLogin_VALUE:
                     break;
                 case UserVersionMessage.Protos.ReqUserVersion_VALUE:
                     UserVersionMessage.ResUserVersionMessage.Builder newBuilder = UserVersionMessage.ResUserVersionMessage.newBuilder();
-                    newBuilder.setPstrIP(msgID);
+                    UserVersionMessage.ReqUserVersionMessage req = (UserVersionMessage.ReqUserVersionMessage) o;
+                    newBuilder.setPstrIP(req.getVersion());
+                    UserVersionMessage.ResUserVersionMessage rs = newBuilder.build();
+                    session.write(rs);
                     break;
             }
         } else {

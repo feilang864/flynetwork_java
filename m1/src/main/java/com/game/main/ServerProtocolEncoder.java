@@ -1,7 +1,9 @@
 package com.game.main;
 
+import com.game.myconst.ConstHelper;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Message;
+import java.util.Arrays;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolEncoder;
@@ -45,6 +47,9 @@ public class ServerProtocolEncoder
             buf.putInt(msgID);
             buf.put(msgData);
             buf.rewind();
+            
+            ConstHelper.AddLoggerInfo("发送消息长度：" + buf.array().length);            
+            ConstHelper.AddLoggerInfo("收到消息ID：" + Arrays.toString(buf.array()));            
             if (session.isConnected()) {
                 out.write(buf);
                 out.flush();
