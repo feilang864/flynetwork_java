@@ -38,9 +38,8 @@ public class TestEncoder
         buf.put(msgData);
         buf.rewind();
 
-        ConstHelper.AddLoggerInfo("发送消息长度：" + buf.array().length);
-        ConstHelper.AddLoggerInfo("收到消息ID：" + Arrays.toString(buf.array()));
-        
+        ConstHelper.AddLoggerInfo("发送消息长度：" + buf.array().length + Arrays.toString(buf.array()));
+
         if (session.isConnected()) {
             out.write(buf);
             out.flush();

@@ -33,7 +33,10 @@ public class TestDecoder
     @Override
     public void decode(IoSession session, IoBuffer buff, ProtocolDecoderOutput out)
             throws Exception {
-        byte[] bytes = Arrays.copyOf(buff.array(), 3);
+        byte[] bytes = new byte[3];
+        buff.get(bytes);
+        ///buff.reset();
+        ConstHelper.AddLoggerInfo(session + "收到消息长度：" + bytes.length + Arrays.toString(bytes));
         Message protoMessage = null;
         protoMessage = UserVersionMessage.ReqUserVersionMessage.newBuilder().mergeFrom(bytes).build();
         out.write(protoMessage);

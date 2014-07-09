@@ -23,10 +23,10 @@ public class MyIoHandler implements org.apache.mina.core.service.IoHandler {
 
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
-        ConstHelper.AddLoggerInfo("收到消息");
-
-        UserVersionMessage.ResUserVersionMessage.Builder newBuilder = UserVersionMessage.ResUserVersionMessage.newBuilder();
+       // ConstHelper.AddLoggerInfo("收到消息");
         UserVersionMessage.ReqUserVersionMessage req = (UserVersionMessage.ReqUserVersionMessage) message;
+        
+        UserVersionMessage.ResUserVersionMessage.Builder newBuilder = UserVersionMessage.ResUserVersionMessage.newBuilder();
         newBuilder.setPstrIP(req.getVersion());
         UserVersionMessage.ResUserVersionMessage rs = newBuilder.build();
         session.write(rs);
