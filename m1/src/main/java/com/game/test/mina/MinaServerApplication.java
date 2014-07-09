@@ -41,7 +41,7 @@ public class MinaServerApplication {
         _acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);
         
         DefaultIoFilterChainBuilder filterChain = _acceptor.getFilterChain();
-        IoFilter filter = new ProtocolCodecFilter(new ServerProtocolCodecFactory());
+        IoFilter filter = new ProtocolCodecFilter(new TestCodecFactory());
         filterChain.addLast("codec", filter);
         
         ///添加实现类，客户端连接，断开，消息处理等
@@ -50,16 +50,16 @@ public class MinaServerApplication {
         
     }
 
-    class ServerProtocolCodecFactory implements ProtocolCodecFactory {
+    class TestCodecFactory implements ProtocolCodecFactory {
 
         @Override
         public ProtocolEncoder getEncoder(IoSession is) throws Exception {
-            return new ServerProtocolEncoder();
+            return new TestEncoder();
         }
 
         @Override
         public ProtocolDecoder getDecoder(IoSession is) throws Exception {
-            return new ServerProtocolDecoder();
+            return new TestDecoder();
         }
     }
 

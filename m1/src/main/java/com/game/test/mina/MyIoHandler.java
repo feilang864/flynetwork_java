@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.game.test.mina;
 
 import com.game.myconst.ConstHelper;
+import com.game.proto.UserVersionMessage;
+import com.google.protobuf.Message;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 
@@ -21,9 +22,15 @@ public class MyIoHandler implements org.apache.mina.core.service.IoHandler {
     }
 
     @Override
-    public void messageReceived(IoSession session, Object message) throws Exception {       
+    public void messageReceived(IoSession session, Object message) throws Exception {
         ConstHelper.AddLoggerInfo("收到消息");
-        session.write(message);
+
+        UserVersionMessage.ResUserVersionMessage.Builder newBuilder = UserVersionMessage.ResUserVersionMessage.newBuilder();
+        UserVersionMessage.ReqUserVersionMessage req = (UserVersionMessage.ReqUserVersionMessage) message;
+        newBuilder.setPstrIP(req.getVersion());
+        UserVersionMessage.ResUserVersionMessage rs = newBuilder.build();
+        session.write(rs);
+        //messageSent(session, rs);
     }
 
     @Override
@@ -47,14 +54,14 @@ public class MyIoHandler implements org.apache.mina.core.service.IoHandler {
     }
 
     @Override
-    public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
-        ConstHelper.AddLoggerInfo("异常捕获");
-        
+    public void exceptionCaught(IoSession session, Throwable cause) {
+        ConstHelper.AddLoggerInfo("异常捕获" + cause.toString());
+
     }
 
-    
     @Override
     public void messageSent(IoSession session, Object message) throws Exception {
         ConstHelper.AddLoggerInfo("消息发送");
+        //session.write(message);
     }
 }

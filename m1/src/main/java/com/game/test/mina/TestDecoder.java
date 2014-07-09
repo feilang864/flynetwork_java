@@ -4,6 +4,7 @@ import com.game.main.*;
 import com.game.main.msgaction.MsgAction;
 import com.game.myconst.ConstHelper;
 import com.game.proto.LoginMessage;
+import com.game.proto.UserVersionMessage;
 import com.google.protobuf.Message;
 import java.util.Arrays;
 import org.apache.mina.core.buffer.IoBuffer;
@@ -17,10 +18,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Vicky
  */
-public class ServerProtocolDecoder
+public class TestDecoder
         implements ProtocolDecoder {
 
-    private static final Logger log = LoggerFactory.getLogger(ServerProtocolDecoder.class);
+    private static final Logger log = LoggerFactory.getLogger(TestDecoder.class);
 
     private static final String CONTEXT = "context";
     private static final String START_TIME = "start_time";
@@ -32,9 +33,10 @@ public class ServerProtocolDecoder
     @Override
     public void decode(IoSession session, IoBuffer buff, ProtocolDecoderOutput out)
             throws Exception {
-        byte[] bytes = new byte[8];
-        Arrays.copyOf(bytes, 8);
-        out.write(buff);
+        byte[] bytes = Arrays.copyOf(buff.array(), 3);
+        Message protoMessage = null;
+        protoMessage = UserVersionMessage.ReqUserVersionMessage.newBuilder().mergeFrom(bytes).build();
+        out.write(protoMessage);
     }
 
     @Override
