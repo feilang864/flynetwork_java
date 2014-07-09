@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.game.test;
+package com.game.xmltest;
 
 
 import java.util.ArrayList;
