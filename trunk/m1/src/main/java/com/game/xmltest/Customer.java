@@ -24,7 +24,7 @@ public class Customer {
 	private String name;
 	@Element
 	private Address address;
-	@ElementList(required = false,type = Order.class)
+	
 	private List<Order> orders = new ArrayList<Order>();
 	
 	public Customer(){
