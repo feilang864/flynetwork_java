@@ -19,7 +19,7 @@ public class CustomerTest {
         Customer customer = create();
         String filePath = "d:/customerOrder.xml";
         //序列化，把对象转为xml
-        //write(customer, filePath);
+        write(customer, filePath);
         //反序列化，xml转为对象
         read(filePath);
     }
@@ -43,12 +43,14 @@ public class CustomerTest {
         File file = new File(filePath);
         Serializer serializer = new Persister();
         serializer.write(customer, file);
+        serializer.write(customer, System.out);
     }
 
     private static void read(String filePath) throws Exception {
         File file = new File(filePath);
         Serializer serializer = new Persister();
         Customer customer = serializer.read(Customer.class, file);
+        
         print(customer);
     }
 

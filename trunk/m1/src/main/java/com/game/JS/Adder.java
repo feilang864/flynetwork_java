@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package com.game.xmltest;
+package com.game.JS;
 
 /**
  *
  * @author Administrator
  */
-public class MyTest {
+public interface Adder {
+
+    int add(int a, int b);
     
 }
