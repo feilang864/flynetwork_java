@@ -10,6 +10,7 @@ package com.game.xmltest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.simpleframework.xml.Attribute;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -18,9 +19,9 @@ import org.simpleframework.xml.Root;
 @Root
 public class Order {
 
-	@Element
+	@Attribute
 	private String code;
-	@Element
+	@Attribute
 	private Date date;
 	@ElementList(required = false,type = Item.class)
 	private List<Item> items = new ArrayList<Item>();
