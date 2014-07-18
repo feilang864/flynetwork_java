@@ -54,12 +54,12 @@ public class MinaServerApplication {
 
         @Override
         public ProtocolEncoder getEncoder(IoSession is) throws Exception {
-            return new TestEncoder();
+            return new BufferMarshalEncoder();
         }
 
         @Override
         public ProtocolDecoder getDecoder(IoSession is) throws Exception {
-            return new TestDecoder();
+            return new BufferMarshalDecoder();
         }
     }
 

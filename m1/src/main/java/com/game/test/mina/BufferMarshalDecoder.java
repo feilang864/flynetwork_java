@@ -18,10 +18,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Vicky
  */
-public class TestDecoder
+public class BufferMarshalDecoder
         implements ProtocolDecoder {
 
-    private static final Logger log = LoggerFactory.getLogger(TestDecoder.class);
+    private static final Logger log = LoggerFactory.getLogger(BufferMarshalDecoder.class);
 
     private static final String CONTEXT = "context";
     private static final String START_TIME = "start_time";
