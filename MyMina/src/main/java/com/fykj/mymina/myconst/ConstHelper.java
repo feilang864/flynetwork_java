@@ -23,7 +23,6 @@ public class ConstHelper {
      *
      * @param msg 输出日志
      */
-    public static void AddLoggerInfo(String msg) {
-        //System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss:ms").format(new Date()) + " -> " + msg);
+    public static void AddLoggerInfo(String msg) {       
         System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss:ms ").format(new Date()) + " -> " + msg);    }
 }
