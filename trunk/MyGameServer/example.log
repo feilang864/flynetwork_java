@@ -1,0 +1,25 @@
+DEBUG main com.flynetwork.gameserver.dataserver.MySqlHelper - 这是Debug信息.
+   DEBUG main com.flynetwork.gameserver.dataserver.MySqlHelper - 这是Debug信息.
+   INFO main com.flynetwork.gameserver.dataserver.MySqlHelper - This is info message.
+   ERROR main com.flynetwork.gameserver.dataserver.MySqlHelper - This is error message.
+   DEBUG main com.flynetwork.mygameserver.ServerHelper - 这是Debug信息.
+   DEBUG main com.flynetwork.mygameserver.ServerHelper - 这是Debug信息.
+   INFO main com.flynetwork.mygameserver.ServerHelper - This is info message.
+   ERROR main com.flynetwork.mygameserver.ServerHelper - This is error message.
+   DEBUG main com.flynetwork.mygameserver.ServerHelper - 这是Debug信息.
+   DEBUG main com.flynetwork.mygameserver.ServerHelper - 这是Debug信息.
+   INFO main com.flynetwork.mygameserver.ServerHelper - This is info message.
+   ERROR main com.flynetwork.mygameserver.ServerHelper - This is error message.
+   DEBUG main com.flynetwork.mygameserver.ServerHelper - 这是Debug信息.
+   INFO main com.flynetwork.mygameserver.ServerHelper - This is info message.
+   ERROR main com.flynetwork.mygameserver.ServerHelper - This is error message.
+   DEBUG main com.flynetwork.mygameserver.ServerHelper - 这是Debug信息.
+   INFO main com.flynetwork.mygameserver.ServerHelper - This is info message.
+   ERROR main com.flynetwork.mygameserver.ServerHelper - This is error message.
+   DEBUG main com.flynetwork.mygameserver.ServerHelper - 这是Debug信息.
+   INFO main com.flynetwork.mygameserver.ServerHelper - This is info message.
+   ERROR main com.flynetwork.mygameserver.ServerHelper - This is error message.
+   DEBUG main com.flynetwork.mygameserver.ServerHelper - 这是Debug信息.
+   INFO main com.flynetwork.mygameserver.ServerHelper - This is info message.
+   ERROR main com.flynetwork.mygameserver.ServerHelper - This is error message.
+   
