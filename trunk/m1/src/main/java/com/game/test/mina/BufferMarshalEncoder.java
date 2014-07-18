@@ -16,10 +16,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Vicky
  */
-public class TestEncoder
+public class BufferMarshalEncoder
         implements ProtocolEncoder {
 
-    protected Logger log = LoggerFactory.getLogger(TestEncoder.class);
+    protected Logger log = LoggerFactory.getLogger(BufferMarshalEncoder.class);
 
     private static final int MAX_SIZE = 1048576;
 
