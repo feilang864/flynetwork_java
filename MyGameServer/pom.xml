@@ -7,8 +7,7 @@
     <packaging>jar</packaging>
     
     <build>        
-        <plugins>          
-            
+        <plugins>            
             <plugin>                
                 <groupId>org.apache.maven.plugins</groupId>                
                 <artifactId>maven-jar-plugin</artifactId>                
@@ -22,8 +21,7 @@
                         </manifest>                    
                     </archive>                
                 </configuration>            
-            </plugin> 
-                  
+            </plugin>                   
             <plugin>                
                 <groupId>org.apache.maven.plugins</groupId>                
                 <artifactId>maven-dependency-plugin</artifactId>                
