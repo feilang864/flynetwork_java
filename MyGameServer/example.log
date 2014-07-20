@@ -36,4 +36,8 @@ DEBUG main com.flynetwork.gameserver.dataserver.MySqlHelper - 这是Debug信息.
    ERROR main com.flynetwork.mygameserver.ServerHelper - This is error message.
    INFO main com.flynetwork.mygameserver.ServerHelper - 2014/07/18 16:45:42:4542  -> 创建业务处理类
    INFO main com.flynetwork.mygameserver.ServerHelper - 2014/07/18 16:45:42:4542  -> Nio异步的Socket监听服务器  5555
+   INFO main com.flynetwork.mygameserver.ServerHelper - 2014/07/20 18:57:30:5730  -> 创建业务处理类
+   INFO main com.flynetwork.mygameserver.ServerHelper - 2014/07/20 18:57:30:5730  -> Nio异步的Socket监听服务器  5555
+   INFO main com.flynetwork.mygameserver.ServerHelper - 2014/07/20 20:05:50:550  -> 创建业务处理类
+   INFO main com.flynetwork.mygameserver.ServerHelper - 2014/07/20 20:05:50:550  -> Nio异步的Socket监听服务器  5555
    
