@@ -86,8 +86,7 @@
     <category name="com.flynetwork" additivity="false">  
         <!-- 日志输出级别，起码可以有5个级别，可以扩展自己的级别，邮件发送必须是ERROR级别不好用，所以最后自己扩展一个邮件发送级别 -->  
         <level value="debug" />  
-        <!--        <appender-ref ref="filelog_daily" />  -->
-        <appender-ref ref="filelog_appender" />  
+        <appender-ref ref="filelog_daily" />  
         <appender-ref ref="console" />  
         <appender-ref ref="ASYNC_test" />  
         <!--        <appender-ref ref="JDBCAppender"/>-->
