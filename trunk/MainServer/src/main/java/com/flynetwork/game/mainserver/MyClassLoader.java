@@ -67,10 +67,10 @@ public class MyClassLoader extends ClassLoader {
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
         try {
             if (StringIsEmpty(this.SourceDir) || StringIsEmpty(this.OutDir)) {
-                logger.error("指定目录为空");
+                logger.error("指定 输入 输出 目录为空");
                 return false;
             }
-            
+
             List<File> sourceFileList = new ArrayList<>();
             File sourceFile = null;
             //得到filePath目录下的所有java源文件
@@ -169,7 +169,7 @@ public class MyClassLoader extends ClassLoader {
     }
 
     @Override
-    public Class<?> loadClass(String name) throws ClassNotFoundException {        
+    public Class<?> loadClass(String name) throws ClassNotFoundException {
         Class<?> tClass = super.loadClass(name);
         if (tClass == null) {
             logger.debug("加载 " + this.OutDir + "" + name + " 失败");
