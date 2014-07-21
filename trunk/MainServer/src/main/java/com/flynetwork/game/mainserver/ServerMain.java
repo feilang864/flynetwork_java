@@ -5,8 +5,6 @@
  */
 package com.flynetwork.game.mainserver;
 
-import jdk.nashorn.internal.codegen.CompilerConstants;
-
 /**
  *
  * @author Administrator
