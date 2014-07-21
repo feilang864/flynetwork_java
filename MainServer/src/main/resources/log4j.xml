@@ -89,7 +89,7 @@
         <appender-ref ref="filelog_daily" />  
         <appender-ref ref="console" />  
         <appender-ref ref="ASYNC_test" />  
-        <!--        <appender-ref ref="JDBCAppender"/>-->
+        <!--<appender-ref ref="JDBCAppender"/>-->
     </category>  
   
 </log4j:configuration>  

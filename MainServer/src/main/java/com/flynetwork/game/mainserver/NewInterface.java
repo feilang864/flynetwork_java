@@ -9,11 +9,7 @@ package com.flynetwork.game.mainserver;
  *
  * @author Administrator
  */
-public class Workflow extends BaseClass {
+public interface NewInterface {
 
-    public Workflow() {
-        super(Workflow.class.getName());
-        this.logger.info("我是 Workflow");
-    }
-
+    void PutString();
 }

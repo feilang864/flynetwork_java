@@ -1,245 +1,46 @@
-2014-07-21 10:59:22: INFO : com.flynetwork.game.mainserver.Workflow:16 -> 我是 Workflow
-2014-07-21 10:59:22: INFO : com.flynetwork.game.mainserver.ServerMain:20 -> create 
-2014-07-21 10:59:22: DEBUG: com.flynetwork.game.mainserver.ServerMain:21 -> create 
-2014-07-21 11:01:15: INFO : com.flynetwork.game.mainserver.ServerMain:18 -> 我是测试的  ServerMain
-2014-07-21 11:01:15: INFO : com.flynetwork.game.mainserver.Workflow:16 -> 我是 Workflow
-2014-07-21 11:01:15: INFO : com.flynetwork.game.mainserver.ServerMain:20 -> create 
-2014-07-21 11:01:15: DEBUG: com.flynetwork.game.mainserver.ServerMain:21 -> create 
-07-21 11:03:36: INFO : com.flynetwork.game.mainserver.ServerMain:18 -> 我是测试的  ServerMain
-07-21 11:03:36: INFO : com.flynetwork.game.mainserver.Workflow:16 -> 我是 Workflow
-07-21 11:03:36: INFO : com.flynetwork.game.mainserver.ServerMain:20 -> create 
-07-21 11:03:36: DEBUG: com.flynetwork.game.mainserver.ServerMain:21 -> create 
-07-21 11:05:02: INFO : com.flynetwork.game.mainserver.ServerMain:18 -> 我是测试的  ServerMain
-07-21 11:05:02: INFO : com.flynetwork.game.mainserver.Workflow:16 -> 我是 Workflow
-07-21 11:05:02: INFO : com.flynetwork.game.mainserver.ServerMain:20 -> create 
-07-21 11:05:02: DEBUG: com.flynetwork.game.mainserver.ServerMain:21 -> create 
-07-21 11:21:44: INFO : com.flynetwork.game.mainserver.ServerMain:20 -> 我是测试的  ServerMain
-07-21 11:21:44: INFO : com.flynetwork.game.mainserver.Workflow:16 -> 我是 Workflow
-07-21 11:21:44: INFO : com.flynetwork.game.mainserver.ServerMain:22 -> create 
-07-21 11:21:44: DEBUG: com.flynetwork.game.mainserver.ServerMain:23 -> create 
-07-21 12:56:37: INFO : com.flynetwork.game.mainserver.ServerMain:20 -> 我是测试的  ServerMain
-07-21 12:56:37: INFO : com.flynetwork.game.mainserver.Workflow:16 -> 我是 Workflow
-07-21 12:56:37: INFO : com.flynetwork.game.mainserver.ServerMain:22 -> create 
-07-21 12:56:37: DEBUG: com.flynetwork.game.mainserver.ServerMain:23 -> create 
-07-21 14:18:35: INFO : com.flynetwork.game.mainserver.ServerMain:20 -> 我是测试的  ServerMain
-07-21 14:18:35: INFO : com.flynetwork.game.mainserver.Workflow:16 -> 我是 Workflow
-07-21 14:18:35: INFO : com.flynetwork.game.mainserver.ServerMain:22 -> create 
-07-21 14:18:35: DEBUG: com.flynetwork.game.mainserver.ServerMain:23 -> create 
-07-21 16:28:17: INFO : com.flynetwork.game.mainserver.MyClassLoader:129 -> D:\script\WhichClassLoader3.java编译完成
-07-21 16:29:09: INFO : com.flynetwork.game.mainserver.MyClassLoader:129 -> D:\script\WhichClassLoader3.java 编译完成
-07-21 16:30:43: INFO : com.flynetwork.game.mainserver.MyClassLoader:129 ->  编译完成 D:\script\WhichClassLoader3.java
-07-21 16:30:43: INFO : com.flynetwork.game.mainserver.MyClassLoader:130 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 16:36:49: INFO : com.flynetwork.game.mainserver.MyClassLoader:131 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 16:36:49: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 16:45:06: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  编译 D:\script 完成
-07-21 16:45:06: INFO : com.flynetwork.game.mainserver.MyClassLoader:133 ->  Load D:\script\classescom.fykj.xml.main.WhichClassLoader3
-07-21 16:45:46: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  编译 D:\script 完成
-07-21 16:45:46: INFO : com.flynetwork.game.mainserver.MyClassLoader:133 ->  Load D:\script\classescom.fykj.xml.main.WhichClassLoader3
-07-21 16:45:46: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  编译 D:\script 完成
-07-21 16:45:46: INFO : com.flynetwork.game.mainserver.MyClassLoader:133 ->  Load D:\script\classescom.fykj.xml.main.WhichClassLoader2
-07-21 16:48:27: ERROR: com.flynetwork.game.mainserver.MyClassLoader:136 ->  编译 D:\scriptWhichClassLoader3.java 失败 
-07-21 16:48:43: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 16:48:43: INFO : com.flynetwork.game.mainserver.MyClassLoader:133 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 16:48:43: ERROR: com.flynetwork.game.mainserver.MyClassLoader:136 ->  编译 D:\script\WhichClassLoader2.java 失败 
-07-21 16:49:15: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 16:49:15: INFO : com.flynetwork.game.mainserver.MyClassLoader:133 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 16:49:15: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  编译 D:\script\ 完成
-07-21 16:49:15: INFO : com.flynetwork.game.mainserver.MyClassLoader:133 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader2
-07-21 16:50:13: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 16:50:13: INFO : com.flynetwork.game.mainserver.MyClassLoader:133 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 16:50:13: ERROR: com.flynetwork.game.mainserver.MyClassLoader:136 ->  编译 D:\script\WhichClassLoader2.java 失败 
-07-21 16:50:58: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 16:50:58: INFO : com.flynetwork.game.mainserver.MyClassLoader:133 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 16:50:58: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  编译 D:\script\ 完成
-07-21 16:50:58: INFO : com.flynetwork.game.mainserver.MyClassLoader:133 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader2
-07-21 16:51:38: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 16:51:38: INFO : com.flynetwork.game.mainserver.MyClassLoader:133 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 16:51:38: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  编译 D:\script\ 完成
-07-21 16:51:38: INFO : com.flynetwork.game.mainserver.MyClassLoader:133 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader2
-07-21 16:51:50: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 16:51:50: INFO : com.flynetwork.game.mainserver.MyClassLoader:133 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 16:51:50: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  编译 D:\script\ 完成
-07-21 16:51:50: INFO : com.flynetwork.game.mainserver.MyClassLoader:133 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader2
-07-21 16:51:50: INFO : com.flynetwork.game.mainserver.MyClassLoader:132 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 16:51:50: INFO : com.flynetwork.game.mainserver.MyClassLoader:133 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:00:53: INFO : com.flynetwork.game.mainserver.MyClassLoader:139 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 17:00:53: INFO : com.flynetwork.game.mainserver.MyClassLoader:140 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:00:53: INFO : com.flynetwork.game.mainserver.MyClassLoader:139 ->  编译 D:\script\ 完成
-07-21 17:00:53: INFO : com.flynetwork.game.mainserver.MyClassLoader:140 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader2
-07-21 17:00:53: INFO : com.flynetwork.game.mainserver.MyClassLoader:139 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 17:00:53: INFO : com.flynetwork.game.mainserver.MyClassLoader:140 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:05:30: INFO : com.flynetwork.game.mainserver.MyClassLoader:39 -> 初始化源：D:\script\classes\ out：D:\script\ 完成
-07-21 17:05:31: INFO : com.flynetwork.game.mainserver.MyClassLoader:146 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 17:05:31: INFO : com.flynetwork.game.mainserver.MyClassLoader:147 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:05:31: INFO : com.flynetwork.game.mainserver.MyClassLoader:146 ->  编译 D:\script\ 完成
-07-21 17:05:31: INFO : com.flynetwork.game.mainserver.MyClassLoader:147 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader2
-07-21 17:05:31: INFO : com.flynetwork.game.mainserver.MyClassLoader:146 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 17:05:31: INFO : com.flynetwork.game.mainserver.MyClassLoader:147 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:06:40: INFO : com.flynetwork.game.mainserver.MyClassLoader:39 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:06:40: INFO : com.flynetwork.game.mainserver.MyClassLoader:146 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 17:06:40: INFO : com.flynetwork.game.mainserver.MyClassLoader:147 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:06:40: INFO : com.flynetwork.game.mainserver.MyClassLoader:146 ->  编译 D:\script\ 完成
-07-21 17:06:40: INFO : com.flynetwork.game.mainserver.MyClassLoader:147 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader2
-07-21 17:06:40: INFO : com.flynetwork.game.mainserver.MyClassLoader:146 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 17:06:40: INFO : com.flynetwork.game.mainserver.MyClassLoader:147 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:07:54: INFO : com.flynetwork.game.mainserver.MyClassLoader:39 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:07:54: INFO : com.flynetwork.game.mainserver.MyClassLoader:149 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 17:07:54: INFO : com.flynetwork.game.mainserver.MyClassLoader:150 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:07:54: INFO : com.flynetwork.game.mainserver.MyClassLoader:149 ->  编译 D:\script\ 完成
-07-21 17:07:54: INFO : com.flynetwork.game.mainserver.MyClassLoader:150 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader2
-07-21 17:07:54: INFO : com.flynetwork.game.mainserver.MyClassLoader:149 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 17:07:54: INFO : com.flynetwork.game.mainserver.MyClassLoader:150 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:08:28: INFO : com.flynetwork.game.mainserver.MyClassLoader:39 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:08:28: INFO : com.flynetwork.game.mainserver.MyClassLoader:149 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 17:08:28: INFO : com.flynetwork.game.mainserver.MyClassLoader:150 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:08:28: INFO : com.flynetwork.game.mainserver.MyClassLoader:149 ->  编译 D:\script\ 完成
-07-21 17:08:28: INFO : com.flynetwork.game.mainserver.MyClassLoader:150 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader2
-07-21 17:08:28: INFO : com.flynetwork.game.mainserver.MyClassLoader:149 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 17:08:28: INFO : com.flynetwork.game.mainserver.MyClassLoader:150 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:16:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:16:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:74 -> 开始编译：D:\script\WhichClassLoader3.java 的文件
-07-21 17:16:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:106 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:16:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:167 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 17:16:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:168 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:16:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:74 -> 开始编译：D:\script\ 的文件
-07-21 17:16:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:106 -> 编译：D:\script\ 的文件成功
-07-21 17:16:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:167 ->  编译 D:\script\ 完成
-07-21 17:16:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:168 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader2
-07-21 17:16:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:74 -> 开始编译：D:\script\WhichClassLoader3.java 的文件
-07-21 17:16:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:106 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:16:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:167 ->  编译 D:\script\WhichClassLoader3.java 完成
-07-21 17:16:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:168 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:17:07: INFO : com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:17:07: INFO : com.flynetwork.game.mainserver.MyClassLoader:74 -> 开始编译：D:\script\WhichClassLoader3.java 的文件
-07-21 17:17:07: INFO : com.flynetwork.game.mainserver.MyClassLoader:106 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:17:07: INFO : com.flynetwork.game.mainserver.MyClassLoader:167 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:17:07: INFO : com.flynetwork.game.mainserver.MyClassLoader:74 -> 开始编译：D:\script\ 的文件
-07-21 17:17:07: INFO : com.flynetwork.game.mainserver.MyClassLoader:106 -> 编译：D:\script\ 的文件成功
-07-21 17:17:07: INFO : com.flynetwork.game.mainserver.MyClassLoader:167 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader2
-07-21 17:17:07: INFO : com.flynetwork.game.mainserver.MyClassLoader:74 -> 开始编译：D:\script\WhichClassLoader3.java 的文件
-07-21 17:17:07: INFO : com.flynetwork.game.mainserver.MyClassLoader:106 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:17:07: INFO : com.flynetwork.game.mainserver.MyClassLoader:167 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:17:43: INFO : com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:17:43: INFO : com.flynetwork.game.mainserver.MyClassLoader:74 -> 开始编译：D:\script\WhichClassLoader3.java 的文件
-07-21 17:17:44: INFO : com.flynetwork.game.mainserver.MyClassLoader:106 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:17:44: INFO : com.flynetwork.game.mainserver.MyClassLoader:167 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:17:44: INFO : com.flynetwork.game.mainserver.MyClassLoader:74 -> 开始编译：D:\script\ 的文件
-07-21 17:17:44: INFO : com.flynetwork.game.mainserver.MyClassLoader:106 -> 编译：D:\script\ 的文件成功
-07-21 17:17:44: INFO : com.flynetwork.game.mainserver.MyClassLoader:167 ->  Load D:\script\classes\com.fykj.xml.main.WhichClassLoader2
-07-21 17:20:34: INFO : com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:20:34: INFO : com.flynetwork.game.mainserver.MyClassLoader:74 -> 开始编译：D:\script\WhichClassLoader3.java 的文件
-07-21 17:20:34: INFO : com.flynetwork.game.mainserver.MyClassLoader:106 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:20:34: INFO : com.flynetwork.game.mainserver.MyClassLoader:175 ->  开始加载 D:\script\classes\java.lang.Object
-07-21 17:20:34: INFO : com.flynetwork.game.mainserver.MyClassLoader:180 ->  开始加载 D:\script\classes\java.lang.Object 失败
-07-21 17:20:34: INFO : com.flynetwork.game.mainserver.MyClassLoader:175 ->  开始加载 D:\script\classes\java.lang.System
-07-21 17:20:34: INFO : com.flynetwork.game.mainserver.MyClassLoader:180 ->  开始加载 D:\script\classes\java.lang.System 失败
-07-21 17:20:34: INFO : com.flynetwork.game.mainserver.MyClassLoader:175 ->  开始加载 D:\script\classes\java.io.PrintStream
-07-21 17:20:34: INFO : com.flynetwork.game.mainserver.MyClassLoader:180 ->  开始加载 D:\script\classes\java.io.PrintStream 失败
-07-21 17:20:34: INFO : com.flynetwork.game.mainserver.MyClassLoader:74 -> 开始编译：D:\script\ 的文件
-07-21 17:20:34: INFO : com.flynetwork.game.mainserver.MyClassLoader:106 -> 编译：D:\script\ 的文件成功
-07-21 17:20:34: INFO : com.flynetwork.game.mainserver.MyClassLoader:175 ->  开始加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:20:34: INFO : com.flynetwork.game.mainserver.MyClassLoader:180 ->  开始加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 失败
-07-21 17:20:48: INFO : com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:20:48: INFO : com.flynetwork.game.mainserver.MyClassLoader:74 -> 开始编译：D:\script\WhichClassLoader3.java 的文件
-07-21 17:20:49: INFO : com.flynetwork.game.mainserver.MyClassLoader:106 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:20:49: INFO : com.flynetwork.game.mainserver.MyClassLoader:175 ->  开始加载 D:\script\classes\java.lang.Object
-07-21 17:20:49: INFO : com.flynetwork.game.mainserver.MyClassLoader:180 ->  开始加载 D:\script\classes\java.lang.Object 成功
-07-21 17:20:49: INFO : com.flynetwork.game.mainserver.MyClassLoader:175 ->  开始加载 D:\script\classes\java.lang.System
-07-21 17:20:49: INFO : com.flynetwork.game.mainserver.MyClassLoader:180 ->  开始加载 D:\script\classes\java.lang.System 成功
-07-21 17:20:49: INFO : com.flynetwork.game.mainserver.MyClassLoader:175 ->  开始加载 D:\script\classes\java.io.PrintStream
-07-21 17:20:49: INFO : com.flynetwork.game.mainserver.MyClassLoader:180 ->  开始加载 D:\script\classes\java.io.PrintStream 成功
-07-21 17:20:49: INFO : com.flynetwork.game.mainserver.MyClassLoader:74 -> 开始编译：D:\script\ 的文件
-07-21 17:20:49: INFO : com.flynetwork.game.mainserver.MyClassLoader:106 -> 编译：D:\script\ 的文件成功
-07-21 17:20:49: INFO : com.flynetwork.game.mainserver.MyClassLoader:175 ->  开始加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3
-07-21 17:20:49: INFO : com.flynetwork.game.mainserver.MyClassLoader:180 ->  开始加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
-07-21 17:22:00: INFO : com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:22:00: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:22:00: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  开始加载 D:\script\classes\java.lang.Object 成功
-07-21 17:22:00: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  开始加载 D:\script\classes\java.lang.System 成功
-07-21 17:22:00: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  开始加载 D:\script\classes\java.io.PrintStream 成功
-07-21 17:22:00: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\ 的文件成功
-07-21 17:22:00: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  开始加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
-07-21 17:22:12: INFO : com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:22:13: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:22:13: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.lang.Object 成功
-07-21 17:22:13: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.lang.System 成功
-07-21 17:22:13: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.io.PrintStream 成功
-07-21 17:22:13: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\ 的文件成功
-07-21 17:22:13: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
-07-21 17:25:04: INFO : com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:25:05: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:25:05: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.lang.Object 成功
-07-21 17:25:05: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.lang.System 成功
-07-21 17:25:05: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.io.PrintStream 成功
-07-21 17:25:05: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\ 的文件成功
-07-21 17:25:05: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
-07-21 17:26:17: INFO : com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:26:17: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:26:17: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.lang.Object 成功
-07-21 17:26:17: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.lang.System 成功
-07-21 17:26:17: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.io.PrintStream 成功
-07-21 17:26:17: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\ 的文件成功
-07-21 17:26:17: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
-07-21 17:27:14: INFO : com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:27:14: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:27:14: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.lang.Object 成功
-07-21 17:27:14: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.lang.System 成功
-07-21 17:27:14: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.io.PrintStream 成功
-07-21 17:27:14: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\ 的文件成功
-07-21 17:27:14: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
-07-21 17:28:15: INFO : com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:28:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:28:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.lang.Object 成功
-07-21 17:28:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.lang.System 成功
-07-21 17:28:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.io.PrintStream 成功
-07-21 17:28:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\ 的文件成功
-07-21 17:28:16: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
-07-21 17:28:59: INFO : com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:29:00: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:29:00: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.lang.Object 成功
-07-21 17:29:00: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.lang.System 成功
-07-21 17:29:00: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.io.PrintStream 成功
-07-21 17:29:00: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\ 的文件成功
-07-21 17:29:00: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
-07-21 17:29:11: INFO : com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:29:11: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:29:11: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.lang.Object 成功
-07-21 17:29:11: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.lang.System 成功
-07-21 17:29:11: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\java.io.PrintStream 成功
-07-21 17:29:11: INFO : com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\ 的文件成功
-07-21 17:29:11: INFO : com.flynetwork.game.mainserver.MyClassLoader:177 ->  加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
-07-21 17:30:28: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:30:29: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:30:29: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\java.lang.Object 成功
-07-21 17:30:29: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\java.lang.System 成功
-07-21 17:30:29: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\java.io.PrintStream 成功
-07-21 17:30:29: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\ 的文件成功
-07-21 17:30:29: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
-07-21 17:31:21:363: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:31:21:737: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:31:21:737: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\java.lang.Object 成功
-07-21 17:31:21:737: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\java.lang.System 成功
-07-21 17:31:21:737: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\java.io.PrintStream 成功
-07-21 17:31:21:768: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\ 的文件成功
-07-21 17:31:21:768: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
-07-21 17:31:38:648: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:31:39:022: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:31:39:022: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\java.lang.Object 成功
-07-21 17:31:39:022: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\java.lang.System 成功
-07-21 17:31:39:022: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\java.io.PrintStream 成功
-07-21 17:31:39:053: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\ 的文件成功
-07-21 17:31:39:053: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
-07-21 17:31:41:955: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:41 -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:31:42:314: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:31:42:314: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\java.lang.Object 成功
-07-21 17:31:42:314: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\java.lang.System 成功
-07-21 17:31:42:314: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\java.io.PrintStream 成功
-07-21 17:31:42:345: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104 -> 编译：D:\script\ 的文件成功
-07-21 17:31:42:345: DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177 -> 加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
-07-21 17:33:00:095: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:41 ] -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
-07-21 17:33:00:454: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104] -> 编译：D:\script\WhichClassLoader3.java 的文件成功
-07-21 17:33:00:454: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.Object 成功
-07-21 17:33:00:454: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.System 成功
-07-21 17:33:00:454: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.io.PrintStream 成功
-07-21 17:33:00:485: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104] -> 编译：D:\script\ 的文件成功
-07-21 17:33:00:485: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
+07-21 17:53:15:679: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:41 ] -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
+07-21 17:53:16:053: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104] -> 编译：D:\script\WhichClassLoader3.java 的文件成功
+07-21 17:53:16:053: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.Object 成功
+07-21 17:53:16:053: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.System 成功
+07-21 17:53:16:053: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.io.PrintStream 成功
+07-21 17:53:16:084: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104] -> 编译：D:\script\ 的文件成功
+07-21 17:53:16:084: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\com.flynetwork.game.mainserver.NewInterface 成功
+07-21 17:53:16:084: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
+07-21 17:54:42:555: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:41 ] -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
+07-21 17:54:42:945: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104] -> 编译：D:\script\WhichClassLoader3.java 的文件成功
+07-21 17:54:42:945: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.Object 成功
+07-21 17:54:42:945: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.System 成功
+07-21 17:54:42:945: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.io.PrintStream 成功
+07-21 17:54:43:148: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104] -> 编译：D:\script\ 的文件成功
+07-21 17:54:43:148: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\com.flynetwork.game.mainserver.NewInterface 成功
+07-21 17:54:43:148: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.Throwable 成功
+07-21 17:54:43:148: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.UnsupportedOperationException 成功
+07-21 17:54:43:148: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
+07-21 17:54:53:163: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:41 ] -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
+07-21 17:54:53:553: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104] -> 编译：D:\script\WhichClassLoader3.java 的文件成功
+07-21 17:54:53:553: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.Object 成功
+07-21 17:54:53:553: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.System 成功
+07-21 17:54:53:553: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.io.PrintStream 成功
+07-21 17:54:53:600: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104] -> 编译：D:\script\ 的文件成功
+07-21 17:54:53:600: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\com.flynetwork.game.mainserver.NewInterface 成功
+07-21 17:54:53:600: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.Throwable 成功
+07-21 17:54:53:600: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.UnsupportedOperationException 成功
+07-21 17:56:28:198: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:41 ] -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
+07-21 17:56:28:573: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104] -> 编译：D:\script\WhichClassLoader3.java 的文件成功
+07-21 17:56:28:573: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.Object 成功
+07-21 17:56:28:573: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.System 成功
+07-21 17:56:28:573: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.io.PrintStream 成功
+07-21 17:56:28:635: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104] -> 编译：D:\script\ 的文件成功
+07-21 17:56:28:635: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\com.flynetwork.game.mainserver.NewInterface 成功
+07-21 17:56:28:635: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\com.flynetwork.game.mainserver.BaseClass 成功
+07-21 17:56:28:635: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.Class 成功
+07-21 17:56:28:635: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\org.apache.log4j.Logger 成功
+07-21 17:56:28:635: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功
+07-21 17:59:27:958: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:41 ] -> 初始化 Class Loader 容器 Source：D:\script\ out：D:\script\classes\ 完成
+07-21 17:59:28:348: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104] -> 编译：D:\script\WhichClassLoader3.java 的文件成功
+07-21 17:59:28:348: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.Object 成功
+07-21 17:59:28:348: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.lang.System 成功
+07-21 17:59:28:348: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\java.io.PrintStream 成功
+07-21 17:59:28:394: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:104] -> 编译：D:\script\ 的文件成功
+07-21 17:59:28:394: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\com.flynetwork.game.mainserver.NewInterface 成功
+07-21 17:59:28:394: [DEBUG: com.flynetwork.game.mainserver.MyClassLoader:177] -> 加载 D:\script\classes\com.fykj.xml.main.WhichClassLoader3 成功

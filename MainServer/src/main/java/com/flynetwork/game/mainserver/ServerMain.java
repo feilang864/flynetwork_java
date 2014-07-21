@@ -17,8 +17,10 @@ public class ServerMain extends BaseClass {
 
         MyClassLoader loader = new MyClassLoader("D:\\script\\", "D:\\script\\classes\\");
         loader.loadJava("WhichClassLoader3.java", "com.fykj.xml.main.WhichClassLoader3").newInstance();
-        loader.loadJava("", "com.fykj.xml.main.WhichClassLoader2").newInstance();
-        loader.loadClass("com.fykj.xml.main.WhichClassLoader3").newInstance();       
+        NewInterface w2 = (NewInterface) loader.loadJava("", "com.fykj.xml.main.WhichClassLoader2").newInstance();
+        w2.PutString();
+        loader.loadClass("com.fykj.xml.main.WhichClassLoader3").newInstance();
+
     }
 
     public ServerMain() {
