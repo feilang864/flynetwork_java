@@ -47,7 +47,12 @@
         </plugins>    
     </build>
     
-    <dependencies>       
+    <dependencies>     
+        <dependency>
+            <groupId>commons-dbutils</groupId>
+            <artifactId>commons-dbutils</artifactId>
+            <version>1.5</version>
+        </dependency>  
         <dependency>
             <groupId>org.apache.mina</groupId>
             <artifactId>mina-core</artifactId>
@@ -73,6 +78,13 @@
             <artifactId>converter-simplexml</artifactId>
             <version>1.6.1</version>
         </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty</artifactId>
+            <version>3.9.2.Final</version>
+        </dependency>
+        
+        
     </dependencies>
     
 </project>
