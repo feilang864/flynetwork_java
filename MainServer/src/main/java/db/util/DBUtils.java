@@ -14,31 +14,55 @@ import org.apache.commons.dbutils.ResultSetHandler;
 
 /**
  *
- * @author 赵聪慧 @2012-10-23 下午3:58:48
+ * mysql数据库辅助文件
+ *
+ * @author
  */
-public class DBUtils {
+public final class DBUtils {
+
+    Connection MyConnection = null;
 
     /**
-     * String url="jdbc:mysql://localhost:3306/db_name"; //连接的URL,db_name为数据库名
-     * String Username="username"; //用户名 String Password="password"; //密码
+     *
+     * 创建一个连接 String url="jdbc:mysql://localhost:3306/db_name";
+     * //连接的URL,db_name为数据库名 String Username="username"; //用户名 String
+     * Password="password"; //密码
      *
      * @param URL
-     * @param username
-     * @param password
+     * @param username 登录用户名
+     * @param password 登录密码
+     * @throws java.sql.SQLException 创建数据库连异常，考虑数据库连接字符串问题
+     */
+    public DBUtils(String URL, String username, String password) throws SQLException {
+        DbUtils.loadDriver("com.mysql.jdbc.Driver");
+        MyConnection = DriverManager.getConnection(URL + "?characterEncoding=utf8", username, password);
+    }
+
+    /**
+     * 创建一个连接
+     *
+     * @param serverip 链接地址
+     * @param port 端口号
+     * @param dbname 数据库名称
+     * @param username 登录用户名
+     * @param pwd 登录密码
+     * @throws java.sql.SQLException 创建数据库连异常，考虑数据库连接字符串问题
+     */
+    public DBUtils(String serverip, int port, String dbname, String username, String pwd) throws SQLException {
+        this("jdbc:mysql://" + serverip + ":" + port + "/" + dbname, username, pwd);
+    }
+
+    /**
+     * 执行查询语句
+     *
+     * @param <T>
+     * @param conn
+     * @param sql
+     * @param rsh
      * @return
      * @throws SQLException
      */
-    public static Connection createConnection(String URL, String username, String password) throws SQLException {
-        DbUtils.loadDriver("com.mysql.jdbc.Driver");
-        Connection connection = DriverManager.getConnection(URL + "?characterEncoding=utf8", username, password);
-        return connection;
-    }
-
-    public static Connection createConnection(String serverip, int port, String dbname, String username, String pwd) throws SQLException {
-        return DBUtils.createConnection("jdbc:mysql://" + serverip + ":" + port + "/" + dbname, username, pwd);
-    }
-
-    public static <T> T query(Connection conn, String sql, ResultSetHandler<T> rsh) throws SQLException {
+    public <T> T query(Connection conn, String sql, ResultSetHandler<T> rsh) throws SQLException {
         Statement stmt;
         ResultSet rs;
         T result;
@@ -70,7 +94,7 @@ public class DBUtils {
      * @return
      * @throws SQLException
      */
-    public static int execture(Connection conn, String sql) throws SQLException {
+    public int execture(Connection conn, String sql) throws SQLException {
         Statement stmt;
         if (conn == null) {
             throw new SQLException("Null connection");
@@ -84,7 +108,14 @@ public class DBUtils {
 
     }
 
-    public static List<String> getTableName(Connection conn) throws SQLException {
+    /**
+     * 获取表名
+     *
+     * @param conn
+     * @return
+     * @throws SQLException
+     */
+    public List<String> getTableName(Connection conn) throws SQLException {
         ResultSet tableRet = conn.getMetaData().getTables(null, null, null, null);
         List<String> tablenames = new ArrayList<String>();
         while (tableRet.next()) {
@@ -93,7 +124,15 @@ public class DBUtils {
         return tablenames;
     }
 
-    public static List<ColumnInfo> getColumnDefine(Connection conn, String tableName) throws SQLException {
+    /**
+     * 获取表属性列的定义
+     *
+     * @param conn
+     * @param tableName
+     * @return
+     * @throws SQLException
+     */
+    public List<ColumnInfo> getColumnDefine(Connection conn, String tableName) throws SQLException {
         DatabaseMetaData metaData = conn.getMetaData();
         ResultSet columns = metaData.getColumns(null, "%", tableName, "%");
         ResultSet primaryKey = metaData.getPrimaryKeys(null, "%", tableName);
@@ -111,19 +150,22 @@ public class DBUtils {
         return infos;
     }
 
-    public static void main(String args[]) {
+    /**
+     * 测试
+     *
+     * @param args
+     */
+    public void testMain(String args[]) {
         try {
-            Connection createConnection = createConnection("jdbc:mysql://192.168.1.121:3306/game", "game", "game");
-            List<String> tableName = getTableName(createConnection);
+
+            List<String> tableName = getTableName(this.MyConnection);
             for (String string : tableName) {
                 System.out.println(string);
-                List<ColumnInfo> clomnDefine = getColumnDefine(createConnection, string);
+                List<ColumnInfo> clomnDefine = getColumnDefine(this.MyConnection, string);
                 for (ColumnInfo columnInfo : clomnDefine) {
                     System.out.println("\t" + columnInfo);
                 }
             }
-
-            // QueryRunner queryRunner = new QueryRunner();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
