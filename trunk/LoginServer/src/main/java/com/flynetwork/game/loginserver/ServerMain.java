@@ -19,11 +19,7 @@ public class ServerMain {
     public static void main(String[] args) {
         System.out.println(123123);
         try {
-            Runtime.getRuntime().exec("cmd.exe \r\n"
-                    + "cd E:\\work\\MainServer\\target\\ \n"
-                    + "E: \n"
-                    + "java -jar MainServer-1.0.jar \n"
-                    + "pause");
+            Runtime.getRuntime().exec("E:\\13.bat");
         } catch (IOException ex) {
             System.out.println(ex);
         }
