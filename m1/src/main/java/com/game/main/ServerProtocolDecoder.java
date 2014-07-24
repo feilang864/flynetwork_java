@@ -33,11 +33,11 @@ public class ServerProtocolDecoder
             throws Exception {
         long startTime = 0L;
         if (session.containsAttribute(START_TIME)) {
-            startTime = (long) session.getAttribute(START_TIME);
+            startTime = Long.parseLong(session.getAttribute(START_TIME).toString());
         }
         int count = 0;
         if (session.containsAttribute(RECEIVE_COUNT)) {
-            count = (int) session.getAttribute(RECEIVE_COUNT);
+            count = Integer.parseInt(session.getAttribute(RECEIVE_COUNT).toString());
         }
         if (System.currentTimeMillis() - startTime > 1000L) {
             if (count > 10) {
@@ -75,7 +75,7 @@ public class ServerProtocolDecoder
             }
             int length = contextBuff.getInt();
             if (length > MAX_SIZE) {
-                SessionUtil.close(session, "--> 数据包长度超过限制:%d -->close-->buf:%d(%s)", length, buff.remaining(), buff.toString());
+                SessionUtil.close(session, "--> 数据包长度超过限�?:%d -->close-->buf:%d(%s)", length, buff.remaining(), buff.toString());
                 return;
             }
             if (contextBuff.remaining() < length) {
@@ -88,7 +88,7 @@ public class ServerProtocolDecoder
             int msgID = contextBuff.getInt();
             byte[] bytes = new byte[length - 4];
             contextBuff.get(bytes);
-            ConstHelper.AddLoggerInfo("收到消息ID：" + msgID + "收到消息长度：" + bytes.length + Arrays.toString(bytes));
+            ConstHelper.AddLoggerInfo("收到消息ID�?" + msgID + "收到消息长度�?" + bytes.length + Arrays.toString(bytes));
             Message protoMessage = MsgAction.BufferNewMessage(msgID, bytes);
             if (protoMessage != null) {
                 out.write(protoMessage);
@@ -111,7 +111,7 @@ public class ServerProtocolDecoder
     }
 
     /**
-     * 可以用于处理在 IoSession 关闭时剩余的未读取数据
+     * 可以用于处理�? IoSession 关闭时剩余的未读取数�?
      *
      * @param session
      * @param out
