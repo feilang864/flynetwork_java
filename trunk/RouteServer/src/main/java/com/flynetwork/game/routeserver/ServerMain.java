@@ -6,7 +6,7 @@
 package com.flynetwork.game.routeserver;
 
 /**
- *
+ * 网关服务器
  * @author Administrator
  */
 public class ServerMain {
