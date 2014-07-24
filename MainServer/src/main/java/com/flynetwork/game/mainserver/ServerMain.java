@@ -19,7 +19,7 @@ public class ServerMain extends BaseClass {
         NewInterface w2 = (NewInterface) loader.loadJava("", "com.fykj.xml.main.WhichClassLoader2").newInstance();
         w2.PutString();
         loader.loadClass("com.fykj.xml.main.WhichClassLoader3").newInstance();
-        Runtime.getRuntime().exec("java -jar test.jar");
+        
     }
 
     public ServerMain() {
