@@ -6,7 +6,7 @@
 package com.flynetwork.game.mainserver;
 
 /**
- *
+ * 守护服务器
  * @author Administrator
  */
 public class ServerMain extends BaseClass {
