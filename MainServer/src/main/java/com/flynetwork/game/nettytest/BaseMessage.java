@@ -5,6 +5,12 @@
  */
 package com.flynetwork.game.nettytest;
 
+import io.netty.buffer.ByteBufInputStream;
+import io.netty.buffer.ByteBufOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * 根消息
  *
@@ -41,18 +47,16 @@ public class BaseMessage implements IMessageAction {
     }
 
     @Override
-    public void readMessage() {
-
+    public void readMessage(ByteBufInputStream inStream) {        
     }
 
-    /**
-     * 获取消息体，Message对象转化成字节数组
-     *
-     * @return
-     */
     @Override
-    public void writeMessage() {
-
+    public void writeMessage(ByteBufOutputStream outStream) {
+        try {
+            outStream.write(messageID);
+        } catch (IOException ex) {
+            Logger.getLogger(BaseMessage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

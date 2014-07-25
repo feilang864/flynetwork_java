@@ -5,6 +5,11 @@
  */
 package com.flynetwork.game.nettytest;
 
+import io.netty.buffer.ByteBufInputStream;
+import io.netty.buffer.ByteBufOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 
 /**
@@ -13,7 +18,7 @@ import javafx.beans.property.ReadOnlyBooleanProperty;
  */
 public class TipsMessage extends BaseMessage implements IMessageAction {
 
-    private static final int messageID = 900999;
+    public static final int messageID = 900999;
 
     public TipsMessage() {
         super(messageID);
@@ -27,13 +32,23 @@ public class TipsMessage extends BaseMessage implements IMessageAction {
     }
 
     @Override
-    public void writeMessage() {
-        super.writeMessage(); //To change body of generated methods, choose Tools | Templates.
+    public void writeMessage(ByteBufOutputStream outStream) {
+        super.writeMessage(outStream); //To change body of generated methods, choose Tools | Templates.
+        try {
+            outStream.writeUTF(tipsString);
+        } catch (IOException ex) {
+            Logger.getLogger(TipsMessage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
-    public void readMessage() {
-        super.readMessage(); //To change body of generated methods, choose Tools | Templates.
+    public void readMessage(ByteBufInputStream inStream) {
+        super.readMessage(inStream); //To change body of generated methods, choose Tools | Templates.
+        try {
+            this.tipsString = inStream.readUTF();
+        } catch (IOException ex) {
+            Logger.getLogger(TipsMessage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
