@@ -8,13 +8,11 @@ package com.flynetwork.game.routeserver.tcpclient;
 import com.flynetwork.game.buffermanager.BufferMarshalFactory;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.Scanner;
 import org.apache.log4j.Logger;
 import org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder;
 import org.apache.mina.core.filterchain.IoFilter;
 import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.service.IoConnector;
-import org.apache.mina.core.session.IoSession;
 import org.apache.mina.core.session.IoSessionConfig;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
@@ -33,7 +31,7 @@ public class IOClient {
         connector = new NioSocketConnector();
         // 2.连接配置
         IoSessionConfig sessionConfig = connector.getSessionConfig();
-        sessionConfig.setReaderIdleTime(300);
+        sessionConfig.setReaderIdleTime(10);
         sessionConfig.setReadBufferSize(1024 * 2);
         // 3创建过滤器
         DefaultIoFilterChainBuilder filterChain = connector.getFilterChain();

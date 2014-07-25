@@ -18,6 +18,10 @@ public class IOHandler implements IoHandler {
 
     protected Logger logger = Logger.getLogger(IOHandler.class);
 
+    public IOHandler() {
+        logger.debug("IOHandler");
+    }    
+    
     @Override
     public void sessionCreated(IoSession session) throws Exception {
         logger.debug("创建一个会话链接（未连接）");
