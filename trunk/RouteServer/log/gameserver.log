@@ -58,3 +58,4 @@
 07-25 13:02:59:299: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:51 ] -> 空闲状态
 07-25 13:03:09:252: [ERROR: com.flynetwork.game.routeserver.tcpserver.IOHandler:57 ] -> 异常捕获java.io.IOException: 远程主机强迫关闭了一个现有的连接。
 07-25 13:03:09:252: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:45 ] -> 连接关闭
+07-25 13:09:43:720: [DEBUG: com.flynetwork.game.routeserver.tcpclient.IOHandler:22 ] -> IOHandler
