@@ -1,0 +1,60 @@
+07-25 11:27:36:864: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:21 ] -> 创建业务处理类
+07-25 11:27:36:880: [INFO : com.flynetwork.game.routeserver.tcpserver.IOServer:53 ] -> 开启端口为 5555 监听服务
+07-25 11:33:36:856: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:21 ] -> 创建业务处理类
+07-25 11:33:36:887: [INFO : com.flynetwork.game.routeserver.tcpserver.IOServer:53 ] -> 开启端口为 5555 监听服务
+07-25 11:38:27:205: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:21 ] -> 创建业务处理类
+07-25 11:38:27:236: [INFO : com.flynetwork.game.routeserver.tcpserver.IOServer:53 ] -> 开启端口为 5555 监听服务
+07-25 12:46:09:993: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:21 ] -> 创建业务处理类
+07-25 12:46:10:040: [INFO : com.flynetwork.game.routeserver.tcpserver.IOServer:53 ] -> 开启端口为 5555 监听服务
+07-25 12:46:44:032: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:21 ] -> 创建业务处理类
+07-25 12:46:44:048: [INFO : com.flynetwork.game.routeserver.tcpserver.IOServer:53 ] -> 开启端口为 9527 监听服务
+07-25 12:47:00:787: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:33 ] -> 连接创建
+07-25 12:47:00:787: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:39 ] -> 连接打开
+07-25 12:47:10:927: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:51 ] -> 空闲状态
+07-25 12:47:21:067: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:51 ] -> 空闲状态
+07-25 12:47:31:207: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:51 ] -> 空闲状态
+07-25 12:47:39:459: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:57 ] -> 异常捕获java.io.IOException: 远程主机强迫关闭了一个现有的连接。
+07-25 12:47:39:506: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:45 ] -> 连接关闭
+07-25 12:47:44:436: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:33 ] -> 连接创建
+07-25 12:47:44:436: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:39 ] -> 连接打开
+07-25 12:47:44:451: [DEBUG: com.flynetwork.game.routeserver.tcpclient.IOHandler:23 ] -> 创建一个会话链接（未连接）
+07-25 12:47:44:451: [DEBUG: com.flynetwork.game.routeserver.tcpclient.IOHandler:28 ] -> 服务器与客户端会建立连接
+07-25 12:47:54:576: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:51 ] -> 空闲状态
+07-25 12:48:04:716: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:51 ] -> 空闲状态
+07-25 12:48:14:606: [DEBUG: com.flynetwork.game.routeserver.tcpclient.IOHandler:44 ] -> Error:客户端捕获到异常java.io.IOException: 远程主机强迫关闭了一个现有的连接。
+07-25 12:48:14:606: [DEBUG: com.flynetwork.game.routeserver.tcpclient.IOHandler:33 ] -> 服务器与客户端会话链接已经关闭
+07-25 12:51:01:386: [DEBUG: com.flynetwork.game.routeserver.tcpserver.IOHandler:21 ] -> 创建业务处理类
+07-25 12:51:01:402: [INFO : com.flynetwork.game.routeserver.tcpserver.IOServer:53 ] -> 开启端口为 9527 监听服务
+07-25 12:51:01:402: [INFO : com.flynetwork.game.routeserver.ServerMain:23 ] -> 网关服务器 启动完成
+07-25 12:52:10:338: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:21 ] -> 创建业务处理类
+07-25 12:52:10:354: [ERROR: com.flynetwork.game.routeserver.tcpserver.IOServer:55 ] -> 开启端口为 9527 监听服务 Exception:java.net.BindException: Address already in use: bind
+07-25 12:52:10:354: [INFO : com.flynetwork.game.routeserver.ServerMain:23 ] -> 网关服务器 启动完成
+07-25 12:52:22:007: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:21 ] -> 创建业务处理类
+07-25 12:52:22:054: [INFO : com.flynetwork.game.routeserver.tcpserver.IOServer:53 ] -> 开启端口为 9527 监听服务
+07-25 12:52:22:054: [INFO : com.flynetwork.game.routeserver.ServerMain:23 ] -> 网关服务器 启动完成
+07-25 12:52:29:043: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:33 ] -> 连接创建
+07-25 12:52:29:043: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:39 ] -> 连接打开
+07-25 12:52:29:058: [DEBUG: com.flynetwork.game.routeserver.tcpclient.IOHandler:23 ] -> 创建一个会话链接（未连接）
+07-25 12:52:29:058: [DEBUG: com.flynetwork.game.routeserver.tcpclient.IOHandler:28 ] -> 服务器与客户端会建立连接
+07-25 12:52:30:728: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:57 ] -> 异常捕获java.io.IOException: 远程主机强迫关闭了一个现有的连接。
+07-25 12:52:30:743: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:45 ] -> 连接关闭
+07-25 13:01:58:272: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:21 ] -> 创建业务处理类
+07-25 13:01:58:288: [INFO : com.flynetwork.game.routeserver.tcpserver.IOServer:53 ] -> 开启端口为 9527 监听服务
+07-25 13:01:58:288: [INFO : com.flynetwork.game.routeserver.ServerMain:23 ] -> 网关服务器 启动完成
+07-25 13:02:04:029: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:33 ] -> 连接创建
+07-25 13:02:04:029: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:39 ] -> 连接打开
+07-25 13:02:04:029: [DEBUG: com.flynetwork.game.routeserver.tcpclient.IOHandler:23 ] -> 创建一个会话链接（未连接）
+07-25 13:02:04:029: [DEBUG: com.flynetwork.game.routeserver.tcpclient.IOHandler:28 ] -> 服务器与客户端会建立连接
+07-25 13:02:08:599: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:33 ] -> 连接创建
+07-25 13:02:08:599: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:39 ] -> 连接打开
+07-25 13:02:08:599: [DEBUG: com.flynetwork.game.routeserver.tcpclient.IOHandler:23 ] -> 创建一个会话链接（未连接）
+07-25 13:02:08:599: [DEBUG: com.flynetwork.game.routeserver.tcpclient.IOHandler:28 ] -> 服务器与客户端会建立连接
+07-25 13:02:08:599: [DEBUG: com.flynetwork.game.routeserver.tcpclient.IOHandler:33 ] -> 服务器与客户端会话链接已经关闭
+07-25 13:02:08:599: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:45 ] -> 连接关闭
+07-25 13:02:18:739: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:51 ] -> 空闲状态
+07-25 13:02:28:879: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:51 ] -> 空闲状态
+07-25 13:02:39:019: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:51 ] -> 空闲状态
+07-25 13:02:49:159: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:51 ] -> 空闲状态
+07-25 13:02:59:299: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:51 ] -> 空闲状态
+07-25 13:03:09:252: [ERROR: com.flynetwork.game.routeserver.tcpserver.IOHandler:57 ] -> 异常捕获java.io.IOException: 远程主机强迫关闭了一个现有的连接。
+07-25 13:03:09:252: [INFO : com.flynetwork.game.routeserver.tcpserver.IOHandler:45 ] -> 连接关闭
