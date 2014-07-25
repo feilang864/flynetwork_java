@@ -5,6 +5,9 @@
  */
 package com.flynetwork.game.nettytest;
 
+import io.netty.buffer.ByteBufInputStream;
+import io.netty.buffer.ByteBufOutputStream;
+
 /**
  * 消息处理接口
  *
@@ -14,12 +17,14 @@ public interface IMessageAction {
 
     /**
      * 读取消息
+     * @param inStream
      */
-    void readMessage();
+    void readMessage(ByteBufInputStream inStream);
 
     /**
      * 书写消息
+     * @param outStream
      */
-    void writeMessage();
+    void writeMessage(ByteBufOutputStream outStream);
 
 }
