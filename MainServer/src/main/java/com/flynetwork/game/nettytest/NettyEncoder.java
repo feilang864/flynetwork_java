@@ -6,13 +6,10 @@
 package com.flynetwork.game.nettytest;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
-import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import java.io.BufferedInputStream;
 import java.nio.ByteOrder;
 import org.apache.log4j.Logger;
 
@@ -31,17 +28,20 @@ public class NettyEncoder extends MessageToByteEncoder<BaseMessage> {
 
     @Override
     protected void encode(ChannelHandlerContext chc, BaseMessage msg, ByteBuf out) throws Exception {
-        // todo out.writeBytes(new byte[2]);
-        logger.info(msg.toString());
+        logger.info("encode");
         //设置 字节数组是大端序
         //in.order(ByteOrder.BIG_ENDIAN);
         //设置 字节数组是小端序 c++, c#, U3D,都是小端序
         //out.order(ByteOrder.LITTLE_ENDIAN);
         ByteBuf buf = Unpooled.buffer();
-        //buf.order(ByteOrder.LITTLE_ENDIAN);
+        buf.order(ByteOrder.LITTLE_ENDIAN);
         ByteBufOutputStream outStream = new ByteBufOutputStream(buf);
         msg.writeMessage(outStream);
-        out.writeBytes(buf);
-
+        ///消息ID、int 4 个字节
+        if (buf.readableBytes() > 4) {
+            out.writeShort(buf.readableBytes());
+            out.writeBytes(buf);
+        }
     }
+
 }

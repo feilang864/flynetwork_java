@@ -53,7 +53,7 @@ public class BaseMessage implements IMessageAction {
     @Override
     public void writeMessage(ByteBufOutputStream outStream) {
         try {
-            outStream.write(messageID);
+            outStream.writeInt(messageID);
         } catch (IOException ex) {
             Logger.getLogger(BaseMessage.class.getName()).log(Level.SEVERE, null, ex);
         }
