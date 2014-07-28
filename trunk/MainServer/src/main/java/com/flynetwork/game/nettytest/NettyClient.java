@@ -36,9 +36,9 @@ public class NettyClient {
             @Override
             protected void initChannel(Channel ch) throws Exception {
                 ChannelPipeline pipeline = ch.pipeline();
-                pipeline.addLast("frameDecoder", new NettyDecoder());
-                pipeline.addLast("frameEncoder", new NettyEncoder());
-                pipeline.addLast("handler", new NettyClientHandler());
+                pipeline.addLast("Decoder", new NettyDecoder())
+                        .addLast("Encoder", new NettyEncoder())
+                        .addLast("handler", new NettyClientHandler());
             }
         });
         b.option(ChannelOption.SO_KEEPALIVE, true);
@@ -65,16 +65,16 @@ public class NettyClient {
     }
 
     public static void main(String[] args) throws Exception {
-        try {
-            long t0 = System.nanoTime();
-            for (int i = 0; i < 1; i++) {
-                NettyClient.sendMsg(i + "你好1");
-            }
-            long t1 = System.nanoTime();
-            System.out.println((t1 - t0) / 1000000.0);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block			
-            e.printStackTrace();
+        //        try {
+        //            long t0 = System.nanoTime();
+        for (int i = 0; i < 1; i++) {
+            NettyClient.sendMsg(i + "你好1");
         }
+        //            long t1 = System.nanoTime();
+        //            System.out.println((t1 - t0) / 1000000.0);
+        //        } catch (Exception e) {
+        //            // TODO Auto-generated catch block			
+        //            e.printStackTrace();
+        //        }
     }
 }

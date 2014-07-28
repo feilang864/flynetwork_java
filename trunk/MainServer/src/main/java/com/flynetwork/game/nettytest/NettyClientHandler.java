@@ -10,7 +10,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import org.apache.log4j.Logger;
 
 /**
- * 
+ *
  * @author Administrator
  */
 public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
@@ -28,10 +28,9 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
         super.handlerAdded(ctx); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-    
     private static final Logger logger = Logger.getLogger(NettyClientHandler.class);
-
+    
+    
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
         //messageReceived方法,名称很别扭，像是一个内部方法.		

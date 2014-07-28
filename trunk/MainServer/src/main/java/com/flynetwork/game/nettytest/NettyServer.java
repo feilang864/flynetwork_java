@@ -9,6 +9,7 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
+import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -31,6 +32,7 @@ public class NettyServer {
         try {
             //ServerBootstrap是设置服务器的辅助类
             ServerBootstrap bs = new ServerBootstrap();
+            
             //group方法是将上面创建的两个EventLoopGroup实例指定到ServerBootstrap实例中去
             bs.group(bossGroup, workerGroup)
                     //channel方法用来创建通道实例(NioServerSocketChannel类来实例化一个进来的连接)
@@ -39,13 +41,14 @@ public class NettyServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
-                            //处理逻辑放到SocketHandler类中去
-                            ch.pipeline()
-                            .addLast("frameDecoder", new NettyDecoder())
-                            .addLast("frameEncoder", new NettyEncoder())
+                            //处理逻辑放到 NettyClientHandler 类中去
+                            ChannelPipeline pipeline = ch.pipeline();
+                            pipeline.addLast("Decoder", new NettyDecoder())
+                            .addLast("Encoder", new NettyEncoder())
                             .addLast("handler", new NettyServerHandler());
                         }
                     })
+                    
                     //option()方法用于设置监听套接字
                     .option(ChannelOption.SO_BACKLOG, 128)
                     //childOption()方法用于设置和客户端连接的套接字
@@ -55,8 +58,6 @@ public class NettyServer {
             // Wait until the session socket is closed.
             // shut down your session.
             cf.channel().closeFuture().sync();
-            ///发送消息
-            //cf.channel().writeAndFlush(cf);
         } finally {
             //关闭相关资源
             workerGroup.shutdownGracefully();

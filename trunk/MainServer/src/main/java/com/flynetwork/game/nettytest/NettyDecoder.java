@@ -10,6 +10,7 @@ import io.netty.buffer.ByteBufInputStream;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
@@ -21,6 +22,7 @@ import org.apache.log4j.Logger;
 public class NettyDecoder extends ByteToMessageDecoder {
 
     private final Logger logger = Logger.getLogger(NettyEncoder.class);
+    private List<Byte> bytes = new ArrayList<Byte>();
 
     public NettyDecoder() {
 
@@ -29,20 +31,25 @@ public class NettyDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext chc, ByteBuf in, List<Object> out) throws Exception {
-        //todo out.add(byte[]);
-        //设置 字节数组是大端序
-        //in.order(ByteOrder.BIG_ENDIAN);
-        //设置 字节数组是小端序 c++, c#, U3D,都是小端序
-        logger.info("decode");
-        //in.order(ByteOrder.LITTLE_ENDIAN);
-        
-        ByteBufInputStream bufInputStream = new ByteBufInputStream(in);
-        int lenI = bufInputStream.readInt();
-        if (TipsMessage.messageID == lenI) {
-            TipsMessage tipsMessage = new TipsMessage();
-            tipsMessage.readMessage(bufInputStream);
-            out.add(tipsMessage);
+        if (in.readableBytes() > 0) {
+            //读取short 需要两个字节
+            if (in.readableBytes() < 6) {
+                in.array();
+            }
+            logger.info("decode " + in.readableBytes());
+            ByteBuf buf = in.readBytes(in.readableBytes());
+            //设置 字节数组是大端序
+            buf.order(ByteOrder.BIG_ENDIAN);
+            //设置 字节数组是小端序 c++, c#, U3D,都是小端序            
+            //buf.order(ByteOrder.LITTLE_ENDIAN);
+            ByteBufInputStream bufInputStream = new ByteBufInputStream(buf);
+            int lenI = bufInputStream.readInt();
+            logger.info("decode " + lenI);
+            if (TipsMessage.messageID == lenI) {
+                TipsMessage tipsMessage = new TipsMessage();
+                tipsMessage.readMessage(bufInputStream);
+                out.add(tipsMessage);
+            }
         }
     }
-
 }
