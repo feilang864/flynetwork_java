@@ -29,19 +29,20 @@ public class NettyEncoder extends MessageToByteEncoder<BaseMessage> {
     @Override
     protected void encode(ChannelHandlerContext chc, BaseMessage msg, ByteBuf out) throws Exception {
         logger.info("encode");
-        //设置 字节数组是大端序
-        //in.order(ByteOrder.BIG_ENDIAN);
-        //设置 字节数组是小端序 c++, c#, U3D,都是小端序
-        //out.order(ByteOrder.LITTLE_ENDIAN);
-        ByteBuf buf = Unpooled.buffer();
-        buf.order(ByteOrder.LITTLE_ENDIAN);
-        ByteBufOutputStream outStream = new ByteBufOutputStream(buf);
+        ByteBuf buffercontent = Unpooled.buffer();
+        ByteBuf bufferLen = Unpooled.buffer();
+        //设置 字节数组是大端序 ByteOrder.BIG_ENDIAN
+        //buf.order(ByteOrder.BIG_ENDIAN);
+        //设置 字节数组是小端序 c++, c#, U3D,都是小端序      ByteOrder.LITTLE_ENDIAN   
+        buffercontent.order(ByteOrder.BIG_ENDIAN);
+        bufferLen.order(ByteOrder.BIG_ENDIAN);
+        ByteBufOutputStream outStream = new ByteBufOutputStream(buffercontent);
         msg.writeMessage(outStream);
         ///消息ID、int 4 个字节
-        if (buf.readableBytes() > 4) {
-            out.writeShort(buf.readableBytes());
-            out.writeBytes(buf);
+        if (buffercontent.readableBytes() > 4) {
+            bufferLen.writeShort(buffercontent.readableBytes());
+            bufferLen.writeBytes(bufferLen);
+            out.writeBytes(bufferLen);
         }
     }
-
 }

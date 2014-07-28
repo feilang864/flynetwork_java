@@ -39,9 +39,10 @@ public class NettyDecoder extends ByteToMessageDecoder {
             logger.info("decode " + in.readableBytes());
             ByteBuf buf = in.readBytes(in.readableBytes());
             //设置 字节数组是大端序
-            buf.order(ByteOrder.BIG_ENDIAN);
+            //buf.order(ByteOrder.BIG_ENDIAN);
             //设置 字节数组是小端序 c++, c#, U3D,都是小端序            
             //buf.order(ByteOrder.LITTLE_ENDIAN);
+            buf.readShort();
             ByteBufInputStream bufInputStream = new ByteBufInputStream(buf);
             int lenI = bufInputStream.readInt();
             logger.info("decode " + lenI);
