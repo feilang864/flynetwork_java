@@ -41,7 +41,7 @@
                         <manifest>                            
                             <addClasspath>true</addClasspath>                            
                             <classpathPrefix>lib/</classpathPrefix>                            
-                            <mainClass>com.flynetwork_game.loginserver.Main</mainClass>                        
+                            <mainClass>com.flynetwork_game.loginserver.main.Main</mainClass>                        
                         </manifest>                    
                     </archive>                
                 </configuration>            
