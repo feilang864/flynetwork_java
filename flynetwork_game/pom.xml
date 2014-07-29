@@ -9,6 +9,9 @@
         <module>engine</module>
         <module>LoginServer</module>
         <module>LogicServer</module>
+        <module>flynetwork_game_engine</module>
+        <module>flynetwork_game_LogicServer</module>
+        <module>flynetwork_game_LoginServer</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
