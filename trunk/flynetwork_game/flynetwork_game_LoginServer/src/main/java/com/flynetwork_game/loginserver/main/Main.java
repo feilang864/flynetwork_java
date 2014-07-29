@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.flynetwork_game.loginserver;
+package com.flynetwork_game.loginserver.main;
 
 import com.flynetwork_game.loginserver.tcpserver.TcpServer;
 import org.apache.log4j.Logger;
