@@ -5,14 +5,18 @@
  */
 package com.flynetwork_game.logicserver.main;
 
+import org.apache.log4j.Logger;
+
 /**
  *
  * @author Administrator
  */
 public class Main {
-
+    
+    static Logger logger = Logger.getLogger(Main.class.getName());
+    
     public static void main(String[] args) {
-
+        logger.info("sssssssssssssssssssssss");
     }
-
+    
 }
