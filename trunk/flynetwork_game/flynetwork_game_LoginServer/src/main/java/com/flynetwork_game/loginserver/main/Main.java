@@ -17,7 +17,7 @@ public class Main {
     static Logger logger = Logger.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
-        logger.info("xxxxxxxxxx");
+        
         TcpServer.getInstance().start();
     }
 }
