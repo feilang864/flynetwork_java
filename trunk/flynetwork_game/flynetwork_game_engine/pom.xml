@@ -29,5 +29,4 @@
             <version>4.0.21.Final</version>
         </dependency>
     </dependencies>
-    <name>flynetwork_game_engine</name>
 </project>
