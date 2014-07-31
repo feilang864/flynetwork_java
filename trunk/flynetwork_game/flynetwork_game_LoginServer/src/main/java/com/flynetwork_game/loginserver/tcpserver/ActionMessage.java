@@ -5,12 +5,8 @@
  */
 package com.flynetwork_game.loginserver.tcpserver;
 
-import com.flynetwork_game.engine.buffer.NettyMessage;
 import com.flynetwork_game.engine.buffer.IActionMessage;
 import com.flynetwork_game.engine.buffer.INettyHandler;
-import com.flynetwork_game.loginserver.tcpmessage.TipsMessage;
-import io.netty.buffer.ByteBufInputStream;
-import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
  *
@@ -20,7 +16,7 @@ public class ActionMessage implements IActionMessage {
 
     @Override
     public INettyHandler getNettyHandlerInstance() {
-        return new TcpHandler();
+        return new TcpServerHandler();
     }
 
 }

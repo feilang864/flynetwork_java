@@ -23,11 +23,13 @@ public class TcpServer {
     }
 
     public void start() {
-        NettyServer ns = new NettyServer(new ActionMessage());
-        ns.start();
+
     }
 
     private TcpServer() {
+        NettyServer ns = new NettyServer(new ActionMessage());
+        ns.setPort(9527);
+        ns.start();
     }
 
 }
