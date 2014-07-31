@@ -38,7 +38,7 @@ public class LLTcpClient {
         if (ns != null) {
             try {
                 logger.debug("等待 10秒 重新连接登录服务器");
-                Thread.sleep(10 * 1000);
+                Thread.sleep(500);
             } catch (InterruptedException ex) {
             }
             ns.reConnect();
