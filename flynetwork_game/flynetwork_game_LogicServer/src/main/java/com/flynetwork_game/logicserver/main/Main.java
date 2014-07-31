@@ -18,10 +18,8 @@ public class Main {
     static Logger logger = Logger.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
-        logger.debug("向登录服务器注册逻辑服务器");
         LLTcpClient.getInstance();
-       
-
+        logger.debug("test");
     }
 
 }
