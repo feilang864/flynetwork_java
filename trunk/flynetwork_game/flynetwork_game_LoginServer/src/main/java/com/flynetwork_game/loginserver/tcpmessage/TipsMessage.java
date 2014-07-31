@@ -5,7 +5,7 @@
  */
 package com.flynetwork_game.loginserver.tcpmessage;
 
-import com.flynetwork_game.engine.buffer.BaseMessage;
+import com.flynetwork_game.engine.buffer.NettyMessage;
 import com.flynetwork_game.engine.buffer.IMessage;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author Administrator
  */
-public class TipsMessage extends BaseMessage implements IMessage {
+public class TipsMessage extends NettyMessage implements IMessage {
 
     public static final int messageID = 900999;
 

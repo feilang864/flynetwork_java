@@ -5,8 +5,9 @@
  */
 package com.flynetwork_game.loginserver.tcpserver;
 
-import com.flynetwork_game.engine.buffer.BaseMessage;
+import com.flynetwork_game.engine.buffer.NettyMessage;
 import com.flynetwork_game.engine.buffer.IActionMessage;
+import com.flynetwork_game.engine.buffer.INettyHandler;
 import com.flynetwork_game.loginserver.tcpmessage.TipsMessage;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -15,11 +16,11 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  *
  * @author Administrator
  */
-public class ActionMessageHandler implements IActionMessage {
+public class ActionMessage implements IActionMessage {
 
     @Override
-    public ChannelInboundHandlerAdapter getInstAdapter() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public INettyHandler getNettyHandlerInstance() {
+        return new TcpHandler();
     }
 
 }

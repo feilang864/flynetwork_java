@@ -5,43 +5,36 @@
  */
 package com.flynetwork_game.loginserver.tcpserver;
 
-import com.flynetwork_game.engine.buffer.BaseMessage;
-import com.flynetwork_game.engine.netty.NettyClient;
+import com.flynetwork_game.engine.buffer.INettyHandler;
+import com.flynetwork_game.engine.buffer.NettyMessage;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author Administrator
  */
-public class TcpHandler extends ChannelInboundHandlerAdapter {
+public class TcpHandler implements INettyHandler {
 
-    private final Logger logger = Logger.getLogger(NettyClient.class);
+    private final Logger logger = Logger.getLogger(TcpHandler.class);
 
     @Override
-    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
-        super.handlerRemoved(ctx); //To change body of generated methods, choose Tools | Templates.
-        logger.info("移除了客户端连接");
+    public void connected(ChannelHandlerContext ctx) {
+        logger.debug("connected");
     }
 
     @Override
-    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
-        super.handlerAdded(ctx); //To change body of generated methods, choose Tools | Templates.
-        logger.info("创建了新的客户端连接");
+    public void closeed(ChannelHandlerContext ctx) {
+        logger.debug("closeed");
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        logger.info(((BaseMessage) msg).toString());
-
+    public void actionMessage(ChannelHandlerContext ctx, NettyMessage message) {
+        logger.debug("actionMessage");
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        logger.info("exceptionCaught" + cause);
-        //close the connection when an exception is raise
-
-        ctx.close();
+    public void inactive(ChannelHandlerContext ctx) {
+        logger.debug("inactive");
     }
 }

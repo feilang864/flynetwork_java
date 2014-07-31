@@ -5,19 +5,15 @@
  */
 package com.flynetwork_game.loginserver.main;
 
-import com.flynetwork_game.loginserver.tcpserver.TcpServer;
-import org.apache.log4j.Logger;
+import com.flynetwork_game.engine.netty.NettyClient;
 
 /**
  *
  * @author Administrator
  */
-public class Main {
-
-    static Logger logger = Logger.getLogger(Main.class.getName());
+public class testClient {
 
     public static void main(String[] args) {
-
-        TcpServer.getInstance().start();
+        new NettyClient().getBootstrap();
     }
 }
