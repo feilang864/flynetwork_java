@@ -23,11 +23,10 @@ public class NettyClient {
     public String HOST = "127.0.0.1";
     public int PORT = 9999;
     public Bootstrap bootstrap = getBootstrap();
-    public Channel channel = getChannel(HOST, PORT);
-    IActionMessage actionMessage;
+    public Channel channel = getChannel(HOST, PORT);   
 
-    public NettyClient(String host, int port, IActionMessage action) {
-        actionMessage = action;
+    public NettyClient(String host, int port) {
+       
         HOST = host;
         PORT = port;
     }
@@ -46,7 +45,7 @@ public class NettyClient {
             @Override
             protected void initChannel(Channel ch) throws Exception {
                 ChannelPipeline pipeline = ch.pipeline();
-                pipeline.addLast("Decoder", new NettyDecoder(actionMessage))
+                pipeline.addLast("Decoder", new NettyDecoder())
                         .addLast("Encoder", new NettyEncoder())
                         .addLast("handler", new NettyClientHandler());
             }

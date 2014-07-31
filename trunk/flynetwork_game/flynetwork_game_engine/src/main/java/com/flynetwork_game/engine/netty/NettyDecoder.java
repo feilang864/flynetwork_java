@@ -25,12 +25,11 @@ class NettyDecoder extends ByteToMessageDecoder {
 
     private final Logger logger = Logger.getLogger(NettyEncoder.class);
     private byte[] bytes;
-    ByteOrder endianOrder = ByteOrder.LITTLE_ENDIAN;
-    IActionMessage ActionMessage;
+    ByteOrder endianOrder = ByteOrder.LITTLE_ENDIAN;    
 
-    public NettyDecoder(IActionMessage actionMessage) {
-        logger.info("初始化解码器");
-        ActionMessage = actionMessage;
+    public NettyDecoder() {
+        logger.debug("初始化解码器");
+       
     }
 
     byte[] bytesAction(byte[] bs) {
@@ -75,7 +74,7 @@ class NettyDecoder extends ByteToMessageDecoder {
             if (buffercontent.readableBytes() < 6) {
                 bytesAction(buffercontent.array(), buffercontent.readerIndex(), buffercontent.readableBytes());
             } else {
-                logger.info("decode " + buffercontent.readableBytes());
+                logger.debug("decode " + buffercontent.readableBytes());
                 ByteBuf buf = buffercontent.readBytes(buffercontent.readableBytes());
                 //设置 字节数组是大端序
                 //buf.order(ByteOrder.BIG_ENDIAN);
@@ -85,14 +84,11 @@ class NettyDecoder extends ByteToMessageDecoder {
                 if (buffercontent.readableBytes() >= len) {
                     ByteBufInputStream bufInputStream = new ByteBufInputStream(buf);
                     int messageid = bufInputStream.readInt();
-
-                    logger.info("收到消息 messageid " + messageid);
-                    BaseMessage bm = ActionMessage.action(messageid, bufInputStream);
-                    if (bm != null) {
-                        outputMessage.add(bm);
-                    }
-
+                    logger.debug("收到消息 messageid " + messageid);
                     
+//                    if (bm != null) {
+//                        outputMessage.add(bm);
+//                    }
                 } else {
                     buffercontent.setIndex(len, len);
                     bytesAction(buffercontent.array(), buffercontent.readerIndex(), buffercontent.readableBytes());
