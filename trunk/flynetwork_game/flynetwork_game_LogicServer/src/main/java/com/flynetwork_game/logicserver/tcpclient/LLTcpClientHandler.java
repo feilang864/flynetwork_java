@@ -21,12 +21,14 @@ public class LLTcpClientHandler implements INettyHandler {
 
     @Override
     public void connected(ChannelHandlerContext ctx) {
-        logger.debug("注册逻辑服务器成功");        
         TcpServer.getInstance();
+        logger.debug("注册逻辑服务器成功");
     }
+    ReConnectScript rcs;
 
     @Override
     public void closeed(ChannelHandlerContext ctx) {
+        rcs = new ReConnectScript();
         logger.debug("与登录服务器断开链接");
     }
 
