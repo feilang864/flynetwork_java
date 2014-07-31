@@ -19,5 +19,4 @@ public interface INettyHandler {
 
     void actionMessage(ChannelHandlerContext ctx, NettyMessage message);
 
-    void inactive(ChannelHandlerContext ctx);
 }

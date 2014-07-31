@@ -33,8 +33,4 @@ public class TcpHandler implements INettyHandler {
         logger.debug("actionMessage");
     }
 
-    @Override
-    public void inactive(ChannelHandlerContext ctx) {
-        logger.debug("inactive");
-    }
 }
