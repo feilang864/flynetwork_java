@@ -25,7 +25,7 @@ class NettyEncoder extends MessageToByteEncoder<BaseMessage> {
     ByteOrder endianOrder = ByteOrder.LITTLE_ENDIAN;
 
     public NettyEncoder() {
-        logger.info("初始化编码器");
+        logger.debug("初始化编码器");
     }
 
     @Override

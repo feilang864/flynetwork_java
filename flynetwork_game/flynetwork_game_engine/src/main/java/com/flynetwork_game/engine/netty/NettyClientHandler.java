@@ -29,11 +29,10 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
     }
 
     private static final Logger logger = Logger.getLogger(NettyClientHandler.class);
-    
-    
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-        //messageReceived方法,名称很别扭，像是一个内部方法.		
-        logger.info("client接收到服务器返回的消息:" + msg);
+
+        logger.debug("client接收到服务器返回的消息:" + msg);
     }
 }

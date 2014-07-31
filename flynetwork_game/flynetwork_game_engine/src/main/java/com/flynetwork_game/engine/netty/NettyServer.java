@@ -32,10 +32,9 @@ public class NettyServer extends Thread {
     ChannelInboundHandlerAdapter nettyHandler;
     IActionMessage actionMessage;
 
-    public NettyServer(ChannelInboundHandlerAdapter handler, IActionMessage action) {
-        nettyHandler = handler;
+    public NettyServer(IActionMessage action) {
         actionMessage = action;
-        logger.info("加载 " + nettyHandler.getClass().getSimpleName());
+        logger.debug("加载 " + nettyHandler.getClass().getSimpleName());
     }
 
     @Override
@@ -57,9 +56,9 @@ public class NettyServer extends Thread {
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
                             //处理逻辑放到 NettyClientHandler 类中去
-                            ch.pipeline().addLast("Decoder", new NettyDecoder(actionMessage))
+                            ch.pipeline().addLast("Decoder", new NettyDecoder())
                             .addLast("Encoder", new NettyEncoder())
-                            .addLast("handler", nettyHandler);
+                            .addLast("handler", actionMessage.getInstAdapter());
                         }
                     })
                     //option()方法用于设置监听套接字
@@ -68,7 +67,7 @@ public class NettyServer extends Thread {
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
             // Bind and start to accept incoming connections
             ChannelFuture cf = bs.bind(this.port).sync();
-            logger.info("开启对端口 " + this.port);
+            logger.debug("开启端口 " + this.port);
             // Wait until the session socket is closed.
             // shut down your session.
             cf.channel().closeFuture().sync();

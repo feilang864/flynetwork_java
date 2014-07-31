@@ -5,13 +5,15 @@
  */
 package com.flynetwork_game.engine.buffer;
 
-import io.netty.channel.ChannelInboundHandlerAdapter;
-
 /**
  *
  * @author Administrator
  */
-public interface IActionMessage {
+public interface INettyHandler {
 
-    ChannelInboundHandlerAdapter getInstAdapter();
+    void connected();
+
+    void closeed();
+
+    void actionMessage();
 }
