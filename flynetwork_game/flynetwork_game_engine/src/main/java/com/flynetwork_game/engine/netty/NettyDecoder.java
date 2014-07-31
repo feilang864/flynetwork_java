@@ -5,7 +5,6 @@
  */
 package com.flynetwork_game.engine.netty;
 
-import com.flynetwork_game.engine.buffer.BaseMessage;
 import com.flynetwork_game.engine.buffer.IActionMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
@@ -23,14 +22,13 @@ import org.apache.log4j.Logger;
  */
 class NettyDecoder extends ByteToMessageDecoder {
 
-    private final Logger logger = Logger.getLogger(NettyEncoder.class);
-    private byte[] bytes;
-    ByteOrder endianOrder = ByteOrder.LITTLE_ENDIAN;    
-
     public NettyDecoder() {
         logger.debug("初始化解码器");
-       
     }
+
+    private final Logger logger = Logger.getLogger(NettyEncoder.class);
+    private byte[] bytes;
+    ByteOrder endianOrder = ByteOrder.LITTLE_ENDIAN;
 
     byte[] bytesAction(byte[] bs) {
         byte[] temps;
@@ -71,7 +69,7 @@ class NettyDecoder extends ByteToMessageDecoder {
             buffercontent.writeBytes(temp);
 
             //读取 消息长度（short）和消息ID（int） 需要 6 个字节
-            if (buffercontent.readableBytes() < 6) {
+            if (buffercontent.readableBytes() <= 6) {
                 bytesAction(buffercontent.array(), buffercontent.readerIndex(), buffercontent.readableBytes());
             } else {
                 logger.debug("decode " + buffercontent.readableBytes());
@@ -85,10 +83,8 @@ class NettyDecoder extends ByteToMessageDecoder {
                     ByteBufInputStream bufInputStream = new ByteBufInputStream(buf);
                     int messageid = bufInputStream.readInt();
                     logger.debug("收到消息 messageid " + messageid);
-                    
-//                    if (bm != null) {
-//                        outputMessage.add(bm);
-//                    }
+
+                    //todo 收包解包处理，
                 } else {
                     buffercontent.setIndex(len, len);
                     bytesAction(buffercontent.array(), buffercontent.readerIndex(), buffercontent.readableBytes());

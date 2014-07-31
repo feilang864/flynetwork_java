@@ -26,15 +26,13 @@ import org.apache.log4j.Logger;
  */
 public class NettyServer extends Thread {
 
-    Logger logger = Logger.getLogger(NettyServer.class.getName());
-
+    private Logger logger = Logger.getLogger(NettyServer.class);
     private int port = 9527;
-    ChannelInboundHandlerAdapter nettyHandler;
-    IActionMessage actionMessage;
+    private ChannelInboundHandlerAdapter nettyHandler;
+    private IActionMessage actionMessage;
 
     public NettyServer(IActionMessage action) {
         actionMessage = action;
-        logger.debug("加载 " + nettyHandler.getClass().getSimpleName());
     }
 
     @Override
@@ -58,7 +56,7 @@ public class NettyServer extends Thread {
                             //处理逻辑放到 NettyClientHandler 类中去
                             ch.pipeline().addLast("Decoder", new NettyDecoder())
                             .addLast("Encoder", new NettyEncoder())
-                            .addLast("handler", actionMessage.getInstAdapter());
+                            .addLast("handler", new NettyHandler(actionMessage.getNettyHandlerInstance()));
                         }
                     })
                     //option()方法用于设置监听套接字

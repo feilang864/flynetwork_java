@@ -5,15 +5,19 @@
  */
 package com.flynetwork_game.engine.buffer;
 
+import io.netty.channel.ChannelHandlerContext;
+
 /**
  *
  * @author Administrator
  */
 public interface INettyHandler {
 
-    void connected();
+    void connected(ChannelHandlerContext ctx);
 
-    void closeed();
+    void closeed(ChannelHandlerContext ctx);
 
-    void actionMessage();
+    void actionMessage(ChannelHandlerContext ctx, NettyMessage message);
+
+    void inactive(ChannelHandlerContext ctx);
 }
