@@ -5,8 +5,8 @@
  */
 package com.flynetwork_game.engine.netty;
 
+import com.flynetwork_game.engine.buffer.INettyHandler;
 import com.flynetwork_game.engine.buffer.NettyMessage;
-import com.flynetwork_game.engine.buffer.IActionMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -17,51 +17,55 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.apache.log4j.Logger;
 
-public class NettyClient {
+public class NettyClient extends Thread{
 
     private final Logger logger = Logger.getLogger(NettyClient.class);
-    public String HOST = "127.0.0.1";
-    public int PORT = 9527;
-    public Bootstrap bootstrap = getBootstrap();
-    public Channel channel = getChannel(HOST, PORT);
+    private String Host = "127.0.0.1";
+    private int Port = 9527;
+    private Bootstrap bootstrap;
+    private Channel channel;
 
-    public NettyClient() {
-
-    }
-
-    /**
-     *
-     * 初始化Bootstrap
-     *
-     * @return
-     */
-    public final Bootstrap getBootstrap() {
+    public NettyClient(final INettyHandler nettyHandler) {
         EventLoopGroup group = new NioEventLoopGroup();
-        Bootstrap b = new Bootstrap();
-        b.group(group).channel(NioSocketChannel.class);
-        b.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10 * 1000)
+        bootstrap = new Bootstrap();
+        bootstrap.group(group).channel(NioSocketChannel.class);
+        bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3 * 1000)
                 .handler(new ChannelInitializer<Channel>() {
                     @Override
                     protected void initChannel(Channel ch) throws Exception {
                         ChannelPipeline pipeline = ch.pipeline();
                         pipeline.addLast("Decoder", new NettyDecoder())
                         .addLast("Encoder", new NettyEncoder())
-                        .addLast("handler", new NettyClientHandler());
+                        .addLast("handler", new NettyHandler(nettyHandler));
                     }
                 });
-        b.option(ChannelOption.SO_KEEPALIVE, true);
-        return b;
+        bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
     }
 
-    public final Channel getChannel(String host, int port) {
-        Channel channel = null;
-        try {
-            channel = bootstrap.connect(host, port).sync().channel();
-        } catch (InterruptedException e) {
-            logger.error(String.format("连接Server(IP[%s],PORT[%s])失败", host, port), e);
-            return null;
+    public void run() {
+        if (channel == null) {
+            try {
+                channel = bootstrap.connect(this.Host, this.Port).sync().channel();
+            } catch (Exception e) {
+
+            }
         }
-        return channel;
+    }
+
+    public String getHost() {
+        return Host;
+    }
+
+    public void setHost(String Host) {
+        this.Host = Host;
+    }
+
+    public int getPort() {
+        return Port;
+    }
+
+    public void setPort(int Port) {
+        this.Port = Port;
     }
 
     public void sendMsg(NettyMessage msg) throws Exception {
