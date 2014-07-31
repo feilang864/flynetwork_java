@@ -17,7 +17,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.apache.log4j.Logger;
 
-public class NettyClient extends Thread{
+public class NettyClient extends Thread {
 
     private final Logger logger = Logger.getLogger(NettyClient.class);
     private String Host = "127.0.0.1";
@@ -43,6 +43,22 @@ public class NettyClient extends Thread{
     }
 
     public void run() {
+        if (channel == null) {
+            try {
+                channel = bootstrap.connect(this.Host, this.Port).sync().channel();
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+    public void reConnect() {
+
+        if (channel != null) {
+            channel.close();
+            channel = null;
+        }
+
         if (channel == null) {
             try {
                 channel = bootstrap.connect(this.Host, this.Port).sync().channel();

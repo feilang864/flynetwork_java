@@ -37,15 +37,11 @@ public abstract class ScriptTaskMillisecondTimer implements Runnable {
         executor = Executors.newScheduledThreadPool(1);
         ///线程执行服务
         ScheduledExecutorService scheduler = (ScheduledExecutorService) executor;
-        scheduler.scheduleAtFixedRate(this, 5, 5, TimeUnit.MILLISECONDS);
-        scheduler.shutdown();
+        scheduler.scheduleAtFixedRate(this, 0, _Millisecond, TimeUnit.MILLISECONDS);
     }
 
-    @Override
-    public abstract void run();
-
     public void shutdown() {
-
+        //scheduler.shutdown();
     }
 
 }
