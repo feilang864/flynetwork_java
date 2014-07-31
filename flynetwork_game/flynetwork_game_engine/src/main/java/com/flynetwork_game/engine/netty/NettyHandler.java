@@ -28,7 +28,12 @@ public class NettyHandler extends SimpleChannelInboundHandler<NettyMessage> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, NettyMessage msg) throws Exception {
         iNettyHandler.actionMessage(ctx, msg);
-    } 
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+
+    }
 
     @Override
     public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
@@ -36,12 +41,7 @@ public class NettyHandler extends SimpleChannelInboundHandler<NettyMessage> {
     }
 
     @Override
-    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
         iNettyHandler.connected(ctx);
-    }
-
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-
     }
 }

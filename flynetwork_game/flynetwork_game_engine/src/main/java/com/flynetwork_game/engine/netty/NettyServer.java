@@ -37,6 +37,14 @@ public class NettyServer extends Thread {
         actionMessage = action;
     }
 
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
     @Override
     public void run() {
         //NioEventLoopGroup是一个多线程的I/O操作事件循环池(参数是线程数量)
