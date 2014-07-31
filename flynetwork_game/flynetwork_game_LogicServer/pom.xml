@@ -18,6 +18,11 @@
             <artifactId>log4j</artifactId>
             <version>1.2.16</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>flynetwork_game_engine</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <name>flynetwork_game_LogicServer</name>
 </project>
