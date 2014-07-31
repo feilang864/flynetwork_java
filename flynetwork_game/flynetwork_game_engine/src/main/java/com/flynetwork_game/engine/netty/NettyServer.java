@@ -15,6 +15,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
+import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 
 /**
@@ -45,6 +47,7 @@ public class NettyServer extends Thread {
         try {
             //ServerBootstrap是设置服务器的辅助类
             ServerBootstrap bs = new ServerBootstrap();
+
             //group方法是将上面创建的两个EventLoopGroup实例指定到ServerBootstrap实例中去
             bs.group(bossGroup, workerGroup)
                     //channel方法用来创建通道实例(NioServerSocketChannel类来实例化一个进来的连接)
@@ -56,6 +59,7 @@ public class NettyServer extends Thread {
                             //处理逻辑放到 NettyClientHandler 类中去
                             ch.pipeline().addLast("Decoder", new NettyDecoder())
                             .addLast("Encoder", new NettyEncoder())
+                            .addLast("ping", new IdleStateHandler(10, 10, 10, TimeUnit.SECONDS))
                             .addLast("handler", new NettyHandler(actionMessage.getNettyHandlerInstance()));
                         }
                     })

@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 class NettyDecoder extends ByteToMessageDecoder {
 
     public NettyDecoder() {
-        logger.debug("初始化解码器");
+        
     }
 
     private final Logger logger = Logger.getLogger(NettyEncoder.class);

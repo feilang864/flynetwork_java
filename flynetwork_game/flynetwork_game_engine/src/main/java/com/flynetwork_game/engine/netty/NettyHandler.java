@@ -28,20 +28,20 @@ public class NettyHandler extends SimpleChannelInboundHandler<NettyMessage> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, NettyMessage msg) throws Exception {
         iNettyHandler.actionMessage(ctx, msg);
-    }
+    } 
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {    
-        iNettyHandler.inactive(ctx);
-    }
-
-    @Override
-    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {       
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
         iNettyHandler.closeed(ctx);
     }
 
     @Override
-    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {       
+    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
         iNettyHandler.connected(ctx);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+
     }
 }
