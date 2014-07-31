@@ -23,7 +23,7 @@ public class TcpServer {
     }
 
     public void start() {
-        NettyServer ns = new NettyServer(new TcpHandler(), new ActionMessageHandler());
+        NettyServer ns = new NettyServer(new ActionMessageHandler());
         ns.start();
     }
 
