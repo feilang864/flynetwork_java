@@ -70,7 +70,7 @@ public class MyClassLoader extends ClassLoader {
                 return false;
             }
 
-            List<File> sourceFileList = new ArrayList<>();
+            List<File> sourceFileList = new ArrayList<File>();
             File sourceFile = null;
             //得到filePath目录下的所有java源文件
             if (StringIsEmpty(fileName)) {
