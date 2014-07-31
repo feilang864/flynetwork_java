@@ -14,9 +14,9 @@ import org.apache.log4j.Logger;
  *
  * @author Administrator
  */
-public class TcpHandler implements INettyHandler {
+public class TcpServerHandler implements INettyHandler {
 
-    private final Logger logger = Logger.getLogger(TcpHandler.class);
+    private final Logger logger = Logger.getLogger(TcpServerHandler.class);
 
     @Override
     public void connected(ChannelHandlerContext ctx) {
