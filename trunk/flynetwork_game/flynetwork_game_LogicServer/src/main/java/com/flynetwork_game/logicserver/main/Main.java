@@ -5,6 +5,8 @@
  */
 package com.flynetwork_game.logicserver.main;
 
+import com.flynetwork_game.logicserver.tcpclient.LLTcpClient;
+import com.flynetwork_game.logicserver.tcpserver.TcpServer;
 import org.apache.log4j.Logger;
 
 /**
@@ -12,11 +14,14 @@ import org.apache.log4j.Logger;
  * @author Administrator
  */
 public class Main {
-    
+
     static Logger logger = Logger.getLogger(Main.class.getName());
-    
+
     public static void main(String[] args) {
-        logger.info("sssssssssssssssssssssss");
+        logger.debug("向登录服务器注册逻辑服务器");
+        LLTcpClient.getInstance();
+       
+
     }
-    
+
 }
