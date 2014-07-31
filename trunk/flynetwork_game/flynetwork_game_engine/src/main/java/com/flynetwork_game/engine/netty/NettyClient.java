@@ -5,7 +5,7 @@
  */
 package com.flynetwork_game.engine.netty;
 
-import com.flynetwork_game.engine.buffer.BaseMessage;
+import com.flynetwork_game.engine.buffer.NettyMessage;
 import com.flynetwork_game.engine.buffer.IActionMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -21,14 +21,12 @@ public class NettyClient {
 
     private final Logger logger = Logger.getLogger(NettyClient.class);
     public String HOST = "127.0.0.1";
-    public int PORT = 9999;
+    public int PORT = 9527;
     public Bootstrap bootstrap = getBootstrap();
-    public Channel channel = getChannel(HOST, PORT);   
+    public Channel channel = getChannel(HOST, PORT);
 
-    public NettyClient(String host, int port) {
-       
-        HOST = host;
-        PORT = port;
+    public NettyClient() {
+
     }
 
     /**
@@ -41,15 +39,16 @@ public class NettyClient {
         EventLoopGroup group = new NioEventLoopGroup();
         Bootstrap b = new Bootstrap();
         b.group(group).channel(NioSocketChannel.class);
-        b.handler(new ChannelInitializer<Channel>() {
-            @Override
-            protected void initChannel(Channel ch) throws Exception {
-                ChannelPipeline pipeline = ch.pipeline();
-                pipeline.addLast("Decoder", new NettyDecoder())
+        b.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10 * 1000)
+                .handler(new ChannelInitializer<Channel>() {
+                    @Override
+                    protected void initChannel(Channel ch) throws Exception {
+                        ChannelPipeline pipeline = ch.pipeline();
+                        pipeline.addLast("Decoder", new NettyDecoder())
                         .addLast("Encoder", new NettyEncoder())
                         .addLast("handler", new NettyClientHandler());
-            }
-        });
+                    }
+                });
         b.option(ChannelOption.SO_KEEPALIVE, true);
         return b;
     }
@@ -65,7 +64,7 @@ public class NettyClient {
         return channel;
     }
 
-    public void sendMsg(BaseMessage msg) throws Exception {
+    public void sendMsg(NettyMessage msg) throws Exception {
         if (channel != null) {
             channel.writeAndFlush(msg).sync();
         } else {
