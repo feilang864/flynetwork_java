@@ -21,7 +21,7 @@ public class LLTcpClientHandler implements INettyHandler {
 
     @Override
     public void connected(ChannelHandlerContext ctx) {
-        TcpServer.getInstance();
+        //TcpServer.getInstance();
         logger.debug("注册逻辑服务器成功");
     }
     ReConnectScript rcs;

@@ -26,7 +26,7 @@ public class NettyClient extends Thread {
     private Channel channel;
 
     public NettyClient(final INettyHandler nettyHandler) {
-        EventLoopGroup group = new NioEventLoopGroup();
+        EventLoopGroup group = new NioEventLoopGroup(1);
         bootstrap = new Bootstrap();
         bootstrap.group(group).channel(NioSocketChannel.class);
         bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3 * 1000)
@@ -45,7 +45,7 @@ public class NettyClient extends Thread {
     public void run() {
         if (channel == null) {
             try {
-                channel = bootstrap.connect(this.Host, this.Port).sync().channel();
+                channel = bootstrap.connect(this.Host, this.Port).channel();
             } catch (Exception e) {
 
             }
@@ -61,7 +61,7 @@ public class NettyClient extends Thread {
 
         if (channel == null) {
             try {
-                channel = bootstrap.connect(this.Host, this.Port).sync().channel();
+                channel = bootstrap.connect(this.Host, this.Port).channel();
             } catch (Exception e) {
 
             }
