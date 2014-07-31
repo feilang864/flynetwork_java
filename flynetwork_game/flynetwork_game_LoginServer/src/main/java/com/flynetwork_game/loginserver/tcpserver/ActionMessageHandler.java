@@ -9,6 +9,7 @@ import com.flynetwork_game.engine.buffer.BaseMessage;
 import com.flynetwork_game.engine.buffer.IActionMessage;
 import com.flynetwork_game.loginserver.tcpmessage.TipsMessage;
 import io.netty.buffer.ByteBufInputStream;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
  *
@@ -17,14 +18,8 @@ import io.netty.buffer.ByteBufInputStream;
 public class ActionMessageHandler implements IActionMessage {
 
     @Override
-    public BaseMessage action(int megID, ByteBufInputStream bbis) {
-        switch (TipsMessage.messageID) {
-            case 9009:
-                TipsMessage tipsMessage = new TipsMessage();
-                tipsMessage.readMessage(bbis);
-                return tipsMessage;
-        }
-        return null;
+    public ChannelInboundHandlerAdapter getInstAdapter() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

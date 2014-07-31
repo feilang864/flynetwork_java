@@ -91,7 +91,7 @@
     </category>  
     <category name="io.netty" additivity="false">  
         <!-- 日志输出级别，起码可以有5个级别，可以扩展自己的级别，邮件发送必须是ERROR级别不好用，所以最后自己扩展一个邮件发送级别 -->  
-        <level value="debug" />   
+        <level value="info" />   
         <appender-ref ref="console" />  
     </category> 
 </log4j:configuration>  
