@@ -43,13 +43,7 @@ public class NettyClient extends Thread {
     }
 
     public void run() {
-        if (channel == null) {
-            try {
-                channel = bootstrap.connect(this.Host, this.Port).channel();
-            } catch (Exception e) {
-
-            }
-        }
+        reConnect();
     }
 
     public void reConnect() {

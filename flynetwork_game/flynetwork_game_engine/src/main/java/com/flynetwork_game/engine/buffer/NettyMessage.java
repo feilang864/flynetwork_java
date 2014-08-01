@@ -5,7 +5,6 @@
  */
 package com.flynetwork_game.engine.buffer;
 
-import com.flynetwork_game.engine.buffer.IMessage;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
 import java.io.IOException;
@@ -17,47 +16,21 @@ import java.util.logging.Logger;
  *
  * @author Administrator
  */
-public class NettyMessage implements IMessage {
+public class NettyMessage {
 
     private int messageID;
+    private ByteBufInputStream megBuffers;
 
-    public NettyMessage(int messageID) {
+    public NettyMessage(int messageID, ByteBufInputStream megBuffers) {
         this.messageID = messageID;
+        this.megBuffers = megBuffers;
     }
 
-    public NettyMessage() {
-    }
-
-    /**
-     * 获取消息ID
-     *
-     * @return
-     */
     public int getMessageID() {
         return messageID;
     }
 
-    /**
-     * 重新tostring() 输出消息ID
-     *
-     * @return
-     */
-    @Override
-    public String toString() {
-        return "消息ID " + this.messageID;
+    public ByteBufInputStream getMegBuffers() {
+        return megBuffers;
     }
-
-    @Override
-    public void readMessage(ByteBufInputStream inStream) {        
-    }
-
-    @Override
-    public void writeMessage(ByteBufOutputStream outStream) {
-        try {
-            outStream.writeInt(messageID);
-        } catch (IOException ex) {
-            Logger.getLogger(NettyMessage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

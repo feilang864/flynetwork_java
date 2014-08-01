@@ -7,7 +7,7 @@ package com.flynetwork_game.logicserver.tcpclient;
 
 import com.flynetwork_game.engine.buffer.INettyHandler;
 import com.flynetwork_game.engine.buffer.NettyMessage;
-import com.flynetwork_game.logicserver.tcpserver.TcpServer;
+import com.flynetwork_game.logicserver.tcpmessage.TipsMessage;
 import io.netty.channel.ChannelHandlerContext;
 import org.apache.log4j.Logger;
 
@@ -23,13 +23,15 @@ public class LLTcpClientHandler implements INettyHandler {
     public void connected(ChannelHandlerContext ctx) {
         //TcpServer.getInstance();
         logger.debug("注册逻辑服务器成功");
+        TipsMessage tipsMessage = new TipsMessage("提示提示而已");
+        ctx.writeAndFlush(tipsMessage);
     }
     ReConnectScript rcs;
 
     @Override
     public void closeed(ChannelHandlerContext ctx) {
         rcs = new ReConnectScript();
-        logger.debug("与登录服务器断开链接");
+        logger.debug("与登录服务器链接失败");
     }
 
     @Override
