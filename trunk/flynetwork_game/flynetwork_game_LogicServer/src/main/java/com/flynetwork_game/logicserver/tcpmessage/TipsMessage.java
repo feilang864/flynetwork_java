@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.flynetwork_game.loginserver.tcpmessage;
+package com.flynetwork_game.logicserver.tcpmessage;
 
 import com.flynetwork_game.engine.buffer.BaseNettyMessage;
-import com.flynetwork_game.engine.buffer.NettyMessage;
 import com.flynetwork_game.engine.buffer.IMessage;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
