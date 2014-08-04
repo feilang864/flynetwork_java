@@ -5,7 +5,6 @@
  */
 package com.flynetwork_game.engine.netty;
 
-import com.flynetwork_game.engine.buffer.IActionMessage;
 import com.flynetwork_game.engine.buffer.NettyMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
@@ -13,6 +12,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
@@ -27,7 +27,7 @@ class NettyDecoder extends ByteToMessageDecoder {
 
     }
 
-    private final Logger logger = Logger.getLogger(NettyEncoder.class);
+    private final Logger logger = Logger.getLogger(NettyDecoder.class);
     private ByteBuf bytes;
     ByteOrder endianOrder = ByteOrder.LITTLE_ENDIAN;
 
@@ -49,8 +49,10 @@ class NettyDecoder extends ByteToMessageDecoder {
      * @param lenI 结束位置
      */
     void bytesAction(ByteBuf intputBuf, int startI, int lenI) {
-        bytes = Unpooled.buffer();
-        bytes.writeBytes(intputBuf, startI, lenI);
+        if (lenI - startI > 0) {
+            bytes = Unpooled.buffer();
+            bytes.writeBytes(intputBuf, startI, lenI);
+        }
     }
 
     private byte ZreoByteCount = 0;
@@ -62,6 +64,7 @@ class NettyDecoder extends ByteToMessageDecoder {
             ZreoByteCount = 0;
             //重新组装字节数组            
             ByteBuf buffercontent = bytesAction(inputBuf);
+            List<NettyMessage> megsList = new ArrayList<>();
             for (;;) {
                 //读取 消息长度（short）和消息ID（int） 需要 6 个字节
                 if (buffercontent.readableBytes() >= 6) {
@@ -73,7 +76,9 @@ class NettyDecoder extends ByteToMessageDecoder {
                         ByteBuf buf = buffercontent.readBytes(len);//读取可以字节数
                         buf.order(endianOrder);//设置 字节数组是小端序 c++, c#, U3D,都是小端序     ByteOrder.BIG_ENDIAN      ByteOrder.LITTLE_ENDIAN  
                         ByteBufInputStream bufInputStream = new ByteBufInputStream(buf);
-                        outputMessage.add(new NettyMessage(messageid, bufInputStream));
+
+                        megsList.add(new NettyMessage(messageid, bufInputStream));
+
                         //第二次重组
                         bytesAction(buffercontent, buffercontent.readerIndex(), buffercontent.readableBytes());
                         buffercontent = Unpooled.buffer();
@@ -88,11 +93,14 @@ class NettyDecoder extends ByteToMessageDecoder {
                 bytesAction(buffercontent, buffercontent.readerIndex(), buffercontent.readableBytes());
                 break;
             }
+            outputMessage.addAll(megsList);
         } else {
-            //todo 空包处理 考虑连续三次空包，断开链接
-            logger.error("decode 空包处理 连续三次空包");
             ZreoByteCount++;
-            chc.close();
+            if (ZreoByteCount >= 3) {
+                //todo 空包处理 考虑连续三次空包，断开链接
+                logger.error("decode 空包处理 连续三次空包");
+                chc.close();
+            }
         }
     }
 }

@@ -30,7 +30,6 @@ public class NettyServer extends Thread {
 
     private Logger logger = Logger.getLogger(NettyServer.class);
     private int port = 9527;
-    private ChannelInboundHandlerAdapter nettyHandler;
     private IActionMessage actionMessage;
 
     public NettyServer(IActionMessage action) {
@@ -67,7 +66,7 @@ public class NettyServer extends Thread {
                             //处理逻辑放到 NettyClientHandler 类中去
                             ch.pipeline().addLast("Decoder", new NettyDecoder())
                             .addLast("Encoder", new NettyEncoder())
-                            .addLast("ping", new IdleStateHandler(10, 10, 10, TimeUnit.SECONDS))
+                            //.addLast("ping", new IdleStateHandler(10, 10, 10, TimeUnit.SECONDS))
                             .addLast("handler", new NettyHandler(actionMessage.getNettyHandlerInstance()));
                         }
                     })
