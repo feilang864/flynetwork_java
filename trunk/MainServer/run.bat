@@ -1,1 +1,0 @@
-cmd /k "java -jar MainServer-1.0.jar"
