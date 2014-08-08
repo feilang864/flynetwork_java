@@ -5,7 +5,7 @@
  */
 package org.game.game_engine.main;
 
-import org.game.game_engine.threadtools.ThreadPool;
+import org.game.game_engine.threadtools.ThreadManager;
 
 /**
  *
@@ -14,14 +14,12 @@ import org.game.game_engine.threadtools.ThreadPool;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
-       
-        ThreadPool.setDebug(true);
-        ThreadPool.setWorker_num(2);
-        ThreadPool.getInstance().addTask(new PrintTask());      
-        ThreadPool.getInstance().addTask(new PrintTask());        
-        ThreadPool.getInstance().addTask(new PrintTask());
-        Thread.sleep(10000);
-        ThreadPool.getInstance().destroy();
+        ThreadManager.getInstance().addShortTimeTask(new PrintTask());
+        ThreadManager.getInstance().addShortTimeTask(new PrintTask());
+        ThreadManager.getInstance().addShortTimeTask(new PrintTask());
 
+        Thread.sleep(10000);
+
+        ThreadManager.getInstance().destroy();
     }
 }

@@ -6,13 +6,13 @@
 package org.game.game_engine.main;
 
 import java.util.concurrent.CountDownLatch;
-import org.game.game_engine.threadtools.Task;
+import org.game.game_engine.threadtools.BaseTask;
 
 /**
  *
  * @author Administrator
  */
-public class PrintTask extends Task {
+public class PrintTask extends BaseTask {
 
     int Count = 00;
 
