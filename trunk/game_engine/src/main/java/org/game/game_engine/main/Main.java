@@ -14,13 +14,13 @@ import org.game.game_engine.threadtools.ThreadPool;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
-        PrintTask pt = new PrintTask();
+       
         ThreadPool.setDebug(true);
         ThreadPool.setWorker_num(2);
         ThreadPool.getInstance().addTask(new PrintTask());      
         ThreadPool.getInstance().addTask(new PrintTask());        
         ThreadPool.getInstance().addTask(new PrintTask());
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         ThreadPool.getInstance().destroy();
 
     }

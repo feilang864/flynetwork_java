@@ -7,6 +7,8 @@ package org.game.game_engine.threadtools;
 
 /**
  *
+ * 线程管理器
+ *
  * @author Troy.Chen
  * @phone 13882122019
  *
