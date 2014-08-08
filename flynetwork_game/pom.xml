@@ -5,11 +5,7 @@
     <artifactId>flynetwork_game</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
-    <modules>
-        <module>flynetwork_game_engine</module>
-        <module>flynetwork_game_LogicServer</module>
-        <module>flynetwork_game_LoginServer</module>
-    </modules>
+    <modules></modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
