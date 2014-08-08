@@ -164,16 +164,16 @@ public final class ThreadPool {
                     isWaiting = false;
                     try {
                         r.setBeginExceuteTime(new Date());
-                        logger.debug("工人<" + index + "> 开始执行 任务<" + r.getTaskId() + ">");
-                        if (r.getBeginExceuteTime().getTime() - r.getSubmitTime().getTime() > 1000) {
-                            logger.error("等待时间更长. " + r.info() + ",工人<" + index + ">,等待时间:" + (r.getFinishTime().getTime() - r.getBeginExceuteTime().getTime()));
+                        logger.info("工人<" + index + "> 开始执行 任务<"+r.getTaskId()+">(“"+r.info()+"”)");
+                        if (r.getBeginExceuteTime().getTime() - r.getSubmitTime().getTime() > 1000L) {
+                            logger.error("任务<"+r.getTaskId()+">(“"+r.info()+"”)等待(“"+(r.getBeginExceuteTime().getTime() - r.getSubmitTime().getTime())+"”ms) 被工人<" + index + ">执行");
                         }
                         /* 执行任务 */
                         r.run();
                         r.setFinishTime(new Date());
-                        logger.debug("工人<" + index + "> 完成了任务 任务<" + r.getTaskId() + ">");
-                        if (r.getFinishTime().getTime() - r.getBeginExceuteTime().getTime() > 1000) {
-                            logger.error("执行了更长的时间. " + r.info() + ",工人<" + index + ">,执行时间:" + (r.getFinishTime().getTime() - r.getBeginExceuteTime().getTime()));
+                        logger.info("工人<" + index + "> 完成了任务 任务<"+r.getTaskId()+">(“"+r.info()+"”)");
+                        if (r.getFinishTime().getTime() - r.getBeginExceuteTime().getTime() > 1000L) {
+                            logger.error("任务<"+r.getTaskId()+">(“"+r.info()+"”)等待(“"+(r.getFinishTime().getTime() - r.getBeginExceuteTime().getTime())+"”ms) 被工人<" + index + ">完成");
                         }
                     } catch (Exception e) {
                         logger.error(e);
@@ -182,7 +182,7 @@ public final class ThreadPool {
                     r = null;
                 }
             }
-            logger.debug("线程结束, 工人<" + index + ">退出");
+            logger.error("线程结束, 工人<" + index + ">退出");
         }
     }
 
