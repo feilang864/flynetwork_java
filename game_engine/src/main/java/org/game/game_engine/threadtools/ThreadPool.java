@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
  *
  * @author Troy.Chen
  */
-public final class ThreadPool {
+final class ThreadPool {
 
     private static Logger logger = Logger.getLogger(ThreadPool.class);
     private static Logger taskLogger = Logger.getLogger(ThreadPool.class);
@@ -33,7 +33,7 @@ public final class ThreadPool {
     /* 系统是否处于繁忙 */
     public static boolean systemIsBusy = false;
     /* 任务列表 */
-    private final static List<Task> taskQueue = Collections.synchronizedList(new LinkedList<Task>());
+    private final static List<BaseTask> taskQueue = Collections.synchronizedList(new LinkedList<BaseTask>());
 
     /* 池中的所有线程 */
     private PoolWorker[] workers;
@@ -60,7 +60,7 @@ public final class ThreadPool {
      *
      * @param newTask
      */
-    public void addTask(Task newTask) {
+    public void addTask(BaseTask newTask) {
         synchronized (taskQueue) {
             newTask.setTaskId(++taskCounter);
             newTask.setSubmitTime(new Date());
@@ -76,7 +76,7 @@ public final class ThreadPool {
      *
      * @param taskes
      */
-    public void batchAddTask(Task[] taskes) {
+    public void batchAddTask(BaseTask[] taskes) {
         if (taskes == null || taskes.length == 0) {
             return;
         }
@@ -145,7 +145,7 @@ public final class ThreadPool {
          */
         public void run() {
             while (isRunning) {
-                Task r = null;
+                BaseTask r = null;
                 synchronized (taskQueue) {
                     while (taskQueue.isEmpty() && isRunning) {
                         try {
@@ -157,7 +157,7 @@ public final class ThreadPool {
                     }
                     /* 取出任务执行 */
                     if (isRunning) {
-                        r = (Task) taskQueue.remove(0);
+                        r = (BaseTask) taskQueue.remove(0);
                     }
                 }
                 if (r != null) {

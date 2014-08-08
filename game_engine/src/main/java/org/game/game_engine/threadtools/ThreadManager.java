@@ -33,4 +33,23 @@ public class ThreadManager {
         }
         return instanceManager;
     }
+
+    public ThreadManager() {
+        ThreadPool.setWorker_num(2);
+    }
+
+    public void addLongTimeTask(BaseTask task) {
+        ThreadPool.getInstance().addTask(task);
+    }
+
+    public void addShortTimeTask(BaseTask task) {
+        ThreadPool.getInstance().addTask(task);
+    }
+
+    /**
+     * 添加释放状态，提示程序退出，表示任务必须结算了
+     */
+    public void destroy() {
+        ThreadPool.getInstance().destroy();
+    }
 }

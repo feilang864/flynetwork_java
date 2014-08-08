@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author Troy.Chen
  */
-public abstract class Task implements Runnable {
+public abstract class BaseTask implements Runnable {
 
     /* 产生时间 */
     private Date generateTime = null;
@@ -25,7 +25,7 @@ public abstract class Task implements Runnable {
     /* 任务id */
     private long taskId;
 
-    public Task() {
+    public BaseTask() {
         this.generateTime = new Date();
     } 
 
