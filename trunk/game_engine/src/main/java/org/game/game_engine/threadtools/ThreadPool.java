@@ -19,9 +19,7 @@ import org.apache.log4j.Logger;
 final class ThreadPool {
 
     private static Logger logger = Logger.getLogger(ThreadPool.class);
-    private static Logger taskLogger = Logger.getLogger(ThreadPool.class);
 
-    private static boolean debug = taskLogger.isDebugEnabled();
     /* 单例 */
     private static ThreadPool instance;
     /* 系统繁忙的任务数 默认 10万 */
@@ -68,7 +66,7 @@ final class ThreadPool {
             /* 唤醒队列, 开始执行 */
             taskQueue.notify();
         }
-        logger.info("提交任务 任务<" + newTask.getTaskId() + ">: " + newTask.info());
+        logger.debug("提交任务 任务<" + newTask.getTaskId() + ">: " + newTask.info());
     }
 
     /**
@@ -104,6 +102,7 @@ final class ThreadPool {
 
     /**
      * 销毁线程池
+     *
      */
     public synchronized void destroy() {
         for (int i = 0; i < worker_num; i++) {
@@ -143,6 +142,7 @@ final class ThreadPool {
         /**
          * 循环执行任务 这也许是线程池的关键所在
          */
+        @Override
         public void run() {
             while (isRunning) {
                 BaseTask r = null;
@@ -164,16 +164,16 @@ final class ThreadPool {
                     isWaiting = false;
                     try {
                         r.setBeginExceuteTime(new Date());
-                        logger.info("工人<" + index + "> 开始执行 任务<"+r.getTaskId()+">(“"+r.info()+"”)");
+                        logger.debug("工人<" + index + "> 开始执行 任务<" + r.getTaskId() + ">(“" + r.info() + "”)");
                         if (r.getBeginExceuteTime().getTime() - r.getSubmitTime().getTime() > 1000L) {
-                            logger.error("任务<"+r.getTaskId()+">(“"+r.info()+"”)等待(“"+(r.getBeginExceuteTime().getTime() - r.getSubmitTime().getTime())+"”ms) 被工人<" + index + ">执行");
+                            logger.error("任务<" + r.getTaskId() + ">(“" + r.info() + "”)等待(“" + (r.getBeginExceuteTime().getTime() - r.getSubmitTime().getTime()) + "”ms) 被工人<" + index + ">执行");
                         }
                         /* 执行任务 */
                         r.run();
                         r.setFinishTime(new Date());
-                        logger.info("工人<" + index + "> 完成了任务 任务<"+r.getTaskId()+">(“"+r.info()+"”)");
+                        logger.debug("工人<" + index + "> 完成了任务 任务<" + r.getTaskId() + ">(“" + r.info() + "”)");
                         if (r.getFinishTime().getTime() - r.getBeginExceuteTime().getTime() > 1000L) {
-                            logger.error("任务<"+r.getTaskId()+">(“"+r.info()+"”)等待(“"+(r.getFinishTime().getTime() - r.getBeginExceuteTime().getTime())+"”ms) 被工人<" + index + ">完成");
+                            logger.error("任务<" + r.getTaskId() + ">(“" + r.info() + "”)耗时(“" + (r.getFinishTime().getTime() - r.getBeginExceuteTime().getTime()) + "”ms) 被工人<" + index + ">完成");
                         }
                     } catch (Exception e) {
                         logger.error(e);
@@ -184,14 +184,6 @@ final class ThreadPool {
             }
             logger.error("线程结束, 工人<" + index + ">退出");
         }
-    }
-
-    public static boolean isDebug() {
-        return debug;
-    }
-
-    public static void setDebug(boolean debug) {
-        ThreadPool.debug = debug;
     }
 
     public static int getWorker_num() {
