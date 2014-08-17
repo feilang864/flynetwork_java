@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.game.game_engine.threadtools;
+package org.game.game_engine.threadmodel;
 
 import java.util.Date;
 

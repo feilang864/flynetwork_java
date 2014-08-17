@@ -5,8 +5,7 @@
  */
 package org.game.game_engine.main;
 
-import java.util.concurrent.CountDownLatch;
-import org.game.game_engine.threadtools.BaseTask;
+import org.game.game_engine.threadmodel.BaseTask;
 
 /**
  *
@@ -22,10 +21,10 @@ public class PrintTask extends BaseTask {
 
             System.out.println("w s " + System.currentTimeMillis());
             try {
-                Thread.sleep(500);
+                Thread.sleep(50);
             } catch (InterruptedException ex) {
             }
-            if (++Count > 2) {
+            if (++Count > 20) {
                 return;
             }
         }
