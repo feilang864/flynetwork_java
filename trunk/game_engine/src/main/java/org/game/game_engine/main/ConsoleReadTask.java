@@ -6,18 +6,14 @@
 
 package org.game.game_engine.main;
 
-import org.game.game_engine.threadtools.BaseTask;
+import org.game.game_engine.struct.BaseTask;
+
 
 /**
  *
  * @author Administrator
  */
 public class ConsoleReadTask extends BaseTask{
-
-    @Override
-    protected boolean needExecuteImmediate() {
-        return false;
-    }
 
     @Override
     public String info() {
