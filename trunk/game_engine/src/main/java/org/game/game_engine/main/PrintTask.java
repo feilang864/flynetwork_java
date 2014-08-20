@@ -32,11 +32,6 @@ public class PrintTask extends BaseTask {
     }
 
     @Override
-    protected boolean needExecuteImmediate() {
-        return false;
-    }
-
-    @Override
     public String info() {
         return "打印日志测试任务";
     }
