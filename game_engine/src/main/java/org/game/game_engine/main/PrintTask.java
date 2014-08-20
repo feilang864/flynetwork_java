@@ -5,7 +5,7 @@
  */
 package org.game.game_engine.main;
 
-import org.game.game_engine.threadmodel.BaseTask;
+import org.game.game_engine.struct.BaseTask;
 
 /**
  *
@@ -19,12 +19,12 @@ public class PrintTask extends BaseTask {
     public void run() {
         while (true) {
 
-            System.out.println("w s " + System.currentTimeMillis());
+            //System.out.println("w s " + System.currentTimeMillis());
             try {
                 Thread.sleep(50);
             } catch (InterruptedException ex) {
             }
-            if (++Count > 20) {
+            if (++Count >= 2) {
                 return;
             }
         }

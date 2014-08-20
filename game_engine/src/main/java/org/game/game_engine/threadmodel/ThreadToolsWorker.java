@@ -5,6 +5,7 @@
  */
 package org.game.game_engine.threadmodel;
 
+import org.game.game_engine.struct.BaseTask;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;

@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.game.game_engine.threadtools;
+package org.game.game_engine.struct;
 
 import java.util.Date;
+import org.game.game_engine.struct.GameObject;
 
 /**
  * 所有任务接口 其他任务必须继承访类
  *
  * @author Troy.Chen
  */
-public abstract class BaseTask implements Runnable {
+public abstract class BaseTask extends GameObject implements Runnable {
 
     /* 产生时间 */
     private Date generateTime = null;
@@ -25,16 +26,17 @@ public abstract class BaseTask implements Runnable {
     /* 任务id */
     private long taskId;
 
+    static long taskIDL = 0;
+
     public BaseTask() {
         this.generateTime = new Date();
+        taskId = ++taskIDL;
     }
 
-    /**
-     * 是否需要立即执行
-     *
-     * @return
-     */
-    protected abstract boolean needExecuteImmediate();
+    @Override
+    public String toString() {
+        return super.toString() + "BaseTask{generateTime=" + generateTime + ", submitTime=" + submitTime + ", beginExceuteTime=" + beginExceuteTime + ", finishTime=" + finishTime + ", taskId=" + taskId + '}';
+    }
 
     /**
      * 任务信息
@@ -55,14 +57,27 @@ public abstract class BaseTask implements Runnable {
         this.beginExceuteTime = beginExceuteTime;
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getFinishTime() {
         return finishTime;
     }
 
+    /**
+     *
+     * @param finishTime
+     */
     public void setFinishTime(Date finishTime) {
         this.finishTime = finishTime;
     }
 
+    /**
+     * 获取提交任务的时间
+     *
+     * @return
+     */
     public Date getSubmitTime() {
         return submitTime;
     }

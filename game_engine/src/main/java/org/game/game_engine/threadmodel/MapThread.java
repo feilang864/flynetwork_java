@@ -5,7 +5,7 @@
  */
 package org.game.game_engine.threadmodel;
 
-import org.game.game_engine.stract.GameObject;
+import org.game.game_engine.struct.GameObject;
 
 /**
  * 地图线程
@@ -14,10 +14,20 @@ import org.game.game_engine.stract.GameObject;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public class MapThread extends GameObject {
-    
+public class MapThread extends GameObject implements Runnable {
+
     public MapThread() {
         setName("万恶之林地图线程");
     }
-    
+
+    @Override
+    public void run() {
+        
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
 }
