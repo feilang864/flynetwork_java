@@ -19,19 +19,19 @@ public class main {
         MapUtil.addMap(new TestMap(3L, "神木村副本1"));
         MapUtil.addMap(new TestMap(4L, "神木村副本2"));
         MapUtil.addMap(new TestMap(5L, "神木村副本3"));
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 10000; i++) {
           
                 MapUtil.registerMessage(1L, 0, new PrintTask());
-                MapUtil.registerMessage(2L, 0, new PrintTask());
-                MapUtil.registerMessage(3L, 0, new PrintTask());
-                MapUtil.registerMessage(4L, 0, new PrintTask());
-                MapUtil.registerMessage(5L, 0, new PrintTask());
-
-                MapUtil.registerMessage(1L, 1, new PrintTask());
-                MapUtil.registerMessage(2L, 1, new PrintTask());
-                MapUtil.registerMessage(3L, 1, new PrintTask());
-                MapUtil.registerMessage(4L, 1, new PrintTask());
-                MapUtil.registerMessage(5L, 1, new PrintTask());
+//                MapUtil.registerMessage(2L, 0, new PrintTask());
+//                MapUtil.registerMessage(3L, 0, new PrintTask());
+//                MapUtil.registerMessage(4L, 0, new PrintTask());
+//                MapUtil.registerMessage(5L, 0, new PrintTask());
+//
+//                MapUtil.registerMessage(1L, 1, new PrintTask());
+//                MapUtil.registerMessage(2L, 1, new PrintTask());
+//                MapUtil.registerMessage(3L, 1, new PrintTask());
+//                MapUtil.registerMessage(4L, 1, new PrintTask());
+//                MapUtil.registerMessage(5L, 1, new PrintTask());
          
             Thread.sleep(5);
         }

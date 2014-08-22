@@ -55,7 +55,9 @@ public class WorkerThread extends GameObject implements Runnable {
      */
     public static WorkerThread GetInstance(String workName) {
         WorkerThread wt = new WorkerThread(workName);
-        new Thread(wt).start();
+        Thread thread = new Thread(wt);
+        thread.setName(workName);
+        thread.start();
         return wt;
     }
 
