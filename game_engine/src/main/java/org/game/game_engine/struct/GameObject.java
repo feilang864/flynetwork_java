@@ -12,7 +12,16 @@ package org.game.game_engine.struct;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public class GameObject {
+public abstract class GameObject {
+
+    public GameObject() {
+        ID = 0L;
+    }
+
+    public GameObject(Long ID, String Name) {
+        this.ID = ID;
+        this.Name = Name;
+    }
 
     private Long ID;
     private String Name;
@@ -25,14 +34,10 @@ public class GameObject {
         this.Name = Name;
     }
 
-    public GameObject() {
-        ID = 0L;
-    }
-
     public void setID(Long ID) {
         this.ID = ID;
-    }    
-    
+    }
+
     public Long getID() {
         return ID;
     }
@@ -42,5 +47,4 @@ public class GameObject {
         return "GameObject{" + "ID=" + ID + ", Name=" + Name + '}';
     }
 
-   
 }

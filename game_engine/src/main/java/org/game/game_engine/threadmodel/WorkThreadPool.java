@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.game.game_engine.utils;
+package org.game.game_engine.threadmodel;
 
 import java.util.Collections;
 import java.util.Date;
@@ -12,6 +12,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.game.game_engine.struct.BaseTask;
 import org.game.game_engine.struct.GameObject;
+import org.game.game_engine.utils.ThreadUtil;
 
 /**
  * 地图线程
