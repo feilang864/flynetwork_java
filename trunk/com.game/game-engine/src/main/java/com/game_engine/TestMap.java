@@ -5,7 +5,7 @@
  */
 package com.game_engine;
 
-import com.game_engine.struct.GameMapBase;
+import com.game_engine.struct.map.GameMapBase;
 
 /**
  *

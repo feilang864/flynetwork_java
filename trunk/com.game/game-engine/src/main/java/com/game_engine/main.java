@@ -22,16 +22,22 @@ public class main {
         for (int i = 0; i < 10000; i++) {
           
                 MapUtil.registerMessage(1L, 0, new PrintTask());
-//                MapUtil.registerMessage(2L, 0, new PrintTask());
-//                MapUtil.registerMessage(3L, 0, new PrintTask());
-//                MapUtil.registerMessage(4L, 0, new PrintTask());
-//                MapUtil.registerMessage(5L, 0, new PrintTask());
-//
-//                MapUtil.registerMessage(1L, 1, new PrintTask());
-//                MapUtil.registerMessage(2L, 1, new PrintTask());
-//                MapUtil.registerMessage(3L, 1, new PrintTask());
-//                MapUtil.registerMessage(4L, 1, new PrintTask());
-//                MapUtil.registerMessage(5L, 1, new PrintTask());
+                MapUtil.registerMessage(2L, 0, new PrintTask());
+                MapUtil.registerMessage(3L, 0, new PrintTask());
+                MapUtil.registerMessage(4L, 0, new PrintTask());
+                MapUtil.registerMessage(5L, 0, new PrintTask());
+
+                MapUtil.registerMessage(1L, 1, new PrintTask());
+                MapUtil.registerMessage(2L, 1, new PrintTask());
+                MapUtil.registerMessage(3L, 1, new PrintTask());
+                MapUtil.registerMessage(4L, 1, new PrintTask());
+                MapUtil.registerMessage(5L, 1, new PrintTask());
+                
+                MapUtil.registerMessage(1L, 2, new PrintTask());
+                MapUtil.registerMessage(2L, 2, new PrintTask());
+                MapUtil.registerMessage(3L, 2, new PrintTask());
+                MapUtil.registerMessage(4L, 2, new PrintTask());
+                MapUtil.registerMessage(5L, 2, new PrintTask());
          
             Thread.sleep(5);
         }
