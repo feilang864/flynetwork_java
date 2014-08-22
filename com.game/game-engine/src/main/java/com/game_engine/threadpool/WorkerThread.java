@@ -40,10 +40,16 @@ public class WorkerThread extends GameObject implements Runnable {
         logger.debug("提交任务 任务<" + newTask.getID() + ">: " + newTask.getName());
     }
     //自定义线程ID
-    private long threadID = 1;
+    private static Long threadID = 1L;
 
     private WorkerThread(String threadName) {
         this.setName(threadName);
+        this.setID(++threadID);
+        synchronized (threadID) {
+            if (threadID + 1 >= Long.MAX_VALUE) {
+                threadID = 0L;
+            }
+        }
         taskQueue = new ArrayList<>();
     }
 
@@ -98,7 +104,7 @@ public class WorkerThread extends GameObject implements Runnable {
 
     @Override
     public String toString() {
-        return "{线程ID=" + threadID + '}';
+        return "{线程ID=" + this.getID() + '}';
     }
 
 }

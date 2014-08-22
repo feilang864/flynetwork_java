@@ -5,11 +5,12 @@
  */
 package com.game_engine.utils;
 
-import com.game_engine.struct.GameMapBase;
+import com.game_engine.struct.map.GameMapBase;
 import com.game_engine.struct.GameRunnable;
 import java.util.HashMap;
 
 /**
+ * 地图管理器
  *
  * @author Troy.Chen
  * @phone 13882122019

@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.game_engine.struct;
+package com.game_engine.struct.map;
 
+import com.game_engine.struct.GameObject;
+import com.game_engine.struct.GameRunnable;
 import com.game_engine.threadpool.WorkerThread;
+import com.game_engine.utils.ThreadUtil;
 import org.apache.log4j.Logger;
 
 /**
@@ -19,14 +22,17 @@ public abstract class GameMapBase extends GameObject {
 
     Logger logger = Logger.getLogger(GameMapBase.class);
 
-    WorkerThread workerThread = null;
-    WorkerThread workerThread1 = null;
+    long threadID[] = new long[6];
 
     public GameMapBase(Long ID, String mapName) {
         this.setID(ID);
         this.setName(mapName);
-        workerThread = WorkerThread.GetInstance(mapName + "_Main");
-        workerThread1 = WorkerThread.GetInstance(mapName + "_1线");
+        threadID[0] = ThreadUtil.getWorkerThread(mapName + "_Main");
+        threadID[1] = ThreadUtil.getWorkerThread(mapName + "_1线");
+        threadID[2] = ThreadUtil.getWorkerThread(mapName + "_2线");
+        threadID[3] = ThreadUtil.getWorkerThread(mapName + "_3线");
+        threadID[4] = ThreadUtil.getWorkerThread(mapName + "_4线");
+        threadID[5] = ThreadUtil.getWorkerThread(mapName + "_5线");
     }
 
     /**
@@ -36,30 +42,7 @@ public abstract class GameMapBase extends GameObject {
      * @param run
      */
     public void addMessage(int lineId, GameRunnable run) {
-
-        switch (lineId) {
-            case 0:
-                workerThread.addTask(run);
-                break;
-            case 1:
-                workerThread1.addTask(run);
-                break;
-            case 2:
-
-                break;
-            case 3:
-
-                break;
-            case 4:
-
-                break;
-            case 5:
-
-                break;
-            case 6:
-
-                break;
-        }
+        ThreadUtil.getWorkHashMaps().get(threadID[lineId]).addTask(run);
     }
 
     @Override

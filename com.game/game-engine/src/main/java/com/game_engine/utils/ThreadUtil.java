@@ -5,7 +5,11 @@
  */
 package com.game_engine.utils;
 
+import com.game_engine.threadpool.WorkerThread;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
+ * 线程利用器
  *
  * @author Troy.Chen
  * @phone 13882122019
@@ -15,6 +19,8 @@ public class ThreadUtil {
 
     private static boolean running = true;
 
+    static ConcurrentHashMap<Long, WorkerThread> workHashMaps = new ConcurrentHashMap<>();
+
     public static boolean isRunning() {
         return running;
     }
@@ -23,7 +29,14 @@ public class ThreadUtil {
         ThreadUtil.running = false;
     }
 
-    public static int getThread(Runnable runnable) {
-        return 0;
+    public static Long getWorkerThread(String workName) {
+        WorkerThread wk = WorkerThread.GetInstance(workName);
+        workHashMaps.put(wk.getID(), wk);
+        return wk.getID();
     }
+
+    public static ConcurrentHashMap<Long, WorkerThread> getWorkHashMaps() {
+        return workHashMaps;
+    }   
+    
 }
