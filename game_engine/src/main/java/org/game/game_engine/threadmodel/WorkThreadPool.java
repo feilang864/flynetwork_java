@@ -39,7 +39,7 @@ public class WorkThreadPool extends GameObject implements Runnable {
 
     public static WorkThreadPool GetInstance(String mapName) {
         WorkThreadPool workThreadPool = new WorkThreadPool();
-        workThreadPool.workerThread = new WorkerThread(workThreadPool);
+        workThreadPool.workerThread = new WorkerThread("后台任务线程", workThreadPool);
         workThreadPool.setName(mapName);
         return workThreadPool;
     }

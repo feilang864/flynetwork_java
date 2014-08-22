@@ -6,12 +6,17 @@
 package org.game.game_engine.main;
 
 import org.game.game_engine.struct.BaseTask;
+import org.game.game_engine.struct.GameRunnable;
 
 /**
  *
  * @author Administrator
  */
-public class PrintTask extends BaseTask {
+public class PrintTask extends GameRunnable {
+
+    public PrintTask() {
+        super("测试");
+    }
 
     int Count = 00;
 
@@ -24,16 +29,10 @@ public class PrintTask extends BaseTask {
                 Thread.sleep(50);
             } catch (InterruptedException ex) {
             }
-            if (++Count >= 2) {
+            if (++Count >= 1) {
                 return;
             }
         }
-
-    }
-
-    @Override
-    public String info() {
-        return "打印日志测试任务";
     }
 
 }

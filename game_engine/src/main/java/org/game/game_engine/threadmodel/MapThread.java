@@ -10,8 +10,10 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.game.game_engine.struct.BaseMap;
 import org.game.game_engine.struct.BaseTask;
 import org.game.game_engine.struct.GameObject;
+import org.game.game_engine.struct.GameRunnable;
 import org.game.game_engine.utils.ThreadUtil;
 
 /**
@@ -32,32 +34,32 @@ public class MapThread extends GameObject {
             name = name + "线程";
             this.setName(name);
             this.setID(id);
-            taskQueue = Collections.synchronizedList(new LinkedList<BaseTask>());
+            taskQueue = Collections.synchronizedList(new LinkedList<GameRunnable>());
             logger.info(name + " 启动");
         }
 
         /* 任务列表 */
-        private final List<BaseTask> taskQueue;
+        private final List<GameRunnable> taskQueue;
 
         /**
          * 增加新的任务 每增加一个新任务，都要唤醒任务队列
          *
          * @param newTask
          */
-        public void addTask(BaseTask newTask) {
+        public void addTask(GameRunnable newTask) {
             synchronized (taskQueue) {
-                newTask.setSubmitTime(new Date());
+
                 taskQueue.add(newTask);
                 /* 唤醒队列, 开始执行 */
                 taskQueue.notify();
             }
-            logger.debug("提交任务 任务<" + newTask.getTaskId() + ">: " + newTask.info());
+            logger.debug("提交任务 任务<" + newTask.getID() + ">: " + newTask.getName());
         }
 
         @Override
         public void run() {
             while (ThreadUtil.isRunning()) {
-                BaseTask r = null;
+                GameRunnable r = null;
                 synchronized (taskQueue) {
                     while (taskQueue.isEmpty() && ThreadUtil.isRunning()) {
                         try {
@@ -73,15 +75,13 @@ public class MapThread extends GameObject {
                     r = taskQueue.remove(0);
                     if (r != null) {
                         try {
-                            r.setBeginExceuteTime(new Date());
-                            logger.info("工人<“" + this.getName() + "”> 开始消息处理<" + r.getTaskId() + "(“" + r.info() + "”)> 等待(“" + (r.getBeginExceuteTime().getTime() - r.getSubmitTime().getTime()) + "”ms)");
                             /* 执行任务 */
                             r.run();
-                            r.setFinishTime(new Date());
-                            logger.info("工人<“" + this.getName() + "”> 完成消息处理<" + r.getTaskId() + "(“" + r.info() + "”)>" + " 耗时(“" + (r.getFinishTime().getTime() - r.getBeginExceuteTime().getTime()) + "”ms)");
+                            r.setFinishTime();
+                            logger.debug("工人<“" + this.getName() + "”> 完成了任务：" + r.toString());
                         } catch (Exception e) {
                             e.printStackTrace();
-                            logger.error("工人<“" + this.getName() + "”> 执行消息处理<" + r.getTaskId() + "(“" + r.info() + "”)> Error " + e);
+                            logger.error("工人<“" + this.getName() + "”> 执行任务<" + r.getID() + "(“" + r.getName() + "”)> 遇到错误: " + e);
                         }
                         r = null;
                     }
@@ -95,15 +95,14 @@ public class MapThread extends GameObject {
 
     WorkerThread workerThread = null;
     WorkerThread workerThread1 = null;
-    GameObject gameMap;
 
-    private MapThread(GameObject gamemap) {
-        gameMap = gamemap;
-        String mapName = "地图：" + gameMap.getName();
+    private MapThread(Long ID, String name) {
+        String mapName = "地图：" + name;
+        this.setID(ID);
         this.setName(mapName);
 
-        workerThread = new WorkerThread(new MapRunnable(1, mapName + "_Main"));
-        workerThread1 = new WorkerThread(new MapRunnable(2, mapName + "_1线"));
+        workerThread = new WorkerThread(mapName + "_Main", new MapRunnable(1, mapName + "_Main"));
+        workerThread1 = new WorkerThread(mapName + "_1线", new MapRunnable(2, mapName + "_1线"));
     }
 
     /**
@@ -112,7 +111,7 @@ public class MapThread extends GameObject {
      * @param lineId
      * @param newTask
      */
-    public void addTask(int lineId, BaseTask newTask) {
+    public void addMessage(int lineId, GameRunnable run) {
         MapRunnable mapRunnable = null;
         switch (lineId) {
             case 0:
@@ -137,11 +136,11 @@ public class MapThread extends GameObject {
 
                 break;
         }
-        mapRunnable.addTask(newTask);
+        mapRunnable.addTask(run);
     }
 
-    public static MapThread GetInstance(GameObject gameMap) {
-        return new MapThread(gameMap);
+    public static MapThread GetInstance(Long id, String name) {
+        return new MapThread(id, name);
     }
 
     @Override

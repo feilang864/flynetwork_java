@@ -22,29 +22,21 @@ public class Main {
         MapUtil.addMap(new QMap(3L, "神木村副本1"));
         MapUtil.addMap(new QMap(4L, "神木村副本2"));
         MapUtil.addMap(new QMap(5L, "神木村副本3"));
-//        MapThread mapThread = MapThread.GetInstance("万恶之林");
-//        MapThread mapThread1 = MapThread.GetInstance("神木村");
+        for (int i = 0; i < 100000; i++) {
+            for (int j = 0; j < 10; j++) {
+                MapUtil.registerMessage(1L, 0, new PrintTask());
+                MapUtil.registerMessage(2L, 0, new PrintTask());
+                MapUtil.registerMessage(3L, 0, new PrintTask());
+                MapUtil.registerMessage(4L, 0, new PrintTask());
+                MapUtil.registerMessage(5L, 0, new PrintTask());
 
-//        mapThread.addTask(0, new PrintTask());
-//        mapThread1.addTask(0, new PrintTask());
-//        mapThread.addTask(1, new PrintTask());
-//        mapThread1.addTask(1, new PrintTask());
-//        mapThread.addTask(0, new PrintTask());
-//        mapThread1.addTask(0, new PrintTask());
-//        mapThread.addTask(1, new PrintTask());
-//        mapThread1.addTask(1, new PrintTask());
-//        mapThread.addTask(0, new PrintTask());
-//        mapThread1.addTask(0, new PrintTask());
-//        mapThread.addTask(1, new PrintTask());
-//        mapThread1.addTask(1, new PrintTask());
-//        ThreadManager.getInstance().addTask(0, new PrintTask());
-//        ThreadManager.getInstance().addTask(0, new PrintTask());
-//        ThreadManager.getInstance().addTask(2, new PrintTask());
-//        ThreadManager.getInstance().addTask(0, new PrintTask());
-//        ThreadManager.getInstance().addTask(0, new PrintTask());
-//        ThreadManager.getInstance().addTask(1, new PrintTask());
-//
-//        Thread.sleep(1000 * 20);
-//        ThreadManager.getInstance().destroy();
+                MapUtil.registerMessage(1L, 1, new PrintTask());
+                MapUtil.registerMessage(2L, 1, new PrintTask());
+                MapUtil.registerMessage(3L, 1, new PrintTask());
+                MapUtil.registerMessage(4L, 1, new PrintTask());
+                MapUtil.registerMessage(5L, 1, new PrintTask());
+            }
+            Thread.sleep(10);
+        }
     }
 }
