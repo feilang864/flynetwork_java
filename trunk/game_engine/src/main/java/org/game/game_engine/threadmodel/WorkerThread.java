@@ -7,7 +7,9 @@ package org.game.game_engine.threadmodel;
 
 /**
  *
- * @author Administrator
+ * @author Troy.Chen
+ * @phone 13882122019
+ * @email 492794628@qq.com
  */
 public class WorkerThread extends Thread {
 
@@ -17,8 +19,9 @@ public class WorkerThread extends Thread {
 
     private int threadGroupID = 0;
 
-    public WorkerThread(Runnable target) {
+    public WorkerThread(String threadName, Runnable target) {
         this._Target = target;
+        this.setName(threadName);
         this.start();
     }
 
@@ -28,8 +31,7 @@ public class WorkerThread extends Thread {
      */
     public Runnable getTarget() {
         return _Target;
-    }  
-    
+    }
 
     @Override
     public void run() {
@@ -40,7 +42,5 @@ public class WorkerThread extends Thread {
     public String toString() {
         return "{threadID=" + threadID + ", threadGroupID=" + threadGroupID + '}';
     }
-
-    
 
 }

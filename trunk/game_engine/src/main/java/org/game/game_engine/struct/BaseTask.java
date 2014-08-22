@@ -6,12 +6,13 @@
 package org.game.game_engine.struct;
 
 import java.util.Date;
-import org.game.game_engine.struct.GameObject;
 
 /**
  * 所有任务接口 其他任务必须继承访类
  *
  * @author Troy.Chen
+ * @phone 13882122019
+ * @email 492794628@qq.com
  */
 public abstract class BaseTask extends GameObject implements Runnable {
 

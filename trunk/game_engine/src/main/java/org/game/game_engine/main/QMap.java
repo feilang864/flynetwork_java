@@ -5,13 +5,14 @@
  */
 package org.game.game_engine.main;
 
+import org.game.game_engine.struct.BaseMap;
 import org.game.game_engine.struct.GameObject;
 
 /**
  *
  * @author fly_troy
  */
-public class QMap extends GameObject {
+public class QMap extends BaseMap {
 
     public QMap(Long ID, String Name) {
         super(ID, Name);
