@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.game_engine.poolnetty;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -15,6 +16,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.apache.log4j.Logger;
 
+
 /**
  * 基于 netty 4.0.21 的 netty 服务
  *
@@ -22,14 +24,13 @@ import org.apache.log4j.Logger;
  * @phone 13882122019
  *
  */
-public class NettyServer extends Thread {
+public class NettyTcpServer extends Thread {
 
-    private Logger logger = Logger.getLogger(NettyServer.class);
+    private Logger logger = Logger.getLogger(NettyTcpServer.class);
     private int port = 9527;
-    private IActionMessage actionMessage;
 
-    public NettyServer(IActionMessage action) {
-        actionMessage = action;
+    public NettyTcpServer() {
+        
     }
 
     public int getPort() {
@@ -63,7 +64,7 @@ public class NettyServer extends Thread {
                             ch.pipeline().addLast("Decoder", new NettyDecoder())
                             .addLast("Encoder", new NettyEncoder())
                             //.addLast("ping", new IdleStateHandler(10, 10, 10, TimeUnit.SECONDS))
-                            .addLast("handler", new NettyHandler(actionMessage.getNettyHandlerInstance()));
+                            .addLast("handler", new NettyIOHandler());
                         }
                     })
                     //option()方法用于设置监听套接字
