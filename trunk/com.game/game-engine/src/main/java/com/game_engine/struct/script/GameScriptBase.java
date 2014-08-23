@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public class GameScriptBase extends GameObject {
+public abstract class GameScriptBase extends GameObject {
 
     Logger logger = Logger.getLogger(GameScriptBase.class);
 
@@ -25,5 +25,7 @@ public class GameScriptBase extends GameObject {
     public GameScriptBase(Long ID, String Name) {
         super(ID, Name);
     }
+
+    public abstract void action();
 
 }
