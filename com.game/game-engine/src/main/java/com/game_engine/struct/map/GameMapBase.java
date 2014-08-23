@@ -7,7 +7,7 @@ package com.game_engine.struct.map;
 
 import com.game_engine.struct.GameObject;
 import com.game_engine.struct.GameRunnable;
-import com.game_engine.threadpool.WorkerThread;
+import com.game_engine.poolthread.WorkerThread;
 import com.game_engine.utils.ThreadUtil;
 import org.apache.log4j.Logger;
 
@@ -33,6 +33,7 @@ public abstract class GameMapBase extends GameObject {
         threadID[3] = ThreadUtil.getWorkerThread(mapName + "_3线");
         threadID[4] = ThreadUtil.getWorkerThread(mapName + "_4线");
         threadID[5] = ThreadUtil.getWorkerThread(mapName + "_5线");
+        threadID[6] = ThreadUtil.getWorkerThread(mapName + "_6线");
     }
 
     /**

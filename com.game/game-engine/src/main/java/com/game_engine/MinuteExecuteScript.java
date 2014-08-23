@@ -3,21 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.game_engine.struct.timetask;
+package com.game_engine;
 
-import com.game_engine.struct.GameObject;
+import com.game_engine.struct.script.GameScriptBase;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import org.apache.log4j.Logger;
+import java.util.concurrent.TimeUnit;
 
 /**
+ * 分钟执行脚本任务
  *
  * @author Troy.Chen
- * @phone 13882122019
- * @email 492794628@qq.com
+ * @phone 1388212209
  */
-public class GameTimeTaskBase extends GameObject {
+public class MinuteExecuteScript extends GameScriptBase {
 
-    Logger logger = Logger.getLogger(GameTimeTaskBase.class);
     int minute = 1;
     ScheduledExecutorService scheduler;
 
@@ -25,7 +26,7 @@ public class GameTimeTaskBase extends GameObject {
      * 分钟执行脚本任务
      *
      */
-    public GameTimeTaskBase() {
+    public MinuteExecuteScript() {
 //        ///创建10个线程，创建的线程数量
 //        Executor executor = Executors.newFixedThreadPool(1);
 //        ///指定任务
@@ -41,8 +42,8 @@ public class GameTimeTaskBase extends GameObject {
         scheduler.shutdown();
     }
 
-    public GameTimeTaskBase(Long ID, String Name) {
-        super(ID, Name);
+    @Override
+    public void action() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }

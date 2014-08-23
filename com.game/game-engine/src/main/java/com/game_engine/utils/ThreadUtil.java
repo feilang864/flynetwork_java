@@ -5,7 +5,7 @@
  */
 package com.game_engine.utils;
 
-import com.game_engine.threadpool.WorkerThread;
+import com.game_engine.poolthread.WorkerThread;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
