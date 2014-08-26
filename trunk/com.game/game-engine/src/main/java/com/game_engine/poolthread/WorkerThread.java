@@ -25,6 +25,11 @@ public class WorkerThread extends GameObject implements Runnable {
 
     /* 任务列表 */
     private final List<GameRunnable> taskQueue;
+    boolean free = true;
+
+    public boolean isFree() {
+        return free;
+    }
 
     /**
      * 增加新的任务 每增加一个新任务，都要唤醒任务队列
@@ -41,6 +46,11 @@ public class WorkerThread extends GameObject implements Runnable {
     }
     //自定义线程ID
     private static Long threadID = 1L;
+    private Thread thread;
+
+    public void setThreadName(String threadName) {
+        thread.setName(threadName);
+    }
 
     private WorkerThread(String threadName) {
         this.setName(threadName);
@@ -61,9 +71,9 @@ public class WorkerThread extends GameObject implements Runnable {
      */
     public static WorkerThread GetInstance(String workName) {
         WorkerThread wt = new WorkerThread(workName);
-        Thread thread = new Thread(wt);
-        thread.setName(workName);
-        thread.start();
+        wt.thread = new Thread(wt);
+        wt.thread.setName(workName);
+        wt.thread.start();
         return wt;
     }
 
@@ -73,6 +83,7 @@ public class WorkerThread extends GameObject implements Runnable {
             GameRunnable r = null;
             synchronized (taskQueue) {
                 while (taskQueue.isEmpty() && ThreadUtil.isRunning()) {
+                    free = true;
                     try {
                         /* 任务队列为空，则等待有新任务加入从而被唤醒 */
                         taskQueue.wait();
@@ -86,18 +97,28 @@ public class WorkerThread extends GameObject implements Runnable {
                 r = taskQueue.remove(0);
             }
             if (r != null) {
+                free = false;
                 try {
                     /* 执行任务 */
+                    r.setSubmitTimeL();
                     r.run();
                     r.setFinishTimeL();
-                    logger.info("工人<“" + this.getName() + "”> 完成了任务：" + r.toString());
+                    long timeL = r.getFinishTimeL() - r.getSubmitTimeL();
+                    if (timeL <= 100L) {
+                        logger.info("工人<“" + this.getName() + "”> 完成了任务：" + r.toString() + " 耗时：" + (timeL));
+                    } else if (timeL <= 1000L) {
+                        logger.error("工人<“" + this.getName() + "”> 长时间执行 完成任务：" + r.toString() + " “考虑”任务脚本逻辑 耗时：" + (timeL));
+                    } else if (timeL > 2000L) {
+                        logger.error("工人<“" + this.getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “检查”任务脚本逻辑 耗时：" + (timeL));
+                    } else {
+                        logger.error("工人<“" + this.getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “考虑是否应该删除”任务脚本 耗时：" + (timeL));
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     logger.error("工人<“" + this.getName() + "”> 执行任务<" + r.getID() + "(“" + r.getName() + "”)> 遇到错误: " + e);
                 }
                 r = null;
             }
-
         }
         logger.error("线程结束, 工人<“" + this.getName() + "”>退出");
     }

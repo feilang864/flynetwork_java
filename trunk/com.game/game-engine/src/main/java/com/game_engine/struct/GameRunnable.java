@@ -22,14 +22,9 @@ public abstract class GameRunnable extends GameObject implements Runnable {
 
     long finishTimeL;
 
-    public GameRunnable() {
-        System.currentTimeMillis();
-    }
-
-    static Long runID = 0L;
-
-    public GameRunnable(String Name) {
-        super(++runID, Name);
+    private GameRunnable(Long ID, String Name) {
+        super(ID, Name);
+        submitTimeL = System.currentTimeMillis();
         synchronized (runID) {
             if (runID + 1 >= Long.MAX_VALUE) {
                 runID = 0L;
@@ -37,8 +32,18 @@ public abstract class GameRunnable extends GameObject implements Runnable {
         }
     }
 
+    static Long runID = 0L;
+
+    public GameRunnable(String Name) {
+        this(++runID, Name);
+    }
+
     public long getSubmitTimeL() {
         return submitTimeL;
+    }
+
+    public void setSubmitTimeL() {
+        this.submitTimeL = System.currentTimeMillis();
     }
 
     public long getFinishTimeL() {
