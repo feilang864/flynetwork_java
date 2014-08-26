@@ -22,7 +22,7 @@ public abstract class GameMapBase extends GameObject {
 
     Logger logger = Logger.getLogger(GameMapBase.class);
 
-    long threadID[] = new long[6];
+    long threadID[] = new long[7];
 
     public GameMapBase(Long ID, String mapName) {
         this.setID(ID);
