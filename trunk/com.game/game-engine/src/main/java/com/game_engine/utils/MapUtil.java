@@ -33,7 +33,11 @@ public class MapUtil {
      * @return
      */
     public static boolean registerMessage(Long mapid, int lineid, GameRunnable run) {
-        gameMaphHashMap.get(mapid).addMessage(lineid, run);
+        if (gameMaphHashMap.containsKey(mapid)) {
+            gameMaphHashMap.get(mapid).addMessage(lineid, run);
+        } else {
+            ThreadUtil.addBackTask(run);
+        }
         return true;
     }
 }
