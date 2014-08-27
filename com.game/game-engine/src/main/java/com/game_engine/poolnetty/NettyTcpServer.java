@@ -5,11 +5,14 @@
  */
 package com.game_engine.poolnetty;
 
+import com.game_engine.poolmessage.MessageBean;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -22,13 +25,13 @@ import org.apache.log4j.Logger;
  * @phone 13882122019
  *
  */
-public class NettyTcpServer extends Thread {
+public class NettyTcpServer {
 
     private Logger logger = Logger.getLogger(NettyTcpServer.class);
     private int port = 9527;
 
-    public NettyTcpServer() {
-
+    public NettyTcpServer(int port) {
+        this.port = port;
     }
 
     public int getPort() {
@@ -39,8 +42,7 @@ public class NettyTcpServer extends Thread {
         this.port = port;
     }
 
-    @Override
-    public void run() {
+    public void start() {
         //NioEventLoopGroup是一个多线程的I/O操作事件循环池(参数是线程数量)
         //bossGroup主要用于接受所有客户端对服务端的连接
         EventLoopGroup bossGroup = new NioEventLoopGroup(2);
@@ -61,7 +63,53 @@ public class NettyTcpServer extends Thread {
                             ch.pipeline().addLast("Decoder", new NettyDecoder())
                             .addLast("Encoder", new NettyEncoder())
                             //.addLast("ping", new IdleStateHandler(10, 10, 10, TimeUnit.SECONDS))
-                            .addLast("handler", new NettyServerIOHandler());
+                            .addLast("handler", new SimpleChannelInboundHandler<MessageBean>() {
+
+                                /**
+                                 * 收到消息
+                                 *
+                                 * @param ctx
+                                 * @param msg
+                                 * @throws Exception
+                                 */
+                                @Override
+                                protected void channelRead0(ChannelHandlerContext ctx, MessageBean msg) throws Exception {
+                                    logger.info("channelRead0");
+                                }
+
+                                /**
+                                 * 发现异常
+                                 *
+                                 * @param ctx
+                                 * @param cause
+                                 */
+                                @Override
+                                public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+                                    logger.info("exceptionCaught");
+                                }
+
+                                /**
+                                 * 断开连接后
+                                 *
+                                 * @param ctx
+                                 * @throws Exception
+                                 */
+                                @Override
+                                public void channelUnregistered(ChannelHandlerContext ctx) {
+
+                                }
+
+                                /**
+                                 * 创建链接后，链接被激活
+                                 *
+                                 * @param ctx
+                                 * @throws Exception
+                                 */
+                                @Override
+                                public void channelActive(ChannelHandlerContext ctx) {
+                                    logger.info("channelActive");
+                                }
+                            });
                         }
                     })
                     //option()方法用于设置监听套接字

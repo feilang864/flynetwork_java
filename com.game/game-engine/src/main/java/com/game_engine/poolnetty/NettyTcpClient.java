@@ -6,29 +6,35 @@
 package com.game_engine.poolnetty;
 
 import com.game_engine.poolmessage.MessageBean;
+import com.game_engine.struct.GameRunnable;
+import com.game_engine.utils.ThreadUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author fly_troy
  */
-public class NettyTcpClient{
-
-    private final Logger logger = Logger.getLogger(NettyClientIOHandler.class);
+public class NettyTcpClient {
+    
+    private final Logger logger = Logger.getLogger(NettyTcpClient.class);
+    
     private String Host = "127.0.0.1";
     private int Port = 9527;
     private Bootstrap bootstrap;
     private Channel channel;
     private boolean reConnect;
-
+    
     public NettyTcpClient() {
         EventLoopGroup group = new NioEventLoopGroup(2);
         bootstrap = new Bootstrap();
@@ -40,56 +46,117 @@ public class NettyTcpClient{
                         ChannelPipeline pipeline = ch.pipeline();
                         pipeline.addLast("Decoder", new NettyDecoder())
                         .addLast("Encoder", new NettyEncoder())
-                        .addLast("handler", new NettyClientIOHandler());
+                        .addLast("handler", new SimpleChannelInboundHandler<MessageBean>() {
+
+                            /**
+                             * 收到消息
+                             *
+                             * @param ctx
+                             * @param msg
+                             * @throws Exception
+                             */
+                            @Override
+                            protected void channelRead0(ChannelHandlerContext ctx, MessageBean msg) throws Exception {
+                                logger.info("channelRead0");
+                            }
+
+                            /**
+                             * 发现异常
+                             *
+                             * @param ctx
+                             * @param cause
+                             */
+                            @Override
+                            public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+                                logger.info("exceptionCaught");
+                            }
+
+                            /**
+                             * 断开连接后
+                             *
+                             * @param ctx
+                             * @throws Exception
+                             */
+                            @Override
+                            public void channelUnregistered(ChannelHandlerContext ctx) {
+                                ThreadUtil.addBackTask(new timerConnet("重新连接服务器"));
+                            }
+
+                            /**
+                             * 创建链接后，链接被激活
+                             *
+                             * @param ctx
+                             * @throws Exception
+                             */
+                            @Override
+                            public void channelActive(ChannelHandlerContext ctx) {
+                                logger.info("channelActive");
+                                MessageBean bean = new MessageBean(1000021);
+                                bean.setMsgbuffer(new byte[5]);
+                                sendMsg(bean);
+                            }
+                        });
                     }
                 });
         bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
     }
-
-    public void run() {
-        Connect();
-    }
-
+    
     public void Connect() {
-
+        
         if (channel != null) {
             channel.close();
             channel = null;
         }
-
+        
         if (channel == null) {
             try {
                 channel = bootstrap.connect(this.Host, this.Port).channel();
             } catch (Exception e) {
-
+                
             }
         }
     }
-
+    
+    class timerConnet extends GameRunnable {
+        
+        public timerConnet(String Name) {
+            super(Name);
+        }
+        
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+            }
+            Connect();
+        }
+    }
+    
     public boolean isReConnect() {
         return reConnect;
     }
-
+    
     public void setReConnect(boolean reConnect) {
         this.reConnect = reConnect;
     }
-
+    
     public String getHost() {
         return Host;
     }
-
+    
     public void setHost(String Host) {
         this.Host = Host;
     }
-
+    
     public int getPort() {
         return Port;
     }
-
+    
     public void setPort(int Port) {
         this.Port = Port;
     }
-
+    
     public void sendMsg(MessageBean msg) {
         if (channel != null && channel.isActive()) {
             channel.writeAndFlush(msg);
@@ -97,5 +164,5 @@ public class NettyTcpClient{
             logger.warn("消息发送失败,连接尚未建立!");
         }
     }
-
+    
 }
