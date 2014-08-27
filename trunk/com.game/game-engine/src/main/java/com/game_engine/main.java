@@ -20,17 +20,13 @@ import com.game_engine.utils.ThreadUtil;
 public class main {
 
     public static void main(String[] args) throws InterruptedException {
-        //ThreadUtil.init(5);
-        NettyTcpServer nettyTcpServer = new NettyTcpServer();
-//        nettyTcpServer.start();
+        ThreadUtil.init(5);
+       
         NettyTcpClient nettyTcpClient = new NettyTcpClient();
-        nettyTcpClient.start();
-        MessageBean bean = new MessageBean(1000021);
-        bean.setMsgbuffer(new byte[5]);
-        Thread.sleep(2000);
-        nettyTcpClient.sendMsg(bean);
-        Thread.sleep(2000);
-        System.exit(0);
+        nettyTcpClient.Connect();
+        
+        
+        //System.exit(0);
 //        MinaTcpServer minaTcpServer = new MinaTcpServer();
 //        if (!minaTcpServer.Start(9527)) {
 //            System.exit(0);
