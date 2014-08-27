@@ -58,7 +58,7 @@ public class NettyTcpClient {
                              */
                             @Override
                             protected void channelRead0(ChannelHandlerContext ctx, MessageBean msg) throws Exception {
-                                logger.info("channelRead0");
+                                logger.info("收到消息");
                             }
 
                             /**
@@ -69,7 +69,7 @@ public class NettyTcpClient {
                              */
                             @Override
                             public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-                                logger.info("exceptionCaught");
+                                logger.info("发送内部错误");
                             }
 
                             /**
@@ -80,7 +80,7 @@ public class NettyTcpClient {
                              */
                             @Override
                             public void channelUnregistered(ChannelHandlerContext ctx) {
-                                ThreadUtil.addBackTask(new timerConnet("重新连接服务器"));
+                                ThreadUtil.addBackTask(new timerConnet());
                             }
 
                             /**
@@ -91,7 +91,7 @@ public class NettyTcpClient {
                              */
                             @Override
                             public void channelActive(ChannelHandlerContext ctx) {
-                                logger.info("channelActive");
+                                logger.info("向登录服务器注册成功~！");
                                 MessageBean bean = new MessageBean(1000021);
                                 bean.setMsgbuffer(new byte[5]);
                                 sendMsg(bean);
@@ -120,13 +120,14 @@ public class NettyTcpClient {
 
     class timerConnet extends GameRunnable {
 
-        public timerConnet(String Name) {
-            super(Name);
+        public timerConnet() {
+            super("重新连接登录服务器");
         }
 
         @Override
         public void run() {
             try {
+                logger.info("与登录服务器连接断开 500ms 重新连接~！");
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
             }
