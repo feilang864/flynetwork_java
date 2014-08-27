@@ -1,12 +1,10 @@
 package com.game_engine.poolmina;
 
-import java.util.Arrays;
+import org.apache.log4j.Logger;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolEncoder;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 编码器
@@ -16,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class BufferMarshalEncoder implements ProtocolEncoder {
 
-    protected Logger log = LoggerFactory.getLogger(BufferMarshalEncoder.class);
+    protected Logger log = Logger.getLogger(BufferMarshalEncoder.class);
 
     private static final int MAX_SIZE = 1048576;
 
