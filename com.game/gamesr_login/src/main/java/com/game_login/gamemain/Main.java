@@ -5,6 +5,9 @@
  */
 package com.game_login.gamemain;
 
+import com.game_engine.utils.ThreadUtil;
+import com.game_login.gametcpserver.GameTcpServer;
+
 /**
  *
  * @author Administrator
@@ -12,6 +15,7 @@ package com.game_login.gamemain;
 public class Main {
 
     public static void main(String[] args) {
-
+        ThreadUtil.init(5);
+        new GameTcpServer();
     }
 }
