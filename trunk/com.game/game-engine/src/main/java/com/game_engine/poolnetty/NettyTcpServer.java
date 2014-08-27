@@ -13,7 +13,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -62,7 +61,7 @@ public class NettyTcpServer extends Thread {
                             ch.pipeline().addLast("Decoder", new NettyDecoder())
                             .addLast("Encoder", new NettyEncoder())
                             //.addLast("ping", new IdleStateHandler(10, 10, 10, TimeUnit.SECONDS))
-                            .addLast("handler", new NettyIOHandler());
+                            .addLast("handler", new NettyServerIOHandler());
                         }
                     })
                     //option()方法用于设置监听套接字
@@ -70,7 +69,8 @@ public class NettyTcpServer extends Thread {
                     //childOption()方法用于设置和客户端连接的套接字
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
             // Bind and start to accept incoming connections
-            ChannelFuture cf = bs.bind(this.port).sync();
+            //ChannelFuture cf = bs.bind(this.port).sync();
+            bs.bind(this.port).sync();
             logger.info("开启端口 " + this.port);
             // Wait until the session socket is closed.
             // shut down your session.

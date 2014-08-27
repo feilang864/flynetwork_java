@@ -12,12 +12,12 @@ import io.netty.buffer.ByteBufInputStream;
  *
  * @author Administrator
  */
-public class NettyMessage {
+public class NettyMessage1 {
 
     private int messageID;
     private ByteBufInputStream megBuffers;
 
-    public NettyMessage(int messageID, ByteBufInputStream megBuffers) {
+    public NettyMessage1(int messageID, ByteBufInputStream megBuffers) {
         this.messageID = messageID;
         this.megBuffers = megBuffers;
     }

@@ -5,6 +5,7 @@
  */
 package com.game_engine.poolnetty;
 
+import com.game_engine.poolmessage.MessageBean;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.Unpooled;
@@ -57,33 +58,32 @@ class NettyDecoder extends ByteToMessageDecoder {
     private byte ZreoByteCount = 0;
 
     @Override
-    protected void decode(ChannelHandlerContext chc, ByteBuf inputBuf, List<Object> outputMessage) throws Exception {
+    protected void decode(ChannelHandlerContext chc, ByteBuf inputBuf, List<Object> outputMessage) {
         logger.debug("decode " + inputBuf.readableBytes());
         if (inputBuf.readableBytes() > 0) {
             ZreoByteCount = 0;
             //重新组装字节数组            
             ByteBuf buffercontent = bytesAction(inputBuf);
-            List<NettyMessage> megsList = new ArrayList<>();
+            List<MessageBean> megsList = new ArrayList<>();
             for (;;) {
                 //读取 消息长度（short）和消息ID（int） 需要 6 个字节
                 if (buffercontent.readableBytes() >= 6) {
                     ///读取消息长度
                     int len = buffercontent.readShort();
                     if (buffercontent.readableBytes() >= len) {
-                        int messageid = buffercontent.readInt();///读取消息ID
-                        logger.info("收到消息 messageid " + messageid);
-                        ByteBuf buf = buffercontent.readBytes(len);//读取可以字节数
-                        buf.order(endianOrder);//设置 字节数组是小端序 c++, c#, U3D,都是小端序     ByteOrder.BIG_ENDIAN      ByteOrder.LITTLE_ENDIAN  
-                        ByteBufInputStream bufInputStream = new ByteBufInputStream(buf);
-
-                        megsList.add(new NettyMessage(messageid, bufInputStream));
-
+                        int messageid = buffercontent.readInt();///读取消息ID                       
+                        ByteBuf buf = buffercontent.readBytes(len - 4);//读取可用字节数;
+                        megsList.add(new MessageBean(messageid, buf.array()));
+                        logger.debug("收到消息 messageid " + messageid);
                         //第二次重组
-                        bytesAction(buffercontent, buffercontent.readerIndex(), buffercontent.readableBytes());
-                        buffercontent = Unpooled.buffer();
-                        buffercontent.writeBytes(bytes);
-                        continue;
-                        //todo 收包解包处理，
+                        if (buffercontent.readableBytes() > 0) {
+                            bytesAction(buffercontent, buffercontent.readerIndex(), buffercontent.readableBytes());
+                            buffercontent = Unpooled.buffer();
+                            buffercontent.writeBytes(bytes);
+                            continue;
+                        } else {
+                            break;
+                        }
                     }
                     ///重新设置读取进度
                     buffercontent.setIndex(buffercontent.readableBytes() - 2, inputBuf.readableBytes());
