@@ -20,13 +20,14 @@ import org.apache.log4j.Logger;
  *
  * @author fly_troy
  */
-public class NettyTcpClient extends Thread {
+public class NettyTcpClient{
 
     private final Logger logger = Logger.getLogger(NettyClientIOHandler.class);
     private String Host = "127.0.0.1";
     private int Port = 9527;
     private Bootstrap bootstrap;
     private Channel channel;
+    private boolean reConnect;
 
     public NettyTcpClient() {
         EventLoopGroup group = new NioEventLoopGroup(2);
@@ -46,10 +47,10 @@ public class NettyTcpClient extends Thread {
     }
 
     public void run() {
-        reConnect();
+        Connect();
     }
 
-    public void reConnect() {
+    public void Connect() {
 
         if (channel != null) {
             channel.close();
@@ -63,6 +64,14 @@ public class NettyTcpClient extends Thread {
 
             }
         }
+    }
+
+    public boolean isReConnect() {
+        return reConnect;
+    }
+
+    public void setReConnect(boolean reConnect) {
+        this.reConnect = reConnect;
     }
 
     public String getHost() {
@@ -81,9 +90,9 @@ public class NettyTcpClient extends Thread {
         this.Port = Port;
     }
 
-    public void sendMsg(MessageBean msg) throws Exception {
-        if (channel != null) {
-            channel.writeAndFlush(msg).sync();
+    public void sendMsg(MessageBean msg) {
+        if (channel != null && channel.isActive()) {
+            channel.writeAndFlush(msg);
         } else {
             logger.warn("消息发送失败,连接尚未建立!");
         }
