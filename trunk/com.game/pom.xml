@@ -8,6 +8,7 @@
     <modules>
         <module>game-engine</module>
         <module>gamesr_login</module>
+        <module>gamesr_logic</module>
     </modules>
     
     <properties>
