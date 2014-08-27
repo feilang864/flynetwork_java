@@ -7,7 +7,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>game-engine</module>
-        <module>game_login</module>
+        <module>gamesr_login</module>
     </modules>
     
     <properties>
