@@ -5,12 +5,6 @@
  */
 package com.game_engine;
 
-import com.game_engine.poolmessage.MessageBean;
-import com.game_engine.poolmina.MinaTcpClient;
-import com.game_engine.poolmina.MinaTcpServer;
-import com.game_engine.poolnetty.NettyTcpClient;
-import com.game_engine.poolnetty.NettyTcpServer;
-import com.game_engine.utils.MapUtil;
 import com.game_engine.utils.ThreadUtil;
 
 /**
@@ -22,8 +16,7 @@ public class main {
     public static void main(String[] args) throws InterruptedException {
         ThreadUtil.init(5);
        
-        NettyTcpClient nettyTcpClient = new NettyTcpClient();
-        nettyTcpClient.Connect();
+       
         
         
         //System.exit(0);

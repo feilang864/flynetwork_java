@@ -26,16 +26,17 @@ import org.apache.log4j.Logger;
  * @author fly_troy
  */
 public class NettyTcpClient {
-    
+
     private final Logger logger = Logger.getLogger(NettyTcpClient.class);
-    
+
     private String Host = "127.0.0.1";
     private int Port = 9527;
     private Bootstrap bootstrap;
     private Channel channel;
     private boolean reConnect;
-    
-    public NettyTcpClient() {
+
+    public NettyTcpClient(int port) {
+        this.Port = port;
         EventLoopGroup group = new NioEventLoopGroup(2);
         bootstrap = new Bootstrap();
         bootstrap.group(group).channel(NioSocketChannel.class);
@@ -100,29 +101,29 @@ public class NettyTcpClient {
                 });
         bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
     }
-    
+
     public void Connect() {
-        
+
         if (channel != null) {
             channel.close();
             channel = null;
         }
-        
+
         if (channel == null) {
             try {
                 channel = bootstrap.connect(this.Host, this.Port).channel();
             } catch (Exception e) {
-                
+
             }
         }
     }
-    
+
     class timerConnet extends GameRunnable {
-        
+
         public timerConnet(String Name) {
             super(Name);
         }
-        
+
         @Override
         public void run() {
             try {
@@ -132,31 +133,31 @@ public class NettyTcpClient {
             Connect();
         }
     }
-    
+
     public boolean isReConnect() {
         return reConnect;
     }
-    
+
     public void setReConnect(boolean reConnect) {
         this.reConnect = reConnect;
     }
-    
+
     public String getHost() {
         return Host;
     }
-    
+
     public void setHost(String Host) {
         this.Host = Host;
     }
-    
+
     public int getPort() {
         return Port;
     }
-    
+
     public void setPort(int Port) {
         this.Port = Port;
     }
-    
+
     public void sendMsg(MessageBean msg) {
         if (channel != null && channel.isActive()) {
             channel.writeAndFlush(msg);
@@ -164,5 +165,5 @@ public class NettyTcpClient {
             logger.warn("消息发送失败,连接尚未建立!");
         }
     }
-    
+
 }
