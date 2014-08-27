@@ -19,7 +19,7 @@ public class NettyClientIOHandler extends SimpleChannelInboundHandler<MessageBea
     private final Logger logger = Logger.getLogger(NettyServerIOHandler.class);
 
     public NettyClientIOHandler() {
-      
+
     }
 
     /**
@@ -39,10 +39,9 @@ public class NettyClientIOHandler extends SimpleChannelInboundHandler<MessageBea
      *
      * @param ctx
      * @param cause
-     * @throws Exception
      */
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         logger.info("exceptionCaught");
     }
 
@@ -53,8 +52,8 @@ public class NettyClientIOHandler extends SimpleChannelInboundHandler<MessageBea
      * @throws Exception
      */
     @Override
-    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-        logger.info("channelUnregistered");
+    public void channelUnregistered(ChannelHandlerContext ctx) {
+
     }
 
     /**
@@ -64,7 +63,7 @@ public class NettyClientIOHandler extends SimpleChannelInboundHandler<MessageBea
      * @throws Exception
      */
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) {
         logger.info("channelActive");
     }
 }

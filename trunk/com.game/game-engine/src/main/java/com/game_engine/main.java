@@ -18,11 +18,11 @@ import com.game_engine.utils.ThreadUtil;
  * @author Administrator
  */
 public class main {
-    
-    public static void main(String[] args) throws InterruptedException, Exception {
+
+    public static void main(String[] args) throws InterruptedException {
         //ThreadUtil.init(5);
         NettyTcpServer nettyTcpServer = new NettyTcpServer();
-        nettyTcpServer.start();
+//        nettyTcpServer.start();
         NettyTcpClient nettyTcpClient = new NettyTcpClient();
         nettyTcpClient.start();
         MessageBean bean = new MessageBean(1000021);
