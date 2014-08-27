@@ -7,7 +7,6 @@ package com.game_engine.struct.map;
 
 import com.game_engine.struct.GameObject;
 import com.game_engine.struct.GameRunnable;
-import com.game_engine.poolthread.WorkerThread;
 import com.game_engine.utils.ThreadUtil;
 import org.apache.log4j.Logger;
 
@@ -25,8 +24,7 @@ public abstract class GameMapBase extends GameObject {
     long threadID[] = new long[7];
 
     public GameMapBase(Long ID, String mapName) {
-        this.setID(ID);
-        this.setName(mapName);
+        super(ID, mapName);
         threadID[0] = ThreadUtil.getWorkerThread(mapName + "_Main");
         threadID[1] = ThreadUtil.getWorkerThread(mapName + "_1线");
         threadID[2] = ThreadUtil.getWorkerThread(mapName + "_2线");
@@ -43,7 +41,7 @@ public abstract class GameMapBase extends GameObject {
      * @param run
      */
     public void addMessage(int lineId, GameRunnable run) {
-        ThreadUtil.getWorkHashMaps().get(threadID[lineId]).addTask(run);
+        ThreadUtil.addTask(threadID[lineId], run);
     }
 
     @Override

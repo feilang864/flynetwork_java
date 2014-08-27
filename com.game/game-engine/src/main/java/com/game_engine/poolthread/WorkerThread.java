@@ -31,6 +31,10 @@ public class WorkerThread extends GameObject implements Runnable {
         return free;
     }
 
+    public void setFree(boolean free) {
+        this.free = free;
+    }
+
     /**
      * 增加新的任务 每增加一个新任务，都要唤醒任务队列
      *
@@ -53,8 +57,7 @@ public class WorkerThread extends GameObject implements Runnable {
     }
 
     private WorkerThread(String threadName) {
-        this.setName(threadName);
-        this.setID(++threadID);
+        super(++threadID, threadName);
         synchronized (threadID) {
             if (threadID + 1 >= Long.MAX_VALUE) {
                 threadID = 0L;
@@ -83,7 +86,6 @@ public class WorkerThread extends GameObject implements Runnable {
             GameRunnable r = null;
             synchronized (taskQueue) {
                 while (taskQueue.isEmpty() && ThreadUtil.isRunning()) {
-                    free = true;
                     try {
                         /* 任务队列为空，则等待有新任务加入从而被唤醒 */
                         taskQueue.wait();
@@ -97,7 +99,6 @@ public class WorkerThread extends GameObject implements Runnable {
                 r = taskQueue.remove(0);
             }
             if (r != null) {
-                free = false;
                 try {
                     /* 执行任务 */
                     r.setSubmitTimeL();

@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public class ThreadPoolUtil {
+class ThreadPoolUtil {
 
     static final Logger logger = Logger.getLogger(ThreadPoolUtil.class);
 
@@ -50,7 +50,7 @@ public class ThreadPoolUtil {
     public static void Init(int threadcountI) {
         logger.info("---------------初始化后台线程池-----开始----------------------");
         taskQueue = Collections.synchronizedList(new LinkedList<GameRunnable>());
-        for (int i = 0; i < threadcountI; i++) {
+        for (int i = 1; i <= threadcountI; i++) {
             Thread thread = new Thread(new BackThreadRunnable(new Long(i), "后台线程池"));
             thread.setName("后台线程池-" + i);
             thread.start();
