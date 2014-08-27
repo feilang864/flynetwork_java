@@ -43,14 +43,17 @@ public class MinaTcpServer {
      * 启动 socket 监听
      *
      * @param port 监听端口号
+     * @return 是否启动成功
      */
-    public void Start(int port) {
+    public boolean Start(int port) {
         try {
             ///绑定一个监听端口号
             _acceptor.bind(new InetSocketAddress(port));
             logger.info("开启端口为 " + port + " 监听服务");
+            return true;
         } catch (IOException ex) {
-            logger.error("开启端口为 " + port + " 监听服务 Exception:" + ex);
+            logger.error("监听端口 " + port + " 失败 Exception：" + ex);
+            return false;
         }
     }
 

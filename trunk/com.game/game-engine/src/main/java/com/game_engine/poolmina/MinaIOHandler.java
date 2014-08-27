@@ -18,8 +18,7 @@ public class MinaIOHandler implements IoHandler {
 
     protected Logger logger = Logger.getLogger(MinaIOHandler.class);
 
-    public MinaIOHandler() {
-        logger.info("创建业务处理类");
+    public MinaIOHandler() {        
 
     }
 

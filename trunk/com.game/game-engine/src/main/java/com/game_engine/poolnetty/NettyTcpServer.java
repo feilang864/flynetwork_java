@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.game_engine.poolnetty;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -14,8 +13,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
-
 
 /**
  * 基于 netty 4.0.21 的 netty 服务
@@ -30,7 +29,7 @@ public class NettyTcpServer extends Thread {
     private int port = 9527;
 
     public NettyTcpServer() {
-        
+
     }
 
     public int getPort() {
@@ -51,7 +50,6 @@ public class NettyTcpServer extends Thread {
         try {
             //ServerBootstrap是设置服务器的辅助类
             ServerBootstrap bs = new ServerBootstrap();
-
             //group方法是将上面创建的两个EventLoopGroup实例指定到ServerBootstrap实例中去
             bs.group(bossGroup, workerGroup)
                     //channel方法用来创建通道实例(NioServerSocketChannel类来实例化一个进来的连接)
@@ -73,16 +71,16 @@ public class NettyTcpServer extends Thread {
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
             // Bind and start to accept incoming connections
             ChannelFuture cf = bs.bind(this.port).sync();
-            logger.debug("开启端口 " + this.port);
+            logger.info("开启端口 " + this.port);
             // Wait until the session socket is closed.
             // shut down your session.
-            cf.channel().closeFuture().sync();
+//            cf.channel().closeFuture().sync();
         } catch (InterruptedException ex) {
-
+            logger.info("开启端口 " + this.port + " xxxxxxxxxxxxxxxx" + ex);
         } finally {
             //关闭相关资源
-            workerGroup.shutdownGracefully();
-            bossGroup.shutdownGracefully();
+//            workerGroup.shutdownGracefully();
+//            bossGroup.shutdownGracefully();
         }
     }
 }
