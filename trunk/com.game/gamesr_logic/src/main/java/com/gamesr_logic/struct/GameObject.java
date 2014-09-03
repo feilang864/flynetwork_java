@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 
-package com.gamesr_logic.manager;
+package com.gamesr_logic.struct;
 
 /**
  *
  * @author Administrator
  */
-public class NewClass {
+public class GameObject {
     
 }
