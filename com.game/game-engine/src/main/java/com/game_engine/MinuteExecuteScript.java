@@ -5,11 +5,7 @@
  */
 package com.game_engine;
 
-import com.game_engine.struct.script.GameScriptBase;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分钟执行脚本任务
@@ -17,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @author Troy.Chen
  * @phone 1388212209
  */
-public class MinuteExecuteScript extends GameScriptBase {
+public class MinuteExecuteScript {
 
     int minute = 1;
     ScheduledExecutorService scheduler;
@@ -42,7 +38,6 @@ public class MinuteExecuteScript extends GameScriptBase {
         scheduler.shutdown();
     }
 
-    @Override
     public void action() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
