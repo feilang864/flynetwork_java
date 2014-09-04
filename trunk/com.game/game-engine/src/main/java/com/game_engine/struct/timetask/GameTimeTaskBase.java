@@ -41,8 +41,8 @@ public class GameTimeTaskBase extends GameObject {
         scheduler.shutdown();
     }
 
-    public GameTimeTaskBase(Long ID, String Name) {
-        super(ID, Name);
+    public GameTimeTaskBase(String Name) {
+        super(Name);
     }
 
 }

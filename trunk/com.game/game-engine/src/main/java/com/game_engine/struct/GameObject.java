@@ -16,30 +16,35 @@ import java.util.Random;
  */
 public abstract class GameObject {
 
-    public GameObject() {
-        ID = 0L;
-    }
-
     private static final Object obj = new Object();
 
     private static long staticID = 0;
 
     private static int serverID = new Random().nextInt(1000000);
 
-    public static long getId() {
+    static long getId() {
         synchronized (obj) {
             staticID += 1;
             return (serverID & 0xFFFF) << 48 | (System.currentTimeMillis() / 1000L & 0xFFFFFFFF) << 16 | staticID & 0xFFFF;
         }
     }
 
-    public GameObject(Long ID, String Name) {
-        this.ID = ID;
+    public GameObject() {
+        this.ID = getId();
+    }
+
+    public GameObject(String Name) {
+        this();
         this.Name = Name;
     }
 
     private Long ID;
     private String Name;
+    private GameAttribute gameAttribute = new GameAttribute();
+
+    public GameAttribute getGameAttribute() {
+        return gameAttribute;
+    }
 
     public String getName() {
         return Name;

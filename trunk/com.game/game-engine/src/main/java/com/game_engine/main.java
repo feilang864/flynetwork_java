@@ -14,11 +14,11 @@ import com.game_engine.utils.ThreadUtil;
 public class main {
 
     public static void main(String[] args) throws InterruptedException {
-        ThreadUtil.init(5);
-       
-       
-        
-        
+        PrintTask p = new PrintTask();
+        p.getGameAttribute().setAttribute("xxx", 10);
+        p.getGameAttribute().setAttribute("xxx", 11);
+        System.out.println(p.getGameAttribute().getAttribute("xxx"));
+
         //System.exit(0);
 //        MinaTcpServer minaTcpServer = new MinaTcpServer();
 //        if (!minaTcpServer.Start(9527)) {

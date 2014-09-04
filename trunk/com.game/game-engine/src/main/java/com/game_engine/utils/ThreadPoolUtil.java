@@ -51,7 +51,7 @@ class ThreadPoolUtil {
         logger.info("---------------初始化后台线程池-----开始----------------------");
         taskQueue = Collections.synchronizedList(new LinkedList<GameRunnable>());
         for (int i = 1; i <= threadcountI; i++) {
-            Thread thread = new Thread(new BackThreadRunnable(new Long(i), "后台线程池"));
+            Thread thread = new Thread(new BackThreadRunnable("后台线程池"));
             thread.setName("后台线程池-" + i);
             thread.start();
         }
@@ -60,8 +60,8 @@ class ThreadPoolUtil {
 
     static class BackThreadRunnable extends GameObject implements Runnable {
 
-        public BackThreadRunnable(Long ID, String Name) {
-            super(ID, Name);
+        public BackThreadRunnable(String Name) {
+            super(Name);
         }
 
         /**
