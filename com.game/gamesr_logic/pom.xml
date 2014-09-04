@@ -32,7 +32,7 @@
                         <goals>
                             <goal>add-source</goal>
                         </goals>
-                        <configuration>
+                        <configuration>                            
                             <sources>
                                 <source>${basedir}/src/main/messages</source>
                                 <source>${basedir}/src/main/handlers</source>
@@ -46,12 +46,13 @@
                 <groupId>org.apache.maven.plugins</groupId>                
                 <artifactId>maven-jar-plugin</artifactId>                
                 <version>2.3.2</version>                
-                <configuration>                    
+                <configuration>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
                     <archive>                        
                         <manifest>                            
-                            <addClasspath>true</addClasspath>                            
-                            <classpathPrefix>lib/</classpathPrefix>                            
-                            <mainClass>com.gamesr_logic.gamemain.Main</mainClass>                        
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>                         
+                            <mainClass>com.gamesr_logic.main.Main</mainClass>                        
                         </manifest>                    
                     </archive>                
                 </configuration>            
@@ -65,14 +66,68 @@
                         <id>copy</id>                        
                         <phase>install</phase>                        
                         <goals>                            
-                            <goal>copy-dependencies</goal>                        
+                            <goal>copy-dependencies</goal>
                         </goals>                        
                         <configuration>                            
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>                        
                         </configuration>                    
                     </execution>                
                 </executions>            
-            </plugin>   
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources-handlers</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/handlers</outputDirectory>
+                            <resources>          
+                                <resource>
+                                    <directory>src/main/handlers</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>              
+                        </configuration>            
+                    </execution>
+                    <execution>
+                        <id>copy-resources-jscripts</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/jscripts</outputDirectory>
+                            <resources>          
+                                <resource>
+                                    <directory>src/main/jscripts</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>              
+                        </configuration>            
+                    </execution>
+                    <execution>
+                        <id>copy-resources-messages</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/messages</outputDirectory>
+                            <resources>          
+                                <resource>
+                                    <directory>src/main/messages</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>              
+                        </configuration>            
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <name>gamesr_logic</name>
