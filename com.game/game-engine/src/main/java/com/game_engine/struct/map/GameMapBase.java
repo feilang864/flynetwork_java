@@ -23,8 +23,8 @@ public abstract class GameMapBase extends GameObject {
 
     long threadID[] = new long[7];
 
-    public GameMapBase(Long ID, String mapName) {
-        super(ID, mapName);
+    public GameMapBase(String mapName) {
+        super(mapName);
         threadID[0] = ThreadUtil.getWorkerThread(mapName + "_Main");
         threadID[1] = ThreadUtil.getWorkerThread(mapName + "_1线");
         threadID[2] = ThreadUtil.getWorkerThread(mapName + "_2线");

@@ -13,8 +13,8 @@ import com.game_engine.struct.map.GameMapBase;
  */
 public class TestMap extends GameMapBase {
 
-    public TestMap(Long ID, String mapName) {
-        super(ID, mapName);
+    public TestMap(String mapName) {
+        super(mapName);
     }
 
 }

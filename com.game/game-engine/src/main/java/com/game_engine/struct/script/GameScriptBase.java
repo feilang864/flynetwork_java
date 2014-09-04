@@ -22,8 +22,8 @@ public abstract class GameScriptBase extends GameObject {
     public GameScriptBase() {
     }
 
-    public GameScriptBase(Long ID, String Name) {
-        super(ID, Name);
+    public GameScriptBase(String Name) {
+        super(Name);
     }
 
     public abstract void action();

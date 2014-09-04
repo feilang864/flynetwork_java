@@ -48,8 +48,6 @@ public class WorkerThread extends GameObject implements Runnable {
         }
         logger.debug("提交任务 任务<" + newTask.getID() + ">: " + newTask.getName());
     }
-    //自定义线程ID
-    private static Long threadID = 1L;
     private Thread thread;
 
     public void setThreadName(String threadName) {
@@ -57,12 +55,7 @@ public class WorkerThread extends GameObject implements Runnable {
     }
 
     private WorkerThread(String threadName) {
-        super(++threadID, threadName);
-        synchronized (threadID) {
-            if (threadID + 1 >= Long.MAX_VALUE) {
-                threadID = 0L;
-            }
-        }
+        super(threadName);
         taskQueue = new ArrayList<>();
     }
 
