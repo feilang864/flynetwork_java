@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 
-package com.gamesr_logic.struct;
+package com.gamesr_logic.struct.scene.map.drop;
 
 /**
  *
  * @author Administrator
  */
-public class GameObject {
+public class DropInfo {
     
 }
