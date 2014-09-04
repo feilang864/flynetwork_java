@@ -62,6 +62,7 @@ public class MyClassLoader extends ClassLoader {
 
         // 获取编译器实例
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+
         // 获取标准文件管理器实例
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
         try {
@@ -94,7 +95,7 @@ public class MyClassLoader extends ClassLoader {
              * 编译选项，在编译java文件时，编译程序会自动的去寻找java文件引用的其他的java源文件或者class。
              * -sourcepath选项就是定义java源文件的查找目录， -classpath选项就是定义class文件的查找目录。
              */
-            Iterable<String> options = Arrays.asList("-d", this.OutDir, "-sourcepath", this.SourceDir);
+            Iterable<String> options = Arrays.asList("-d", this.OutDir, "-sourcepath", this.SourceDir, "-encoding", "UTF-8");
             JavaCompiler.CompilationTask compilationTask = compiler.getTask(null, fileManager, null, options, null, compilationUnits);
 
             // 运行编译任务
