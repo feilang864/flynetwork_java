@@ -24,7 +24,7 @@ class ThreadPoolUtil {
     static final Logger logger = Logger.getLogger(ThreadPoolUtil.class);
 
     /* 任务列表 */
-    private static List<GameRunnable> taskQueue = null;
+    private final static List<GameRunnable> taskQueue = Collections.synchronizedList(new LinkedList<GameRunnable>());
 
     private ThreadPoolUtil() {
     }
@@ -48,8 +48,6 @@ class ThreadPoolUtil {
     }
 
     public static void Init(int threadcountI) {
-        logger.info("---------------初始化后台线程池-----开始----------------------");
-        taskQueue = Collections.synchronizedList(new LinkedList<GameRunnable>());
         for (int i = 1; i <= threadcountI; i++) {
             Thread thread = new Thread(new BackThreadRunnable("后台线程池"));
             thread.setName("后台线程池-" + i);
