@@ -2,9 +2,9 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="gamelog" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
-    <class>com.game_engine.data.log.BaseLog</class>
     <class>com.game_engine.data.log.CreatLog</class>
-    <class>com.game_engine.data.log.NewEntity</class>
+    <class>com.game_engine.data.log.Testlog</class>
+    <class>com.game_engine.data.log.BaseLog</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.1.198:3306/test?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
@@ -12,6 +12,7 @@
       <property name="javax.persistence.jdbc.password" value="fuckdaohaode1314"/>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
     </properties>
   </persistence-unit>
 </persistence>

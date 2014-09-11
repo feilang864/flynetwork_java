@@ -15,9 +15,14 @@ import javax.persistence.Persistence;
  */
 public class DataManager {
 
-    private final EntityManagerFactory logEntityManagerFactory = Persistence.createEntityManagerFactory("gamelog");
-    private static DataManager instance = new DataManager();
-    private CreatLogJpaController logdao = new CreatLogJpaController(logEntityManagerFactory);
+    private EntityManagerFactory logEntityManagerFactory;
+    private CreatLogJpaController logdao;
+    private static final DataManager instance = new DataManager();
+
+    public DataManager() {
+        logEntityManagerFactory = Persistence.createEntityManagerFactory("gamelog");
+        logdao = new CreatLogJpaController(logEntityManagerFactory);
+    }
 
     public static DataManager getInstance() {
 
