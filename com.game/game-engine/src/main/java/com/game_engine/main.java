@@ -17,9 +17,9 @@ public class main {
 
     public static void main(String[] args) throws InterruptedException {
         PrintTask p = new PrintTask();
-        p.getGameAttribute().setAttribute("xxx", 10);
-        p.getGameAttribute().setAttribute("xxx", 11);
-        System.out.println(p.getGameAttribute().getAttribute("xxx"));
+        p.getGameAttribute().setValue("xxx", 10);
+        p.getGameAttribute().setValue("xxx", 11);
+        System.out.println(p.getGameAttribute().getStringValue("xxx"));
 
         ServerThread threadPool = new ServerThread("Main");
         MapThread mapThread = new MapThread("金银岛1线——");

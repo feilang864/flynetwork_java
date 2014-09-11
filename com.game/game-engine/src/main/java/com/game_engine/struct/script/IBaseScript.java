@@ -7,17 +7,8 @@ package com.game_engine.struct.script;
 
 /**
  *
- * @author Administrator
+ * @author fly_troy
  */
-public class writertask extends ScriptTaskMillisecondTimer {
-
-    public writertask() {
-        super(5);
-    }
-
-    @Override
-    public void run() {
-        System.out.println("writertask");
-    }
+public interface IBaseScript {
 
 }
