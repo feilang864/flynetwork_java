@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 /**
- * Ò»ÇÐ¸¸Àà
+ * åŸºç±»
  *
  * @author Troy.Chen
  * @phone 13882122019
@@ -65,7 +65,7 @@ public abstract class GameObject implements Serializable{
 
     @Override
     public String toString() {
-        return "{" + "ID=" + ID + ", Name=¡°" + Name + "¡±}";
+        return "{" + "ID=" + ID + ", Name=ï¿½ï¿½" + Name + "ï¿½ï¿½}";
     }
 
 }

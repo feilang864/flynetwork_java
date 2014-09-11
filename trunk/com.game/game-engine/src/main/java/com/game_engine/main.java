@@ -5,6 +5,8 @@
  */
 package com.game_engine;
 
+import com.game_engine.data.log.CreatLog;
+import com.game_engine.data.manager.DataManager;
 import com.game_engine.struct.map.MapThread;
 import com.game_engine.utils.ServerThread;
 import com.game_engine.utils.ThreadUtil;
@@ -16,13 +18,15 @@ import com.game_engine.utils.ThreadUtil;
 public class main {
 
     public static void main(String[] args) throws InterruptedException {
-        PrintTask p = new PrintTask();
-        p.getGameAttribute().setValue("xxx", 10);
-        p.getGameAttribute().setValue("xxx", 11);
-        System.out.println(p.getGameAttribute().getStringValue("xxx"));
+        DataManager.getInstance().getLogdao().create(new CreatLog());
 
-        ServerThread threadPool = new ServerThread("Main");
-        MapThread mapThread = new MapThread("金银岛1线——");
+//        PrintTask p = new PrintTask();
+//        p.getGameAttribute().setValue("xxx", 10);
+//        p.getGameAttribute().setValue("xxx", 11);
+//        System.out.println(p.getGameAttribute().getStringValue("xxx"));
+
+//        ServerThread threadPool = new ServerThread("Main");
+//        MapThread mapThread = new MapThread("金银岛1线——");
         //System.exit(0);
         //        MinaTcpServer minaTcpServer = new MinaTcpServer();
         //        if (!minaTcpServer.Start(9527)) {
