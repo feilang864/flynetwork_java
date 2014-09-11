@@ -5,16 +5,17 @@
  */
 package com.game_engine.struct;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
- * ä¸€åˆ‡çˆ¶ç±»
+ * Ò»ÇĞ¸¸Àà
  *
  * @author Troy.Chen
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public abstract class GameObject {
+public abstract class GameObject implements Serializable{
 
     private static final Object obj = new Object();
 
@@ -64,7 +65,7 @@ public abstract class GameObject {
 
     @Override
     public String toString() {
-        return "{" + "ID=" + ID + ", Name=â€œ" + Name + "â€}";
+        return "{" + "ID=" + ID + ", Name=¡°" + Name + "¡±}";
     }
 
 }
