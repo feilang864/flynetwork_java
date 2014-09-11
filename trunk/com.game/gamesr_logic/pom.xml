@@ -13,7 +13,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>game-engine</artifactId>
             <version>${project.version}</version>
-        </dependency>
+        </dependency> 
     </dependencies>
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
