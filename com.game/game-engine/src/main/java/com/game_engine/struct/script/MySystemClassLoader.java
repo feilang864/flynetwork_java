@@ -21,11 +21,16 @@ import javax.tools.ToolProvider;
 import org.apache.log4j.Logger;
 
 /**
- * class loader 容器 extends ClassLoader
  *
- * @author Administrator
+ * @author fly_troy
  */
-public class MyClassLoader extends ClassLoader {
+public class MySystemClassLoader extends ClassLoader {
+
+    public MySystemClassLoader(String SourceDir, String OutDir, ClassLoader parent) {
+        super(parent);
+        this.SourceDir = SourceDir;
+        this.OutDir = OutDir;
+    }
 
     /**
      * 初始化一个 classloader 容器
@@ -33,7 +38,7 @@ public class MyClassLoader extends ClassLoader {
      * @param sourceDir 源文件夹
      * @param outDir 编译完成后输出目录，也是load class的目录
      */
-    public MyClassLoader(String sourceDir, String outDir) {
+    public MySystemClassLoader(String sourceDir, String outDir) {
         this.SourceDir = sourceDir;
         this.OutDir = outDir;
 
@@ -195,7 +200,7 @@ public class MyClassLoader extends ClassLoader {
         }
         byte[] classData = getClassData(name); //返回.class文件的内容
         if (classData != null) {
-            clazz = super.defineClass(name, classData, 0, classData.length);
+            clazz = defineClass(name, classData, 0, classData.length);
             if (clazz != null) {
                 logger.error("加载 " + name + ".class 成功");
                 super.resolveClass(clazz); // 分解类
