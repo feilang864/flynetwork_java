@@ -16,6 +16,11 @@ import com.gamesr_logic.struct.scene.map.spirit.player.GamePlayer;
 public class GoodsConsume extends GoodsBase {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3209649368923695985L;
+
+	/**
      * 使用道具
      *
      * @param player
