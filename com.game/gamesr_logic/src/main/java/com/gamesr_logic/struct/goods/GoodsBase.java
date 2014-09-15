@@ -14,7 +14,12 @@ import com.gamesr_logic.struct.scene.map.spirit.player.GamePlayer;
  */
 public abstract class GoodsBase extends GameObject {
 
-    public abstract void use(GamePlayer player);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4692142376378209984L;
+
+	public abstract void use(GamePlayer player);
 
     public abstract void unUse(GamePlayer player);
 }
