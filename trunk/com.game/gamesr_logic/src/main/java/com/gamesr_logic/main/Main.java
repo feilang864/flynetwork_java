@@ -20,6 +20,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         MyClassLoader loader = new MyClassLoader("E:\\work\\java\\com.game\\gamesr_logic\\src\\main\\jscripts", "E:\\work\\java\\com.game\\gamesr_logic\\src\\main\\output");
         MainScript ms = (MainScript) (loader.loadJava(null, "com.game.script.main.MainScript").newInstance());
+        
 //        ThreadUtil.init(5);
 //        new GameTcpClient();
 //        new GameTcpServer();
