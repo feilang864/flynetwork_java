@@ -17,7 +17,7 @@ public class Main {
 
     public static void main(String[] args) {
         ThreadUtil.init(5);
-        DataManager instance = DataManager.getInstance();
+        //DataManager instance = DataManager.getInstance();
         new GameTcpServer();
     }
 }
