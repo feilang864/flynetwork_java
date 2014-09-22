@@ -36,7 +36,7 @@ public class Main {
         });
 
 //        ThreadUtil.init(5);
-        new GameTcpClient();
-        new GameTcpServer();
+        GameTcpClient gameTcpClient = new GameTcpClient();
+        GameTcpServer gameTcpServer = new GameTcpServer();
     }
 }

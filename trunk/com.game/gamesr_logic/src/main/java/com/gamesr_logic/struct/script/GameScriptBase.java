@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class GameScriptBase extends GameObject {
 
-    Logger logger = Logger.getLogger(GameScriptBase.class);
+    private static final Logger logger = Logger.getLogger(GameScriptBase.class);
 
     public GameScriptBase() {
     }
@@ -27,5 +27,6 @@ public abstract class GameScriptBase extends GameObject {
     }
 
     public abstract void action();
+    private static final long serialVersionUID = -3139727905513324776L;
 
 }
