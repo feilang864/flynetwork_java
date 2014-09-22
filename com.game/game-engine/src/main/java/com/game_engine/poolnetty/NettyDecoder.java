@@ -27,7 +27,7 @@ class NettyDecoder extends ByteToMessageDecoder {
 
     }
 
-    private final Logger logger = Logger.getLogger(NettyDecoder.class);
+    private static final Logger logger = Logger.getLogger(NettyDecoder.class);
     private ByteBuf bytes;
     ByteOrder endianOrder = ByteOrder.LITTLE_ENDIAN;
 

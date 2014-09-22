@@ -27,7 +27,7 @@ import org.apache.log4j.Logger;
  */
 public class NettyTcpClient {
 
-    private final Logger logger = Logger.getLogger(NettyTcpClient.class);
+    private static final Logger logger = Logger.getLogger(NettyTcpClient.class);
 
     private String Host = "127.0.0.1";
     private int Port = 9527;

@@ -22,7 +22,7 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 public class MinaTcpServer {
 
     IoAcceptor _acceptor;
-    protected Logger logger = Logger.getLogger(MinaTcpServer.class);
+    private static final Logger logger = Logger.getLogger(MinaTcpServer.class);
 
     public MinaTcpServer() {
         //创建一个nio异步的socket监听服务器
