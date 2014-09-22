@@ -5,12 +5,8 @@
  */
 package com.game_engine;
 
-import com.game_engine.data.log.CreatLog;
-import com.game_engine.data.manager.DataManager;
 import com.game_engine.struct.map.GameMapBase;
-import com.game_engine.struct.map.MapThread;
 import com.game_engine.utils.MapUtil;
-import com.game_engine.utils.ServerThread;
 import com.game_engine.utils.ThreadUtil;
 
 /**
@@ -22,11 +18,16 @@ public class main {
     public static void main(String[] args) throws InterruptedException {
         
         ThreadUtil.init(5);
-        MapUtil.addMap(new GameMapBase("新手村") {        });
-        MapUtil.addMap(new GameMapBase("金银岛1线") {        });
-        MapUtil.addMap(new GameMapBase("金银岛2线") {        });
-        MapUtil.addMap(new GameMapBase("神木村") {        });
-        MapUtil.addMap(new GameMapBase("地球防御本部") {        });
+        MapUtil.addMap(new GameMapBase("新手村") {private static final long serialVersionUID = 1L;
+        });
+        MapUtil.addMap(new GameMapBase("金银岛1线") {private static final long serialVersionUID = 1L;
+        });
+        MapUtil.addMap(new GameMapBase("金银岛2线") {private static final long serialVersionUID = 1L;
+        });
+        MapUtil.addMap(new GameMapBase("神木村") {private static final long serialVersionUID = 1L;
+        });
+        MapUtil.addMap(new GameMapBase("地球防御本部") {private static final long serialVersionUID = 1L;
+        });
         
 
 //        PrintTask p = new PrintTask();
