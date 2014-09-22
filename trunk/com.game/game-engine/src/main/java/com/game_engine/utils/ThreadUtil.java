@@ -5,7 +5,6 @@
  */
 package com.game_engine.utils;
 
-import com.game_engine.poolthread.WorkerThread;
 import com.game_engine.struct.GameRunnable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,20 +21,17 @@ public class ThreadUtil {
 
     private static boolean running = true;
 
-    static ConcurrentHashMap<Long, WorkerThread> workHashMaps = new ConcurrentHashMap<>();
+    static ConcurrentHashMap<Long, ServerThread> workHashMaps = new ConcurrentHashMap<>();
     static final Logger logger = Logger.getLogger(ThreadUtil.class);
 
     public static boolean isRunning() {
         return running;
     }
 
-    public static void init(int threadcountI) {
-        logger.info("---------------初始化--线程池---开始----------------------");
-        for (int i = 1; i <= threadcountI; i++) {
-            WorkerThread wk = WorkerThread.GetInstance("thread-" + i);
-            workHashMaps.put(wk.getID(), wk);
-        }
-        logger.info("---------------初始化--线程池---结束-----线程数量" + threadcountI + "------------");
+    public static void init(int threadcountI) {        
+        getWorkerThread(GlobeThreadGroup, "全局同步线程执行器");
+        getWorkerThread(GlobeThreadGroup, "全局定时器管理执行器");
+        getWorkerThread(GlobeThreadGroup, "全局数据库管理器");
         ThreadPoolUtil.Init(threadcountI);
     }
 
@@ -44,9 +40,9 @@ public class ThreadUtil {
     }
 
     public synchronized static Long getBackWorkerThread(String workName) {
-        for (Map.Entry<Long, WorkerThread> entry : workHashMaps.entrySet()) {
+        for (Map.Entry<Long, ServerThread> entry : workHashMaps.entrySet()) {
             Long long1 = entry.getKey();
-            WorkerThread workerThread = entry.getValue();
+            ServerThread workerThread = entry.getValue();
             if (workerThread.isFree()) {
                 workerThread.setFree(false);
                 workerThread.setName(workName);
@@ -55,11 +51,13 @@ public class ThreadUtil {
         }
         return -1L;
     }
+    public static final ThreadGroup GlobeThreadGroup = new ThreadGroup("全局线程");
+    public static final ThreadGroup MapThreadGroup = new ThreadGroup("地图线程");
 
-    public synchronized static Long getWorkerThread(String workName) {
-        WorkerThread wk = WorkerThread.GetInstance(workName);
-        workHashMaps.put(wk.getID(), wk);
-        return wk.getID();
+    public synchronized static Long getWorkerThread(ThreadGroup threadGroup, String workName) {
+        ServerThread wk = new ServerThread(threadGroup, workName);
+        workHashMaps.put(wk.getId(), wk);
+        return wk.getId();
     }
 
     public static void addTask(long threadID, GameRunnable gameRunnable) {

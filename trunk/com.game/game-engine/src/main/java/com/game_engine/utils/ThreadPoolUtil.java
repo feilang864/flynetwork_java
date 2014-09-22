@@ -48,9 +48,9 @@ class ThreadPoolUtil {
     }
 
     public static void Init(int threadcountI) {
+        ThreadGroup threadGroup = new ThreadGroup(ThreadUtil.GlobeThreadGroup, "后台线程");
         for (int i = 1; i <= threadcountI; i++) {
-            Thread thread = new Thread(new BackThreadRunnable("后台线程池"));
-            thread.setName("后台线程池-" + i);
+            Thread thread = new Thread(threadGroup, new BackThreadRunnable("后台线程-" + i), "后台线程-" + i);
             thread.start();
         }
         logger.info("---------------初始化后台线程池-----结束-----线程数量" + threadcountI + "------------");
