@@ -13,7 +13,7 @@ import com.game_engine.poolnetty.NettyTcpServer;
  */
 public class GameTcpServer {
 
-    NettyTcpServer nettyTcpServer = new NettyTcpServer(9527);
+    NettyTcpServer nettyTcpServer = new NettyTcpServer(1, 9527);
 
     public GameTcpServer() {
         nettyTcpServer.start();
