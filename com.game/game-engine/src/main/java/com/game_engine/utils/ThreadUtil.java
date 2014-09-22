@@ -29,8 +29,7 @@ public class ThreadUtil {
     }
 
     public static void init(int threadcountI) {        
-        getWorkerThread(GlobeThreadGroup, "全局同步线程执行器");
-        getWorkerThread(GlobeThreadGroup, "全局定时器管理执行器");
+        getWorkerThread(GlobeThreadGroup, "全局同步线程执行器");        
         getWorkerThread(GlobeThreadGroup, "全局数据库管理器");
         ThreadPoolUtil.Init(threadcountI);
     }
