@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 public abstract class TimerEvent extends GameRunnable {
 
     private static final Logger logger = Logger.getLogger(TimerEvent.class);
+    private static final long serialVersionUID = -8331296295264699207L;
     int minute = 1;
     long endtime = 0;
     int execcount = 0;

@@ -26,6 +26,23 @@ public class MapUtil {
     }
 
     /**
+     * 增加消息
+     *
+     * @param mapid
+     * @param lineid
+     * @param run
+     * @return
+     */
+    public static boolean addMessage(Long mapid, int lineid, GameRunnable run) {
+        if (gameMaphHashMap.containsKey(mapid)) {
+            gameMaphHashMap.get(mapid).addMessage(lineid, run);
+        } else {
+            ThreadUtil.addBackTask(run);
+        }
+        return true;
+    }
+
+    /**
      *
      * @param mapid
      * @param lineid
