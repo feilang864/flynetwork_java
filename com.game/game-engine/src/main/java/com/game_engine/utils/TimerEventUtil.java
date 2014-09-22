@@ -12,6 +12,6 @@ package com.game_engine.utils;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public class TimeTaskUtil {
+public class TimerEventUtil {
 
 }
