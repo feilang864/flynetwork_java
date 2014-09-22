@@ -14,7 +14,7 @@ import org.apache.mina.filter.codec.ProtocolEncoderOutput;
  */
 public class BufferMarshalEncoder implements ProtocolEncoder {
 
-    protected Logger log = Logger.getLogger(BufferMarshalEncoder.class);
+    private static final Logger log = Logger.getLogger(BufferMarshalEncoder.class);
 
     private static final int MAX_SIZE = 1048576;
 

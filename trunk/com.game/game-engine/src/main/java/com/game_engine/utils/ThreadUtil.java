@@ -22,7 +22,7 @@ public class ThreadUtil {
     private static boolean running = true;
 
     static ConcurrentHashMap<Long, ServerThread> workHashMaps = new ConcurrentHashMap<>();
-    static final Logger logger = Logger.getLogger(ThreadUtil.class);
+    private static final Logger logger = Logger.getLogger(ThreadUtil.class);
 
     public static boolean isRunning() {
         return running;

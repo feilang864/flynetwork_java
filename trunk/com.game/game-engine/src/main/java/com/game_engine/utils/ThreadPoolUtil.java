@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
  */
 class ThreadPoolUtil {
 
-    static final Logger logger = Logger.getLogger(ThreadPoolUtil.class);
+    private static final Logger logger = Logger.getLogger(ThreadPoolUtil.class);
 
     /* 任务列表 */
     private final static List<GameRunnable> taskQueue = Collections.synchronizedList(new LinkedList<GameRunnable>());

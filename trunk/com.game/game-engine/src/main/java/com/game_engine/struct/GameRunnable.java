@@ -16,12 +16,16 @@ import org.apache.log4j.Logger;
  */
 public abstract class GameRunnable extends GameObject implements Runnable {
 
-    final Logger logger = Logger.getLogger(GameRunnable.class);
+    private static final Logger logger = Logger.getLogger(GameRunnable.class);
 
     long submitTimeL;
 
     long finishTimeL;
 
+    /**
+     *
+     * @param Name 任务名称
+     */
     public GameRunnable(String Name) {
         super(Name);
         submitTimeL = System.currentTimeMillis();

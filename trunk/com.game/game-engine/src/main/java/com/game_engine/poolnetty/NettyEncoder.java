@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
  */
 class NettyEncoder extends MessageToByteEncoder<MessageBean> {
 
-    private final Logger logger = Logger.getLogger(NettyEncoder.class);
+    private static final Logger logger = Logger.getLogger(NettyEncoder.class);
     ByteOrder endianOrder = ByteOrder.LITTLE_ENDIAN;
 
     public NettyEncoder() {

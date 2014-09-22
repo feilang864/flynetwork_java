@@ -16,7 +16,7 @@ import org.apache.mina.core.session.IoSession;
  */
 public class MinaIOHandler implements IoHandler {
 
-    protected Logger logger = Logger.getLogger(MinaIOHandler.class);
+    private static final Logger logger = Logger.getLogger(MinaIOHandler.class);
 
     public MinaIOHandler() {        
 

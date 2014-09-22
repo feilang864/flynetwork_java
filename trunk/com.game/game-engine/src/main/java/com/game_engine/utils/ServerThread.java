@@ -19,7 +19,7 @@ public class ServerThread extends Thread {
 
     
     
-    static final Logger logger = Logger.getLogger(ServerThread.class);
+    private static final Logger logger = Logger.getLogger(ServerThread.class);
 
     /* 任务列表 */
     private final List<GameRunnable> taskQueue = Collections.synchronizedList(new LinkedList<GameRunnable>());
