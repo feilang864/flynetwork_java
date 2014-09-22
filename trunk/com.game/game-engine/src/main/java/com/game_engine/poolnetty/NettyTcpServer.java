@@ -6,6 +6,8 @@
 package com.game_engine.poolnetty;
 
 import com.game_engine.poolmessage.MessageBean;
+import com.game_engine.utils.ServerThread;
+import com.game_engine.utils.ThreadUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
@@ -28,9 +30,10 @@ import org.apache.log4j.Logger;
 public class NettyTcpServer {
 
     private static final Logger logger = Logger.getLogger(NettyTcpServer.class);
+    private static final Long workerThread = ThreadUtil.getWorkerThread(ThreadUtil.GlobeThreadGroup, "全局消息分派执行器");
     private int port = 9527;
 
-    public NettyTcpServer(int port) {
+    public NettyTcpServer(int serverid, int port) {
         this.port = port;
     }
 

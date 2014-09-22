@@ -5,6 +5,8 @@
  */
 package com.game_engine.utils;
 
+import org.apache.log4j.Logger;
+
 /**
  * 计时任务利用器
  *
@@ -13,5 +15,12 @@ package com.game_engine.utils;
  * @email 492794628@qq.com
  */
 public class TimerEventUtil {
+
+    private static final Logger logger = Logger.getLogger(TimerEventUtil.class);
+
+    public TimerEventUtil() {
+        ThreadUtil.getWorkerThread(ThreadUtil.GlobeThreadGroup, "全局定时器管理执行器");
+
+    }
 
 }
