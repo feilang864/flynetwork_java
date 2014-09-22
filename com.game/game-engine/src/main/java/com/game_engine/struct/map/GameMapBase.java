@@ -19,19 +19,18 @@ import org.apache.log4j.Logger;
  */
 public abstract class GameMapBase extends GameObject {
 
-    Logger logger = Logger.getLogger(GameMapBase.class);
+    private static final long serialVersionUID = 1L;
+
+    private static final Logger logger = Logger.getLogger(GameMapBase.class);
 
     long threadID[] = new long[7];
 
     public GameMapBase(String mapName) {
         super(mapName);
-        threadID[0] = ThreadUtil.getWorkerThread(mapName + "_Main");
-        threadID[1] = ThreadUtil.getWorkerThread(mapName + "_1线");
-        threadID[2] = ThreadUtil.getWorkerThread(mapName + "_2线");
-        threadID[3] = ThreadUtil.getWorkerThread(mapName + "_3线");
-        threadID[4] = ThreadUtil.getWorkerThread(mapName + "_4线");
-        threadID[5] = ThreadUtil.getWorkerThread(mapName + "_5线");
-        threadID[6] = ThreadUtil.getWorkerThread(mapName + "_6线");
+        ThreadGroup tempThreadGroup = new ThreadGroup(ThreadUtil.MapThreadGroup, mapName);
+        threadID[0] = ThreadUtil.getWorkerThread(tempThreadGroup, "Main");
+        threadID[1] = ThreadUtil.getWorkerThread(tempThreadGroup, "怪物AI");
+        threadID[2] = ThreadUtil.getWorkerThread(tempThreadGroup, "移动同步");
     }
 
     /**

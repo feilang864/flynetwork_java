@@ -5,7 +5,6 @@
  */
 package com.game_engine.utils;
 
-import com.game_engine.poolthread.WorkerThread;
 import com.game_engine.struct.GameRunnable;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -18,16 +17,21 @@ import org.apache.log4j.Logger;
  */
 public class ServerThread extends Thread {
 
+    
+    
     static final Logger logger = Logger.getLogger(ServerThread.class);
 
     /* 任务列表 */
     private final List<GameRunnable> taskQueue = Collections.synchronizedList(new LinkedList<GameRunnable>());
 
+    
     boolean free = true;
 
+    private long id;
+    
     public ServerThread(String name) {
         super(name);
-        start();
+        start();        
     }
 
     public ServerThread(ThreadGroup group, String name) {
@@ -41,8 +45,8 @@ public class ServerThread extends Thread {
 
     public void setFree(boolean free) {
         this.free = free;
-    }
-
+    }    
+    
     /**
      * 增加新的任务 每增加一个新任务，都要唤醒任务队列
      *
