@@ -65,7 +65,6 @@ public class NettyTcpClient {
                              */
                             @Override
                             protected void channelRead0(ChannelHandlerContext ctx, MessageBean msg) throws Exception {
-                                logger.info("收到消息");
                                 MessagePool.getInstance().registerMessage(msg);
                             }
 
@@ -117,9 +116,8 @@ public class NettyTcpClient {
                              */
                             @Override
                             public void channelActive(ChannelHandlerContext ctx) {
-                                logger.error("连接激活");
                                 logger.info("向登录服务器注册成功~！");
-                                MessageBean bean = new MessageBean(ctx, 1000021);
+                                MessageBean bean = new MessageBean(ctx, 100201);
                                 bean.setMsgbuffer(new byte[5]);
                                 sendMsg(bean);
                             }

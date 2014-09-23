@@ -78,7 +78,6 @@ public class NettyTcpServer {
                                  */
                                 @Override
                                 protected void channelRead0(ChannelHandlerContext ctx, MessageBean msg) throws Exception {
-                                    logger.info("收到消息");
                                     MessagePool.getInstance().registerMessage(msg);
                                 }
 
@@ -112,7 +111,7 @@ public class NettyTcpServer {
                                  */
                                 @Override
                                 public void channelActive(ChannelHandlerContext ctx) {
-                                    logger.info("新建连接成功");
+                                    logger.info("新建连接成功 ");
                                 }
                             });
                         }
