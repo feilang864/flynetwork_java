@@ -8,6 +8,7 @@ package com.game_engine.utils;
 import com.game_engine.struct.map.GameMapBase;
 import com.game_engine.struct.GameRunnable;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 地图管理器
@@ -35,8 +36,10 @@ public class MapUtil {
     public static boolean addMessage(long mapid, long lineid, GameRunnable run) {
         if (gameMaphHashMap.containsKey(mapid)) {
             gameMaphHashMap.get(mapid).addMessage(lineid, run);
-        } else {
-            ThreadUtil.addBackTask(run);
+        } else if (mapid == 0) {
+            for (Map.Entry<Long, GameMapBase> entry : gameMaphHashMap.entrySet()) {
+                entry.getValue().addMessage(0, run);
+            }
         }
         return true;
     }

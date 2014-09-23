@@ -86,7 +86,7 @@ public abstract class GameMapBase extends GameObject {
 
     public GameMapBase(int ID, int lineCount, String mapName) {
         super(ID, mapName);
-        ThreadGroup mapGroup = new ThreadGroup(MapThread.getMAP_THREAD_GROUP(), mapName);        
+        ThreadGroup mapGroup = new ThreadGroup(MapThread.getMAP_THREAD_GROUP(), mapName);
         for (int i = 1; i <= lineCount; i++) {
             GameMapLine gameMapLine = new GameMapLine(mapGroup, i, mapName + " " + i + "线");
             gameMap.put(gameMapLine.getID(), gameMapLine);
@@ -96,11 +96,17 @@ public abstract class GameMapBase extends GameObject {
     /**
      * 增加新的任务 每增加一个新任务，都要唤醒任务队列
      *
-     * @param lineid
-     * @param run
+     * @param lineid 分线ID
+     * @param run 需要执行的任务
      */
     public void addMessage(long lineid, GameRunnable run) {
-        gameMap.get(lineid).addMessage(run);
+        if (lineid > 0) {
+            gameMap.get(lineid).addMessage(run);
+        } else if (lineid == 0) {
+            for (Map.Entry<Long, GameMapLine> entry : gameMap.entrySet()) {
+                entry.getValue().addMessage(run);
+            }
+        }
     }
 
     @Override

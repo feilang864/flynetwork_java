@@ -30,7 +30,6 @@ import org.apache.log4j.Logger;
 public class NettyTcpServer {
 
     private static final Logger logger = Logger.getLogger(NettyTcpServer.class);
-    private static final Long workerThread = ThreadUtil.getWorkerThread(ThreadUtil.GlobeThreadGroup, "NettyTcpServer消息全局执行器");
     private int port = 9527;
 
     public NettyTcpServer(int serverid, int port) {
