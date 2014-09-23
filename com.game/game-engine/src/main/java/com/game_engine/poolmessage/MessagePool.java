@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -43,7 +42,7 @@ public class MessagePool {
         messageThread.addTask(messageBean);
     }
 
-    public void registerHandlerMessage(long messageId, Class<HandlerAction> handel, Class<com.google.protobuf.Message> message) {
+    public void registerHandlerMessage(long messageId, Class<? extends HandlerAction> handel, Class<? extends com.google.protobuf.Message> message) {
         MessageHandler messageHandler = new MessageHandler(messageId, handel, message);
         handlerMap.put(messageId, messageHandler);
     }
@@ -51,10 +50,10 @@ public class MessagePool {
     class MessageHandler {
 
         long messageId;
-        Class<HandlerAction> handel;
-        Class<com.google.protobuf.Message> message;
+        Class<? extends HandlerAction> handel;
+        Class<? extends com.google.protobuf.Message> message;
 
-        public MessageHandler(long messageId, Class<HandlerAction> handel, Class<com.google.protobuf.Message> message) {
+        public MessageHandler(long messageId, Class<? extends HandlerAction> handel, Class<? extends com.google.protobuf.Message> message) {
             this.messageId = messageId;
             this.handel = handel;
             this.message = message;
@@ -68,19 +67,19 @@ public class MessagePool {
             this.messageId = messageId;
         }
 
-        public Class<HandlerAction> getHandel() {
+        public Class<? extends HandlerAction> getHandel() {
             return handel;
         }
 
-        public void setHandel(Class<HandlerAction> handel) {
+        public void setHandel(Class<? extends HandlerAction> handel) {
             this.handel = handel;
         }
 
-        public Class<com.google.protobuf.Message> getMessage() {
+        public Class<? extends com.google.protobuf.Message> getMessage() {
             return message;
         }
 
-        public void setMessage(Class<com.google.protobuf.Message> message) {
+        public void setMessage(Class<? extends com.google.protobuf.Message> message) {
             this.message = message;
         }
 
@@ -125,14 +124,18 @@ public class MessagePool {
                 }
 
                 if (msg != null) {
+                    MessageHandler get = handlerMap.get(msg.getMsgid());
                     try {
-                        MessageHandler get = handlerMap.get(msg.getMsgid());
                         HandlerAction newInstance = get.getHandel().newInstance();
                         Message parseFrom = get.getMessage().newInstance().getParserForType().parseFrom(msg.getMsgbuffer());
                         newInstance.setTCPHandler(parseFrom, get);
                         newInstance.action();
                     } catch (InstantiationException | IllegalAccessException | InvalidProtocolBufferException e) {
-                        logger.error("工人<“" + Thread.currentThread().getName() + "”> 执行任务<" + msg.getMsgid() + "(“" + "" + "”)> 遇到错误: " + e);
+                        logger.error("工人<“" + Thread.currentThread().getName() + "”> 执行任务<" + msg.getMsgid() + "(“" + get.getMessage().getName() + "”)> 遇到错误: " + e);
+                        e.printStackTrace();
+                    } catch (Exception ex) {
+                        logger.error("工人<“" + Thread.currentThread().getName() + "”> 执行任务<" + msg.getMsgid() + "(“" + get.getMessage().getName() + "”)> 遇到错误: " + ex);
+                        ex.printStackTrace();
                     }
                     msg = null;
                 }
