@@ -3,11 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package GLHandler;
+
+import com.game_engine.poolmessage.HandlerAction;
 
 /**
  *
- * @author Administrator
+ * @author fly_ty
  */
-public class NewClass {
-    
+public class GLMessageHandler extends HandlerAction {
+
+    @Override
+    public void action() {
+
+    }
+
 }
