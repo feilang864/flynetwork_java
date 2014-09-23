@@ -6,6 +6,7 @@
 package com.game_engine.poolnetty;
 
 import com.game_engine.poolmessage.MessageBean;
+import com.game_engine.poolmessage.MessagePool;
 import com.game_engine.utils.ServerThread;
 import com.game_engine.utils.ThreadUtil;
 import io.netty.bootstrap.ServerBootstrap;
@@ -25,6 +26,7 @@ import org.apache.log4j.Logger;
  *
  * @author Troy.Chen
  * @phone 13882122019
+ * @email 492794628@qq.com
  *
  */
 public class NettyTcpServer {
@@ -47,9 +49,9 @@ public class NettyTcpServer {
     public void start() {
         //NioEventLoopGroup是一个多线程的I/O操作事件循环池(参数是线程数量)
         //bossGroup主要用于接受所有客户端对服务端的连接
-        EventLoopGroup bossGroup = new NioEventLoopGroup(2);
+        EventLoopGroup bossGroup = new NioEventLoopGroup(4);
         //当有新的连接进来时将会被注册到workerGroup(不提供参数，会使用默认的线程数)
-        EventLoopGroup workerGroup = new NioEventLoopGroup(2);
+        EventLoopGroup workerGroup = new NioEventLoopGroup(4);
         try {
             //ServerBootstrap是设置服务器的辅助类
             ServerBootstrap bs = new ServerBootstrap();
@@ -77,6 +79,7 @@ public class NettyTcpServer {
                                 @Override
                                 protected void channelRead0(ChannelHandlerContext ctx, MessageBean msg) throws Exception {
                                     logger.info("收到消息");
+                                    MessagePool.getInstance().registerMessage(msg);
                                 }
 
                                 /**
