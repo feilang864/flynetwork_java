@@ -5,7 +5,7 @@
  */
 package com.game_login.gamemain;
 
-import com.game_engine.data.manager.DataManager;
+import com.game_engine.poolmessage.MessagePool;
 import com.game_engine.utils.ThreadUtil;
 import com.game_login.gametcpserver.GameTcpServer;
 
@@ -18,6 +18,7 @@ public class Main {
     public static void main(String[] args) {
         ThreadUtil.init(5);
         //DataManager instance = DataManager.getInstance();
-        new GameTcpServer();
+        MessagePool.getInstance().registerHandlerMessage(100201, null, null);
+        GameTcpServer gameTcpServer = new GameTcpServer();
     }
 }
