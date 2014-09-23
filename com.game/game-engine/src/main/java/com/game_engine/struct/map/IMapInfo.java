@@ -12,28 +12,26 @@ package com.game_engine.struct.map;
  */
 public interface IMapInfo {
 
-    long mapId = 0;
-    long serverId = 0;
-    long lineId = 0;
-
-    /**
-     * 获取地图ID 运行时地图ID
-     *
-     * @return
-     */
-    long getMapId();
+   
 
     /**
      * 获取服务器ID
      *
      * @return
      */
-    long getServerId();
+    int getServerId();
+
+    /**
+     * 获取地图ID 运行时地图ID
+     *
+     * @return
+     */
+    int getMapId();
 
     /**
      * 获取所在地图的线
      *
      * @return
      */
-    long getLineId();
+    int getLineId();
 }
