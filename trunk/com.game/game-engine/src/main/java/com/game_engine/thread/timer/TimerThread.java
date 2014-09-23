@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -62,9 +63,9 @@ public class TimerThread extends GameObject implements Runnable {
     @Override
     public void run() {
         while (ThreadUtil.isRunning()) {
-
+            List<TimerEvent> tempTimerEvents = null;
             synchronized (taskQueue) {
-                while (taskQueue.isEmpty() && ThreadUtil.isRunning()) {
+                while (ThreadUtil.isRunning() && taskQueue.isEmpty()) {
                     try {
                         /* 任务队列为空，则等待有新任务加入从而被唤醒 */
                         taskQueue.wait(200);
@@ -72,65 +73,20 @@ public class TimerThread extends GameObject implements Runnable {
                         logger.error(ie);
                     }
                 }
-            }
-            //队列不为空的情况下  取出队列定时器任务
-            List<TimerEvent> tempTimerEvents = null;
-            synchronized (taskQueue) {
+                //队列不为空的情况下  取出队列定时器任务
                 tempTimerEvents = new ArrayList<>(taskQueue);
             }
 
-            if (!tempTimerEvents.isEmpty() && ThreadUtil.isRunning()) {
+            if (ThreadUtil.isRunning() && !tempTimerEvents.isEmpty()) {
                 for (TimerEvent timerEvent : tempTimerEvents) {
                     MapUtil.addMessage(timerEvent.getMapId(), timerEvent.getLineId(), timerEvent);
                 }
             }
 
-            while (taskQueue.isEmpty() && ThreadUtil.isRunning()) {
-                try {
-
-                    /* 任务队列为空，则等待有新任务加入从而被唤醒 */
-                    taskQueue.wait(10);
-                } catch (InterruptedException ie) {
-                    logger.error(ie);
-                }
-            }
-
-            GameRunnable r = null;
-            synchronized (taskQueue) {
-                while (taskQueue.isEmpty() && ThreadUtil.isRunning()) {
-                    try {
-                        /* 任务队列为空，则等待有新任务加入从而被唤醒 */
-                        taskQueue.wait(500);
-                    } catch (InterruptedException ie) {
-                        logger.error(ie);
-                    }
-                }
-                /* 取出任务执行 */
-                if (ThreadUtil.isRunning()) {
-                    r = taskQueue.remove(0);
-                }
-            }
-
-            if (r != null) {
-                try {
-                    /* 执行任务 */
-                    //r.setSubmitTimeL();
-                    r.run();
-                    r.setFinishTimeL();
-                    long timeL = r.getFinishTimeL() - r.getSubmitTimeL();
-                    if (timeL <= 100L) {
-                        logger.debug("工人<“" + this.getName() + "”> 完成了任务：" + r.toString() + " 耗时：" + (timeL));
-                    } else if (timeL <= 1000L) {
-                        logger.debug("工人<“" + this.getName() + "”> 长时间执行 完成任务：" + r.toString() + " “考虑”任务脚本逻辑 耗时：" + (timeL));
-                    } else if (timeL <= 4000L) {
-                        logger.debug("工人<“" + this.getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “检查”任务脚本逻辑 耗时：" + (timeL));
-                    } else {
-                        logger.error("工人<“" + this.getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “考虑是否应该删除”任务脚本 耗时：" + (timeL));
-                    }
-                } catch (Exception e) {
-                    logger.error("工人<“" + this.getName() + "”> 执行任务<" + r.getID() + "(“" + r.getName() + "”)> 遇到错误: " + e);
-                }
-                r = null;
+            try {
+                //定时器， 执行方式 间隔 10ms 执行一次 把需要处理的任务放到对应的处理线程
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {
             }
         }
         logger.error("线程结束, 工人<“" + this.getName() + "”>退出");
