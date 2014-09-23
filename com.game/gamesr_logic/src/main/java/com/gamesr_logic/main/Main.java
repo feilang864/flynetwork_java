@@ -25,14 +25,39 @@ public class Main {
 
         ThreadUtil.init(5);
         MapUtil.addMap(new GameMapBase("新手村") {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -5083000240328934526L;
         });
         MapUtil.addMap(new GameMapBase("金银岛1线") {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -7690682228112074844L;
         });
         MapUtil.addMap(new GameMapBase("金银岛2线") {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8565031301592571782L;
         });
         MapUtil.addMap(new GameMapBase("神木村") {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -5689784304443758309L;
         });
         MapUtil.addMap(new GameMapBase("地球防御本部") {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -2342157202339410073L;
         });
 
 //        ThreadUtil.init(5);
