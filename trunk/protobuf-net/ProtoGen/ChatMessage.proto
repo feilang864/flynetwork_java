@@ -1,0 +1,121 @@
+package com.game.proto;
+
+
+// 枚举类型
+// Req 2xx 客户端请求服务器
+// Res 1xx 服务器相应客户端
+//      100  201  100表示大模块  2 表示客户端发送  01 表示具体子模块        
+enum Protos_Chat {
+    ResPersonalNotice = 800201;
+    ResMonsterTalk    = 800202;
+    ReqChat           = 800208;//客户端发起聊天内容请求 
+    ResChat           = 800108;//服务器回复聊天信息 or 转发聊天
+}
+
+
+// 个人通知消息
+message ResPersonalNoticeMessage {
+    optional Protos_Chat msgID = 1 [default = ResPersonalNotice]; 
+    optional int64 sendFrom = 2; // 消息发送者
+    optional int64 sendTo = 3; // 消息接受者;允许多个接收者
+    
+    required int32 type = 4; //信息类型 1-错误， 2-提示， 3-成功 （暂定，具体见文档）
+
+    optional int32 contentIndex = 5; // 消息标识 与消息内容互斥,也就是说,有Index就不再定义content了
+
+    optional string content = 6; // 信息内容 与 消息标识互斥
+
+    repeated string values = 7; // 参数
+}
+
+
+// 服务器通知到客户端怪物说话消息
+message ResMonsterTalkMessage {
+    optional Protos_Chat msgID = 1 [default = ResMonsterTalk]; // 消息ID;虽然是optional;但必须定义default枚举值    
+    optional int64 sendFrom = 2; // 消息发送者
+    optional int64 sendTo = 3; // 消息接受者;允许多个接收者
+    
+    required int64 monsterID = 4;//怪物id
+    optional int32 contentIndex = 5;//对话索引号
+    optional string content = 6;//具体内容
+}
+
+
+message ReqGoodsInfo{
+	required int32 goodsid = 1;//物品id
+	required int32 backpackType = 2;//背包类型，0是背包，1是仓库，2是随身商店
+}
+
+
+// 物品附加属性
+message GoodsAddition {
+
+    required int32 type = 1;//附加属性类型
+    required int32 hide = 2;//附加属性是否隐藏
+    required int32 value1 = 3;//附加属性值1
+    required int32 value2 = 4;//附加属性值2
+    required int32 randMaxVal = 5;//当前星级可达到的最高值
+}
+
+// 物品基础属性
+message GoodsInfo {
+    
+	required int64 id = 1;//ID
+	required int32 type = 2;//类型
+	required int32 modelId = 3;//物品模型ID
+    required int32 count = 4;//数量
+    required int64 createTime = 5; //获取时间(物品的创建时间)
+
+    optional int32 packageId = 6; //背包类型，0是背包，1是仓库，2是随身商店
+    optional int32 gridId = 7; //所在背包网格id
+    optional int32 durability = 8; //持久度
+    optional string maker = 9; //创造者
+    optional bool bind = 10; //是否绑定
+    optional int64 losttime = 11; //失效时间
+
+    optional GoodsAddition addition = 13; // 附加属性列表
+}
+
+
+enum Protos_ChatType{
+	CHATTYPE_WORLD = 0;//世界
+	CHATTYPE_SCENE = 1;//当前场景
+	CHATTYPE_GROUP = 2;//帮会    
+	CHATTYPE_TEAM = 3;//组队
+	CHATTYPE_ROLE = 4;//私聊，
+	CHATTYPE_SYSTEM = 5;//系统
+	CHATTYPE_LABA = 99;//喇叭
+}
+
+// 客户端请求聊天
+message ReqChatMessage {
+    optional Protos_Chat msgID = 1 [default = ReqChat]; // 消息ID;虽然是optional;但必须定义default枚举值    
+    optional int64 sendFrom = 2; // 消息发送者
+    optional int64 sendTo = 3; // 消息接受者;允许多个接收者，私聊可以使用
+    
+    required int32 chatType = 4;//聊天类型, //世界 1;//阵营 2;//公会 3;//组队 4;//私聊 5;//系统
+    required string content = 5;//聊天内容  
+    optional int64 sendToPlayerID = 6; // 私聊接受id
+    optional string sendToPlayerName = 7; // 私聊接受name
+    optional int64 goodsid = 8;//物品id
+	optional int32 backpackType = 9;//背包类型，0是背包，1是仓库，2是随身商店
+}
+
+
+// 服务器推送消息到客户端
+message ResPushMessage {
+    optional Protos_Chat msgID = 1 [default = ResChat]; // 消息ID;虽然是optional;但必须定义default枚举值    
+    optional int64 sendFrom = 2; // 消息发送者
+    optional int64 sendTo = 3; // 消息接受者;允许多个接收者
+    
+    required int32 chatType = 4;//聊天类型 0;//世界 1;//阵营 2;//公会 3;//组队 4;//私聊 5;//系统   
+    required int32 isgm = 5;//是否GM 1是 0否
+    required int64 sendPlayerID = 6;//发送人id
+    required string sendPlayerName = 7;//发送人名字
+    required int32 sendPlayerlevel = 8;//发送人等级
+    required int32 vipLevel = 9;//发送人vip等级	
+	required int32 camp     = 10;//发起人阵营 1为部落 2为联盟
+	required string content =11;//聊天消息	
+	optional GoodsInfo goods = 12;//附带的物品
+
+}
