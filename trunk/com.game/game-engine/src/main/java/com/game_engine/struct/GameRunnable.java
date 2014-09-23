@@ -16,6 +16,8 @@ import org.apache.log4j.Logger;
  */
 public abstract class GameRunnable extends GameObject implements Runnable {
 
+    private static final long serialVersionUID = -6366203475094728409L;
+
     private static final Logger logger = Logger.getLogger(GameRunnable.class);
 
     long submitTimeL;

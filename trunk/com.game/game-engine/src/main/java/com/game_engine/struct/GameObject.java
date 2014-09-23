@@ -15,15 +15,16 @@ import java.util.Random;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public abstract class GameObject implements Serializable{
+public abstract class GameObject implements Serializable {
 
+    private static final long serialVersionUID = 6613390145680665678L;
     private static final Object obj = new Object();
 
     private static long staticID = 0;
 
     private static int serverID = new Random().nextInt(1000000);
 
-    static long getId() {
+    public static long getId() {
         synchronized (obj) {
             staticID += 1;
             return (serverID & 0xFFFF) << 48 | (System.currentTimeMillis() / 1000L & 0xFFFFFFFF) << 16 | staticID & 0xFFFF;
@@ -36,6 +37,11 @@ public abstract class GameObject implements Serializable{
 
     public GameObject(String Name) {
         this();
+        this.Name = Name;
+    }
+
+    public GameObject(long ID, String Name) {
+        this.ID = ID;
         this.Name = Name;
     }
 
@@ -65,7 +71,7 @@ public abstract class GameObject implements Serializable{
 
     @Override
     public String toString() {
-        return "{" + "ID=" + ID + ", Name=��" + Name + "��}";
+        return "{" + "ID=" + ID + ", Name=" + Name + "}";
     }
 
 }

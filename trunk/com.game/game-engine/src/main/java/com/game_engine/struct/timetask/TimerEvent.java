@@ -6,6 +6,7 @@
 package com.game_engine.struct.timetask;
 
 import com.game_engine.struct.GameRunnable;
+import com.game_engine.struct.map.IMapInfo;
 import java.util.concurrent.ScheduledExecutorService;
 import org.apache.log4j.Logger;
 
@@ -16,7 +17,7 @@ import org.apache.log4j.Logger;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public abstract class TimerEvent extends GameRunnable {
+public abstract class TimerEvent extends GameRunnable implements IMapInfo {
 
     private static final Logger logger = Logger.getLogger(TimerEvent.class);
     private static final long serialVersionUID = -8331296295264699207L;
@@ -24,6 +25,9 @@ public abstract class TimerEvent extends GameRunnable {
     long endtime = 0;
     int execcount = 0;
     int jiangetime = 0;
+    int serverId = 0;
+    int mapId = 0;
+    int lineId = 0;
     ScheduledExecutorService scheduler;
 
     public TimerEvent(long endtime, int execcount, int jiangetime, String Name) {
@@ -33,22 +37,22 @@ public abstract class TimerEvent extends GameRunnable {
         this.jiangetime = jiangetime;
     }
 
-    /**
-     * 分钟执行脚本任务
-     *
-     */
-    //public TimerEvent() {
-//        ///创建10个线程，创建的线程数量
-//        Executor executor = Executors.newFixedThreadPool(1);
-//        ///指定任务
-//        executor.execute(this);
-//        ///预订线程，数量
-//        executor = Executors.newScheduledThreadPool(1);
-//        ///线程执行服务
-//        scheduler = (ScheduledExecutorService) executor;
-//        scheduler.scheduleAtFixedRate(this, minute, minute, TimeUnit.MINUTES);
-    //}
     public void shutdown() {
         scheduler.shutdown();
+    }
+
+    @Override
+    public int getServerId() {
+        return serverId;
+    }
+
+    @Override
+    public int getMapId() {
+        return mapId;
+    }
+
+    @Override
+    public int getLineId() {
+        return lineId;
     }
 }

@@ -29,11 +29,10 @@ public class MapUtil {
      * 增加消息
      *
      * @param mapid
-     * @param lineid
      * @param run
      * @return
      */
-    public static boolean addMessage(Long mapid, int lineid, GameRunnable run) {
+    public static boolean addMessage(long mapid, long lineid, GameRunnable run) {
         if (gameMaphHashMap.containsKey(mapid)) {
             gameMaphHashMap.get(mapid).addMessage(lineid, run);
         } else {
@@ -49,12 +48,8 @@ public class MapUtil {
      * @param run
      * @return
      */
-    public static boolean registerMessage(Long mapid, int lineid, GameRunnable run) {
-        if (gameMaphHashMap.containsKey(mapid)) {
-            gameMaphHashMap.get(mapid).addMessage(lineid, run);
-        } else {
-            ThreadUtil.addBackTask(run);
-        }
+    public static boolean registerMessage(long mapid, int lineid, GameRunnable run) {
+
         return true;
     }
 }

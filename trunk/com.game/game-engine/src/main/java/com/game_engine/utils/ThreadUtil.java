@@ -29,8 +29,8 @@ public class ThreadUtil {
     }
 
     public static void init(int threadcountI) {        
-        getWorkerThread(GlobeThreadGroup, "全局同步线程执行器");        
-        getWorkerThread(GlobeThreadGroup, "全局数据库管理器");
+        getWorkerThread(GlobeThreadGroup, "线程同步执行器");        
+        getWorkerThread(GlobeThreadGroup, "数据库执行器");
         ThreadPoolUtil.Init(threadcountI);
     }
 
@@ -51,7 +51,6 @@ public class ThreadUtil {
         return -1L;
     }
     public static final ThreadGroup GlobeThreadGroup = new ThreadGroup("全局线程");
-    public static final ThreadGroup MapThreadGroup = new ThreadGroup("地图线程");
 
     public synchronized static Long getWorkerThread(ThreadGroup threadGroup, String workName) {
         ServerThread wk = new ServerThread(threadGroup, workName);

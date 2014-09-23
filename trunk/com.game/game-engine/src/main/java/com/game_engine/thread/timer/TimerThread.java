@@ -3,9 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.game_engine.utils;
+package com.game_engine.thread.timer;
 
+import com.game_engine.struct.GameObject;
 import com.game_engine.struct.GameRunnable;
+import com.game_engine.struct.timetask.TimerEvent;
+import com.game_engine.thread.ServerThread;
+import com.game_engine.utils.MapUtil;
+import com.game_engine.utils.ThreadUtil;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,33 +19,30 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author Administrator
+ * @author fly_troy
  */
-public class ServerThread extends Thread {
+public class TimerThread extends GameObject implements Runnable {
 
-    private static final Logger logger = Logger.getLogger(ServerThread.class);
+    private static final long serialVersionUID = -8711653349963675546L;
 
+    private static final Logger logger = Logger.getLogger(TimerThread.class);
+    ServerThread serverThread;
+    private static final ThreadGroup MAP_THREAD_GROUP = new ThreadGroup("全局定时器");
     /* 任务列表 */
-    private final List<GameRunnable> taskQueue = Collections.synchronizedList(new LinkedList<GameRunnable>());
+    private final List<TimerEvent> taskQueue = Collections.synchronizedList(new LinkedList<TimerEvent>());
 
-    boolean free = true;
-
-    public ServerThread(String name) {
-        super(name);
-        start();
+    public static TimerThread GetInstance(String Name) {
+        TimerThread mapThread = new TimerThread(Name);
+        mapThread.serverThread = new ServerThread(MAP_THREAD_GROUP, mapThread, Name);
+        return mapThread;
     }
 
-    public ServerThread(ThreadGroup group, String name) {
-        super(group, name);
-        start();
+    public static ThreadGroup getMAP_THREAD_GROUP() {
+        return MAP_THREAD_GROUP;
     }
 
-    public boolean isFree() {
-        return free;
-    }
-
-    public void setFree(boolean free) {
-        this.free = free;
+    private TimerThread(String Name) {
+        super(Name);
     }
 
     /**
@@ -47,7 +50,7 @@ public class ServerThread extends Thread {
      *
      * @param newTask
      */
-    public void addTask(GameRunnable newTask) {
+    public void addTask(TimerEvent newTask) {
         synchronized (taskQueue) {
             taskQueue.add(newTask);
             /* 唤醒队列, 开始执行 */
@@ -59,6 +62,39 @@ public class ServerThread extends Thread {
     @Override
     public void run() {
         while (ThreadUtil.isRunning()) {
+
+            synchronized (taskQueue) {
+                while (taskQueue.isEmpty() && ThreadUtil.isRunning()) {
+                    try {
+                        /* 任务队列为空，则等待有新任务加入从而被唤醒 */
+                        taskQueue.wait(200);
+                    } catch (InterruptedException ie) {
+                        logger.error(ie);
+                    }
+                }
+            }
+            //队列不为空的情况下  取出队列定时器任务
+            List<TimerEvent> tempTimerEvents = null;
+            synchronized (taskQueue) {
+                tempTimerEvents = new ArrayList<>(taskQueue);
+            }
+
+            if (!tempTimerEvents.isEmpty() && ThreadUtil.isRunning()) {
+                for (TimerEvent timerEvent : tempTimerEvents) {
+                    MapUtil.addMessage(timerEvent.getMapId(), timerEvent.getLineId(), timerEvent);
+                }
+            }
+
+            while (taskQueue.isEmpty() && ThreadUtil.isRunning()) {
+                try {
+
+                    /* 任务队列为空，则等待有新任务加入从而被唤醒 */
+                    taskQueue.wait(10);
+                } catch (InterruptedException ie) {
+                    logger.error(ie);
+                }
+            }
+
             GameRunnable r = null;
             synchronized (taskQueue) {
                 while (taskQueue.isEmpty() && ThreadUtil.isRunning()) {
@@ -92,7 +128,6 @@ public class ServerThread extends Thread {
                         logger.error("工人<“" + this.getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “考虑是否应该删除”任务脚本 耗时：" + (timeL));
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
                     logger.error("工人<“" + this.getName() + "”> 执行任务<" + r.getID() + "(“" + r.getName() + "”)> 遇到错误: " + e);
                 }
                 r = null;

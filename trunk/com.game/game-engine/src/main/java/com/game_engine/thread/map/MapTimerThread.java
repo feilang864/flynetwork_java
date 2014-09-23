@@ -3,18 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.game_engine;
+package com.game_engine.thread.map;
 
-import com.game_engine.struct.map.GameMapBase;
+import com.game_engine.struct.GameObject;
 
 /**
  *
- * @author Administrator
+ * @author fly_troy
  */
-public class TestMap extends GameMapBase {
+public class MapTimerThread extends GameObject implements Runnable {
 
-    public TestMap(String mapName) {
-        super(mapName);
+    @Override
+    public void run() {
+
     }
 
 }
