@@ -5,25 +5,32 @@
  */
 package com.game_engine.poolmessage;
 
+import io.netty.channel.ChannelHandlerContext;
+
 /**
  *
- * @author fly_troy
+ * @author Troy.Chen
+ * @phone 13882122019
+ * @email 492794628@qq.com
  */
 public class MessageBean {
 
-    private int msgid;
+    private ChannelHandlerContext channelHandlerContext;
+    private long msgid;
     private byte[] msgbuffer;
 
-    public MessageBean(int msgid) {
+    public MessageBean(ChannelHandlerContext channelHandlerContext, long msgid) {
+        this.channelHandlerContext = channelHandlerContext;
         this.msgid = msgid;
     }
 
-    public MessageBean(int msgid, byte[] msgbuffer) {
+    public MessageBean(ChannelHandlerContext channelHandlerContext, long msgid, byte[] msgbuffer) {
+        this.channelHandlerContext = channelHandlerContext;
         this.msgid = msgid;
         this.msgbuffer = msgbuffer;
     }
 
-    public int getMsgid() {
+    public long getMsgid() {
         return msgid;
     }
 
@@ -35,4 +42,11 @@ public class MessageBean {
         this.msgbuffer = msgbuffer;
     }
 
+    public ChannelHandlerContext getChannelHandlerContext() {
+        return channelHandlerContext;
+    }
+
+    public void setChannelHandlerContext(ChannelHandlerContext channelHandlerContext) {
+        this.channelHandlerContext = channelHandlerContext;
+    }
 }

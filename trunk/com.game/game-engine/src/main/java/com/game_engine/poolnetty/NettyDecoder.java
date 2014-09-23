@@ -7,7 +7,6 @@ package com.game_engine.poolnetty;
 
 import com.game_engine.poolmessage.MessageBean;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -19,7 +18,9 @@ import org.apache.log4j.Logger;
 /**
  * 解码器
  *
- * @author Administrator
+ * @author Troy.Chen
+ * @phone 13882122019
+ * @email 492794628@qq.com
  */
 class NettyDecoder extends ByteToMessageDecoder {
 
@@ -28,8 +29,6 @@ class NettyDecoder extends ByteToMessageDecoder {
     }
 
     private static final Logger logger = Logger.getLogger(NettyDecoder.class);
-    private ByteBuf bytes;
-    ByteOrder endianOrder = ByteOrder.LITTLE_ENDIAN;
 
     ByteBuf bytesAction(ByteBuf inputBuf) {
         ByteBuf bufferLen = Unpooled.buffer();
@@ -56,10 +55,28 @@ class NettyDecoder extends ByteToMessageDecoder {
     }
 
     private byte ZreoByteCount = 0;
+    private ByteBuf bytes;
+    private final ByteOrder endianOrder = ByteOrder.LITTLE_ENDIAN;
+    private long reveLastTime = 0;
+    private long secondTime = 0;
+    private int reveCount = 0;
 
     @Override
     protected void decode(ChannelHandlerContext chc, ByteBuf inputBuf, List<Object> outputMessage) {
-        logger.debug("decode " + inputBuf.readableBytes());
+
+        if (System.currentTimeMillis() - secondTime < 1000L) {
+            reveCount++;
+        } else {
+            secondTime = System.currentTimeMillis();
+            reveCount = 0;
+        }
+
+        if (reveCount > 50 || System.currentTimeMillis() - reveLastTime < 5L) {
+            logger.error("发送消息过于频繁");
+            chc.disconnect();
+            return;
+        }       
+
         if (inputBuf.readableBytes() > 0) {
             ZreoByteCount = 0;
             //重新组装字节数组            
@@ -71,10 +88,9 @@ class NettyDecoder extends ByteToMessageDecoder {
                     ///读取消息长度
                     int len = buffercontent.readShort();
                     if (buffercontent.readableBytes() >= len) {
-                        int messageid = buffercontent.readInt();///读取消息ID                       
+                        long messageid = buffercontent.readLong();///读取消息ID
                         ByteBuf buf = buffercontent.readBytes(len - 4);//读取可用字节数;
-                        megsList.add(new MessageBean(messageid, buf.array()));
-                        logger.debug("收到消息 messageid " + messageid);
+                        megsList.add(new MessageBean(chc, messageid, buf.array()));                        
                         //第二次重组
                         if (buffercontent.readableBytes() > 0) {
                             bytesAction(buffercontent, buffercontent.readerIndex(), buffercontent.readableBytes());
@@ -101,5 +117,6 @@ class NettyDecoder extends ByteToMessageDecoder {
                 chc.close();
             }
         }
+        reveLastTime = System.currentTimeMillis();
     }
 }
