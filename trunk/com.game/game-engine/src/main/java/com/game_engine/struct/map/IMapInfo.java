@@ -12,7 +12,23 @@ package com.game_engine.struct.map;
  */
 public interface IMapInfo {
 
-   
+    /**
+     * 
+     * @param serverId 
+     */
+    void setServerId(int serverId);
+
+    /**
+     * 
+     * @param mapId 
+     */
+    void setMapId(int mapId);
+
+    /**
+     * 
+     * @param lineId 
+     */
+    void setLineId(int lineId);
 
     /**
      * 获取服务器ID
