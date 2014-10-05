@@ -15,29 +15,6 @@ import com.game_engine.struct.GameObject;
  * @param <TMonster> 怪物
  * @param <TNpc> npc
  */
-public class AreaInfo<TPlayer, TDrop, TMonster, TNpc> extends GameObject implements IMapInfo {
-
-    private int serverId = 0;
-    private int mapId = 0;
-    private int lineId = 0;
-
-    public AreaInfo(long ID, String Name) {
-        super(ID, Name);
-    }    
-
-    @Override
-    public int getServerId() {
-        return serverId;
-    }
-
-    @Override
-    public int getMapId() {
-        return mapId;
-    }
-
-    @Override
-    public int getLineId() {
-        return lineId;
-    }
+public interface AreaInfo<TPlayer, TDrop, TMonster, TNpc> extends IMapInfo {
 
 }

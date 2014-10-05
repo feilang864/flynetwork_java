@@ -7,7 +7,6 @@ package com.game_engine.struct.timetask;
 
 import com.game_engine.struct.GameRunnable;
 import com.game_engine.struct.map.IMapInfo;
-import java.util.concurrent.ScheduledExecutorService;
 import org.apache.log4j.Logger;
 
 /**
@@ -21,24 +20,72 @@ public abstract class TimerEvent extends GameRunnable implements IMapInfo {
 
     private static final Logger logger = Logger.getLogger(TimerEvent.class);
     private static final long serialVersionUID = -8331296295264699207L;
-    int minute = 1;
-    long endtime = 0;
-    int execcount = 0;
-    int jiangetime = 0;
-    int serverId = 0;
-    int mapId = 0;
-    int lineId = 0;
-    ScheduledExecutorService scheduler;
 
-    public TimerEvent(long endtime, int execcount, int jiangetime, String Name) {
+    private boolean initExec;
+    private int execcount;
+    private long jiangetime;
+    private int serverId;
+    private int mapId;
+    private int lineId;
+
+    /**
+     * 全局执行，所有地图的地图线会执行的定时器
+     *
+     * @param initExec 是否初始化执行一次
+     * @param execcount 执行次数 无限制 -1
+     * @param jiangetime 间隔执行时间 最短5毫秒
+     * @param Name 任务名称
+     */
+    public TimerEvent(boolean initExec, int execcount, long jiangetime, String Name) {
         super(Name);
-        this.endtime = endtime;
+        this.initExec = initExec;
         this.execcount = execcount;
         this.jiangetime = jiangetime;
+        this.serverId = 0;
+        this.mapId = 0;
+        this.lineId = 0;
+        if (initExec) {
+            this.run();
+        }
     }
 
-    public void shutdown() {
-        scheduler.shutdown();
+    /**
+     * 全局执行，所有地图的地图线会执行的定时器
+     *
+     * @param initExec
+     * @param execcount
+     * @param jiangetime
+     * @param serverId
+     * @param mapId
+     * @param lineId
+     * @param Name
+     */
+    public TimerEvent(boolean initExec, int execcount, long jiangetime, int serverId, int mapId, int lineId, String Name) {
+        super(Name);
+        this.initExec = initExec;
+        this.execcount = execcount;
+        this.jiangetime = jiangetime;
+        this.serverId = serverId;
+        this.mapId = mapId;
+        this.lineId = lineId;
+        if (initExec) {
+            this.run();
+        }
+    }
+
+    @Override
+    public void setServerId(int serverId) {
+        this.serverId = serverId;
+    }
+
+    @Override
+    public void setMapId(int mapId) {
+        this.mapId = mapId;
+    }
+
+    @Override
+    public void setLineId(int lineId) {
+        this.lineId = lineId;
     }
 
     @Override

@@ -8,7 +8,6 @@ package com.game_engine.struct.map;
 import com.game_engine.struct.GameObject;
 import com.game_engine.struct.GameRunnable;
 import com.game_engine.thread.map.MapThread;
-import com.game_engine.utils.ThreadUtil;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -53,8 +52,7 @@ public abstract class GameMapBase extends GameObject {
          *
          * @param run
          */
-        public void addMessage(GameRunnable run) {
-            //ThreadUtil.addTask(threadID[lineId], run);
+        public void addMessage(GameRunnable run) {            
             mapThreadMain.addTask(run);
         }
 
@@ -76,6 +74,21 @@ public abstract class GameMapBase extends GameObject {
         @Override
         public int getLineId() {
             return lineId;
+        }
+
+        @Override
+        public void setServerId(int serverId) {
+            this.serverId = serverId;
+        }
+
+        @Override
+        public void setMapId(int mapId) {
+            this.mapId = mapId;
+        }
+
+        @Override
+        public void setLineId(int lineId) {
+            this.lineId = lineId;
         }
 
     }

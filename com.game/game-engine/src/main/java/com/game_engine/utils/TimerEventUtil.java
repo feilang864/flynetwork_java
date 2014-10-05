@@ -18,9 +18,14 @@ public class TimerEventUtil {
 
     private static final Logger logger = Logger.getLogger(TimerEventUtil.class);
 
+    private static final TimerEventUtil instace = new TimerEventUtil();
+
+    private static TimerEventUtil getInstace() {
+        return instace;
+    }
+
     public TimerEventUtil() {
         ThreadUtil.getWorkerThread(ThreadUtil.GlobeThreadGroup, "全局定时器管理执行器");
-
     }
 
 }
