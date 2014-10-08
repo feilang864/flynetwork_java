@@ -50,25 +50,25 @@ public class ThreadManager {
 
     public final ThreadGroup GlobeThreadGroup = new ThreadGroup("全局线程");
 
-    public Long getWorkerThread(ThreadGroup threadGroup, String workName) {
+    public final Long getWorkerThread(ThreadGroup threadGroup, String workName) {
         ServerThread wk = new ServerThread(threadGroup, workName);
         workHashMaps.put(wk.getId(), wk);
         return wk.getId();
     }
 
-    public Long getWorkerThread(ThreadGroup threadGroup, GameRunnable runnable, String workName) {
+    public final Long getWorkerThread(ThreadGroup threadGroup, GameRunnable runnable, String workName) {
         ServerThread wk = new ServerThread(threadGroup, runnable, workName);
         workHashMaps.put(wk.getId(), wk);
         return wk.getId();
     }
 
-    public void addTask(long threadID, GameRunnable gameRunnable) {
-//        if (workHashMaps.containsKey(threadID)) {
-//            workHashMaps.get(threadID).addTask(gameRunnable);
-//        }
+    public final void addTask(long threadID, GameRunnable gameRunnable) {
+        if (workHashMaps.containsKey(threadID)) {
+            workHashMaps.get(threadID).addTask(gameRunnable);
+        }
     }
 
-    public static void addBackTask(GameRunnable gameRunnable) {
+    public final void addBackTask(GameRunnable gameRunnable) {
         //ThreadPoolUtil.addTask(gameRunnable);
     }
 }
