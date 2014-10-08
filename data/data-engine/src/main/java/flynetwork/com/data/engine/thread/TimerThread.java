@@ -5,9 +5,9 @@
  */
 package flynetwork.com.data.engine.thread;
 
+import flynetwork.com.data.engine.manager.ThreadManager;
 import flynetwork.com.data.engine.struct.thread.GameRunnable;
 import flynetwork.com.data.engine.struct.thread.TimerEvent;
-import flynetwork.com.data.engine.manager.ThreadManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -23,7 +23,7 @@ public class TimerThread extends GameRunnable {
     private static final long serialVersionUID = -8711653349963675546L;
 
     private static final Logger logger = Logger.getLogger(TimerThread.class);
-    long threadID;
+
     private static final ThreadGroup MAP_THREAD_GROUP = new ThreadGroup("全局定时器");
     /* 任务列表 */
     private final List<TimerEvent> taskQueue = Collections.synchronizedList(new LinkedList<TimerEvent>());
@@ -39,7 +39,7 @@ public class TimerThread extends GameRunnable {
 
     private TimerThread(String Name) {
         super(Name);
-        threadID = ThreadManager.getInstance().getWorkerThread(MAP_THREAD_GROUP, this, Name);
+        Long workerThread = ThreadManager.getInstance().getWorkerThread(MAP_THREAD_GROUP, this, Name);
     }
 
     /**
