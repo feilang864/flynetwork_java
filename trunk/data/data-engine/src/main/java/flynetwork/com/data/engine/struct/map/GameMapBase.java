@@ -44,9 +44,9 @@ public abstract class GameMapBase extends GameObject {
             ThreadGroup tempThreadGroup = new ThreadGroup(threadGroup, mapName);
             logger.info("加载地图：" + mapName + " 阻挡信息");
             logger.info("地图：" + mapName + " 创建完成");
-            mapThreadMain = ThreadManager.getInstance().getWorkerThread(tempThreadGroup, "Main——线程");
-            mapThreadMonsterAI = ThreadManager.getInstance().getWorkerThread(tempThreadGroup, "怪物AI——线程");
-            mapThreadMain = ThreadManager.getInstance().getWorkerThread(tempThreadGroup, "移动——线程");
+            mapThreadMain = ThreadManager.getInstance().getMapThread(tempThreadGroup, "Main——线程");
+            mapThreadMonsterAI = ThreadManager.getInstance().getMapThread(tempThreadGroup, "怪物AI——线程");
+            mapThreadMain = ThreadManager.getInstance().getMapThread(tempThreadGroup, "移动——线程");
         }
 
         /**

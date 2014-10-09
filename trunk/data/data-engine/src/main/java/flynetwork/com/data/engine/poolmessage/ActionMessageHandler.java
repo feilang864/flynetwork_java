@@ -6,6 +6,7 @@
 package flynetwork.com.data.engine.poolmessage;
 
 import com.google.protobuf.Message;
+import flynetwork.com.data.engine.struct.GameAttribute;
 
 /**
  *
@@ -14,19 +15,28 @@ import com.google.protobuf.Message;
 public abstract class ActionMessageHandler {
 
     private com.google.protobuf.Message message;
-    private Object parameter;
+    private GameAttribute parameter;
+
+    public static final String PLAYER_StringValue = "PLAYER";
+
+    public static final String SESION_StringValue = "SESION";
+
+    public static final String IMapInfo_StringValue = "IMapInfo";
 
     public Message getMessage() {
         return message;
     }
 
-    public Object getParameter() {
-        return parameter;
+    public void setParameter(String key, Object value) {
+        parameter.setValue(key, value);
     }
 
-    public void setTCPHandler(Message message, Object parameter) {
+    public Object getParameter(String key) {
+        return parameter.getValue(key);
+    }
+
+    public void setMessage(Message message) {
         this.message = message;
-        this.parameter = parameter;
     }
 
     public abstract void action();

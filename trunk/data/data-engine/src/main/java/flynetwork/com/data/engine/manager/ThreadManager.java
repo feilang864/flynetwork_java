@@ -6,13 +6,17 @@
 package flynetwork.com.data.engine.manager;
 
 import flynetwork.com.data.engine.struct.thread.GameRunnable;
-import flynetwork.com.data.engine.thread.ServerThread;
+import flynetwork.com.data.engine.thread.BackThread;
+import flynetwork.com.data.engine.thread.MapThread;
+import flynetwork.com.data.engine.thread.RunnableThread;
 import java.util.HashMap;
 import org.apache.log4j.Logger;
 
 /**
  *
- * @author Administrator
+ * @author Troy.Chen
+ * @phone 13882122019
+ * @email 492794628@qq.com
  */
 public class ThreadManager {
 
@@ -23,24 +27,52 @@ public class ThreadManager {
     public static ThreadManager getInstance() {
         return instance;
     }
-
-    HashMap<Long, ServerThread> workHashMaps;
-
-    public long mapThread;
-    public long dbThread;
-    public long NoneThread;
+    BackThread backThread;
+    HashMap<Long, RunnableThread> workHashMaps;
+    private long mapThreadID;
+    private long chatThreadID;
+    private long socialThreadID;
 
     public ThreadManager() {
         workHashMaps = new HashMap<>();
-        ThreadGroup tempGroup = new ThreadGroup(GlobeThreadGroup, "同步线程执行器");
-        mapThread = getWorkerThread(tempGroup, "地图线程同步器");
-        dbThread = getWorkerThread(tempGroup, "数据库线程同步器");
-        NoneThread = getWorkerThread(tempGroup, "数据库线程同步器");
+        MapThread mapThread = new MapThread();
+        workHashMaps.put(mapThread.getID(), mapThread);
+        mapThreadID = mapThread.getID();
+        chatThreadID = getMapThread(GlobeThreadGroup, "聊天线程执行器");
+        socialThreadID = getMapThread(GlobeThreadGroup, "社交线程执行器");
+//        backThread = new BackThread(5);
     }
 
-    private boolean running = true;
+    /**
+     * 返回地图线程执行器
+     *
+     * @return
+     */
+    public long getMapThreadID() {
+        return mapThreadID;
+    }
 
-    public boolean isRunning() {
+    /**
+     * 返回聊天线程执行器
+     *
+     * @return
+     */
+    public long getChatThreadID() {
+        return chatThreadID;
+    }
+
+    /**
+     * 返回社交线程执行器
+     *
+     * @return
+     */
+    public long getSocialThreadID() {
+        return socialThreadID;
+    }
+
+    private static boolean running = true;
+
+    public static boolean isRunning() {
         return running;
     }
 
@@ -48,18 +80,16 @@ public class ThreadManager {
         running = false;
     }
 
-    public final ThreadGroup GlobeThreadGroup = new ThreadGroup("全局线程");
+    private static ThreadGroup GlobeThreadGroup = new ThreadGroup("全局线程");
 
-    public final Long getWorkerThread(ThreadGroup threadGroup, String workName) {
-        ServerThread wk = new ServerThread(threadGroup, workName);
-        workHashMaps.put(wk.getId(), wk);
-        return wk.getId();
+    public static ThreadGroup getGlobeThreadGroup() {
+        return GlobeThreadGroup;
     }
 
-    public final Long getWorkerThread(ThreadGroup threadGroup, GameRunnable runnable, String workName) {
-        ServerThread wk = new ServerThread(threadGroup, runnable, workName);
-        workHashMaps.put(wk.getId(), wk);
-        return wk.getId();
+    public final Long getMapThread(ThreadGroup threadGroup, String workName) {
+        RunnableThread wk = new RunnableThread(threadGroup, workName);
+        workHashMaps.put(wk.getID(), wk);
+        return wk.getID();
     }
 
     public final void addTask(long threadID, GameRunnable gameRunnable) {
@@ -69,6 +99,6 @@ public class ThreadManager {
     }
 
     public final void addBackTask(GameRunnable gameRunnable) {
-        //ThreadPoolUtil.addTask(gameRunnable);
+        backThread.addTask(gameRunnable);
     }
 }
