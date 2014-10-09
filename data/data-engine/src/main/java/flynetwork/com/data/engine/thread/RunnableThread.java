@@ -5,8 +5,9 @@
  */
 package flynetwork.com.data.engine.thread;
 
-import flynetwork.com.data.engine.struct.thread.GameRunnable;
 import flynetwork.com.data.engine.manager.ThreadManager;
+import flynetwork.com.data.engine.struct.GameObject;
+import flynetwork.com.data.engine.struct.thread.GameRunnable;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,25 +15,25 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author Administrator
+ * @author Troy.Chen
+ * @phone 13882122019
+ * @email 492794628@qq.com
  */
-public class ServerThread extends Thread {
+public class RunnableThread extends GameObject implements Runnable {
 
-    private static final Logger logger = Logger.getLogger(ServerThread.class);
+    private static final long serialVersionUID = 7479446431965332788L;
+
+    private static final Logger logger = Logger.getLogger(RunnableThread.class);
 
     /* 任务列表 */
-    private final List<GameRunnable> taskQueue = Collections.synchronizedList(new LinkedList<GameRunnable>());
+    protected final List<GameRunnable> taskQueue = Collections.synchronizedList(new LinkedList<GameRunnable>());
 
     boolean free = true;
 
-    public ServerThread(ThreadGroup group, String name) {
-        super(group, name);
-        start();
-    }
-
-    public ServerThread(ThreadGroup group, Runnable target, String name) {
-        super(group, target, name);
-        start();
+    public RunnableThread(ThreadGroup group, String name) {
+        super(name);
+        Thread thread = new Thread(group, this, name);
+        thread.start();
     }
 
     public boolean isFree() {
@@ -46,23 +47,23 @@ public class ServerThread extends Thread {
     /**
      * 增加新的任务 每增加一个新任务，都要唤醒任务队列
      *
-     * @param newTask
+     * @param runnable
      */
-    public void addTask(GameRunnable newTask) {
+    public void addTask(GameRunnable runnable) {
         synchronized (taskQueue) {
-            taskQueue.add(newTask);
+            taskQueue.add(runnable);
             /* 唤醒队列, 开始执行 */
             taskQueue.notify();
         }
-        logger.debug("提交任务 任务<" + newTask.getID() + ">: " + newTask.getName());
+        logger.debug("新增任务 任务ID<" + runnable.getID() + ">");
     }
 
     @Override
     public void run() {
-        while (ThreadManager.getInstance().isRunning()) {
+        while (ThreadManager.isRunning()) {
             GameRunnable r = null;
             synchronized (taskQueue) {
-                while (taskQueue.isEmpty() && ThreadManager.getInstance().isRunning()) {
+                while (taskQueue.isEmpty() && ThreadManager.isRunning()) {
                     try {
                         /* 任务队列为空，则等待有新任务加入从而被唤醒 */
                         taskQueue.wait(500);
@@ -71,7 +72,7 @@ public class ServerThread extends Thread {
                     }
                 }
                 /* 取出任务执行 */
-                if (ThreadManager.getInstance().isRunning()) {
+                if (ThreadManager.isRunning()) {
                     r = taskQueue.remove(0);
                 }
             }

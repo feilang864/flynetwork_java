@@ -24,7 +24,7 @@ public abstract class GameObject implements Serializable {
 
     private static int serverID = new Random().nextInt(1000000);
 
-    public static long getId() {
+    public static long getCreateId() {
         synchronized (obj) {
             staticID += 1;
             return (serverID & 0xFFFF) << 48 | (System.currentTimeMillis() / 1000L & 0xFFFFFFFF) << 16 | staticID & 0xFFFF;
@@ -32,27 +32,31 @@ public abstract class GameObject implements Serializable {
     }
 
     public GameObject() {
-        this.ID = getId();
-        gameAttribute = new GameAttribute();
+        this(getCreateId(), "");
     }
 
     public GameObject(String Name) {
-        this();
-        this.Name = Name;
+        this(getCreateId(), Name);
     }
 
     public GameObject(long ID, String Name) {
         this.ID = ID;
         this.Name = Name;
-        gameAttribute = new GameAttribute();
+        tempAttribute = new GameAttribute();
     }
 
     private Long ID;
     private String Name;
-    private GameAttribute gameAttribute;
+    //
+    private transient GameAttribute tempAttribute;
 
-    public GameAttribute getGameAttribute() {
-        return gameAttribute;
+    /**
+     * 返回运行时属性值
+     *
+     * @return
+     */
+    public GameAttribute getTempAttribute() {
+        return tempAttribute;
     }
 
     public String getName() {

@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package flynetwork.com.data.engine.thread;
+package flynetwork.com.data.engine.manager;
 
-import flynetwork.com.data.engine.manager.ThreadManager;
-import flynetwork.com.data.engine.struct.thread.GameRunnable;
+import flynetwork.com.data.engine.struct.GameObject;
 import flynetwork.com.data.engine.struct.thread.TimerEvent;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,30 +15,29 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author fly_troy
+ * @author Troy.Chen
+ * @phone 13882122019
+ * @email 492794628@qq.com
  */
-public class TimerThread extends GameRunnable {
+public class TimerManager extends GameObject implements Runnable {
 
-    private static final long serialVersionUID = -8711653349963675546L;
+    private static final long serialVersionUID = -5015184885546797327L;
 
-    private static final Logger logger = Logger.getLogger(TimerThread.class);
+    private static final Logger logger = Logger.getLogger(TimerManager.class);
 
-    private static final ThreadGroup MAP_THREAD_GROUP = new ThreadGroup("全局定时器");
+    static TimerManager instance = new TimerManager();
+
+    public static TimerManager getInstance() {
+        return instance;
+    }
+
     /* 任务列表 */
     private final List<TimerEvent> taskQueue = Collections.synchronizedList(new LinkedList<TimerEvent>());
 
-    public static TimerThread GetInstance(String Name) {
-        TimerThread mapThread = new TimerThread(Name);
-        return mapThread;
-    }
-
-    public static ThreadGroup getMAP_THREAD_GROUP() {
-        return MAP_THREAD_GROUP;
-    }
-
-    private TimerThread(String Name) {
-        super(Name);
-        Long workerThread = ThreadManager.getInstance().getWorkerThread(MAP_THREAD_GROUP, this, Name);
+    public TimerManager() {
+        super("全局定时器");
+        Thread thread = new Thread(ThreadManager.getGlobeThreadGroup(), this, "全局定时器");
+        thread.start();
     }
 
     /**

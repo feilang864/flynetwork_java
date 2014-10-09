@@ -42,7 +42,8 @@ public class NettyTcpClient {
         return " Host=" + Host + ", Port=" + Port;
     }
 
-    public NettyTcpClient(int port) {
+    public NettyTcpClient(String host, int port) {
+        this.Host = host;
         this.Port = port;
         EventLoopGroup group = new NioEventLoopGroup(4);
         bootstrap = new Bootstrap();
