@@ -5,8 +5,8 @@
  */
 package flynetwork.com.data.engine.manager;
 
-import flynetwork.com.data.engine.struct.GameObject;
-import flynetwork.com.data.engine.struct.thread.TimerEvent;
+import flynetwork.com.data.engine.struct.DataObject;
+import flynetwork.com.data.engine.struct.thread.TimerEventRunnable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public class TimerManager extends GameObject implements Runnable {
+public class TimerManager extends DataObject implements Runnable {
 
     private static final long serialVersionUID = -5015184885546797327L;
 
@@ -32,34 +32,34 @@ public class TimerManager extends GameObject implements Runnable {
     }
 
     /* 任务列表 */
-    private final List<TimerEvent> taskQueue = Collections.synchronizedList(new LinkedList<TimerEvent>());
+    private final List<TimerEventRunnable> taskQueue = Collections.synchronizedList(new LinkedList<TimerEventRunnable>());
 
     public TimerManager() {
-        super("全局定时器");
-        Thread thread = new Thread(ThreadManager.getGlobeThreadGroup(), this, "全局定时器");
+        super("全局定时执行器");
+        Thread thread = new Thread(GlobalManager.getInstance().getGlobeThreadGroup(), this, "定时执行器");
         thread.start();
     }
 
     /**
      * 增加新的任务 每增加一个新任务，都要唤醒任务队列
      *
-     * @param newTask
+     * @param newTimerTask
      */
-    public void addTask(TimerEvent newTask) {
+    public void addTimerTask(TimerEventRunnable newTimerTask) {
         synchronized (taskQueue) {
-            taskQueue.add(newTask);
+            taskQueue.add(newTimerTask);
             /* 唤醒队列, 开始执行 */
             taskQueue.notify();
         }
-        logger.debug("提交任务 任务<" + newTask.getID() + ">: " + newTask.getName());
+        logger.debug(this.getName() + " 接受任务 任务<" + newTimerTask.getID() + ">: " + newTimerTask.getName());
     }
 
     @Override
     public void run() {
-        while (ThreadManager.getInstance().isRunning()) {
-            List<TimerEvent> tempTimerEvents = null;
+        while (GlobalManager.getInstance().isRunning()) {
+            List<TimerEventRunnable> tempTimerEvents = null;
             synchronized (taskQueue) {
-                while (ThreadManager.getInstance().isRunning() && taskQueue.isEmpty()) {
+                while (GlobalManager.getInstance().isRunning() && taskQueue.isEmpty()) {
                     try {
                         /* 任务队列为空，则等待有新任务加入从而被唤醒 */
                         taskQueue.wait(200);
@@ -71,9 +71,22 @@ public class TimerManager extends GameObject implements Runnable {
                 tempTimerEvents = new ArrayList<>(taskQueue);
             }
 
-            if (ThreadManager.getInstance().isRunning() && !tempTimerEvents.isEmpty()) {
-                for (TimerEvent timerEvent : tempTimerEvents) {
-                    ThreadManager.getInstance().addTask(timerEvent.getID(), timerEvent);
+            if (GlobalManager.getInstance().isRunning() && !tempTimerEvents.isEmpty()) {
+                for (TimerEventRunnable timerEvent : tempTimerEvents) {
+                    int execCount = timerEvent.getTempAttribute().getintValue("Execcount");
+                    long lastTime = timerEvent.getTempAttribute().getlongValue("LastExecTime");
+                    if (System.currentTimeMillis() - lastTime >= timerEvent.getJiangetime()) {
+
+                        ThreadManager.getInstance().addTask(timerEvent.getThreadID(), timerEvent);
+
+                        execCount++;
+                        if (timerEvent.getExeccount() == execCount) {
+                            taskQueue.remove(timerEvent);
+                        } else {
+                            timerEvent.getTempAttribute().setValue("Execcount", execCount);
+                            timerEvent.getTempAttribute().setValue("LastExecTime", System.currentTimeMillis());
+                        }
+                    }
                 }
             }
 

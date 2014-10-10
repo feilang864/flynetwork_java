@@ -5,9 +5,9 @@
  */
 package flynetwork.com.data.engine.thread;
 
-import flynetwork.com.data.engine.manager.ThreadManager;
-import flynetwork.com.data.engine.struct.GameObject;
-import flynetwork.com.data.engine.struct.thread.GameRunnable;
+import flynetwork.com.data.engine.manager.GlobalManager;
+import flynetwork.com.data.engine.struct.DataObject;
+import flynetwork.com.data.engine.struct.thread.DataRunnable;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,8 +25,8 @@ public class BackThread {
     private static final Logger logger = Logger.getLogger(BackThread.class);
 
     /* 任务列表 */
-    List<GameRunnable> taskQueue = Collections.synchronizedList(new LinkedList<GameRunnable>());
-    static ThreadGroup threadGroup = new ThreadGroup(ThreadManager.getGlobeThreadGroup(), "后台线程");
+    List<DataRunnable> taskQueue = Collections.synchronizedList(new LinkedList<DataRunnable>());
+    static final ThreadGroup threadGroup = new ThreadGroup(GlobalManager.getInstance().getGlobeThreadGroup(), "后台执行器");
 
     public BackThread(int threadcountI) {
         for (int i = 1; i <= threadcountI; i++) {
@@ -40,16 +40,16 @@ public class BackThread {
      *
      * @param newTask
      */
-    public void addTask(GameRunnable newTask) {
+    public void addTask(DataRunnable newTask) {
         synchronized (taskQueue) {
             taskQueue.add(newTask);
             /* 唤醒队列, 开始执行 */
             taskQueue.notify();
         }
-        logger.debug("提交任务 任务<" + newTask.getID() + ">: " + newTask.getName());
+        logger.debug(threadGroup.getName() + " 接受任务 任务<" + newTask.getID() + ">: " + newTask.getName());
     }
 
-    class BackThreadRunnable extends GameObject implements Runnable {
+    class BackThreadRunnable extends DataObject implements Runnable {
 
         private static final long serialVersionUID = 2211758026109556311L;
 
@@ -64,10 +64,10 @@ public class BackThread {
          */
         @Override
         public void run() {
-            while (ThreadManager.isRunning()) {
-                GameRunnable r = null;
+            while (GlobalManager.getInstance().isRunning()) {
+                DataRunnable r = null;
                 synchronized (taskQueue) {
-                    while (taskQueue.isEmpty() && ThreadManager.isRunning()) {
+                    while (taskQueue.isEmpty() && GlobalManager.getInstance().isRunning()) {
                         try {
                             /* 任务队列为空，则等待有新任务加入从而被唤醒 */
                             taskQueue.wait(500);
@@ -76,7 +76,7 @@ public class BackThread {
                         }
                     }
                     /* 取出任务执行 */
-                    if (ThreadManager.isRunning()) {
+                    if (GlobalManager.getInstance().isRunning()) {
                         r = taskQueue.remove(0);
                     }
                 }

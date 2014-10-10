@@ -5,7 +5,7 @@
  */
 package flynetwork.com.data.engine.struct.thread;
 
-import flynetwork.com.data.engine.struct.GameObject;
+import flynetwork.com.data.engine.struct.DataObject;
 import org.apache.log4j.Logger;
 
 /**
@@ -15,11 +15,11 @@ import org.apache.log4j.Logger;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public abstract class GameRunnable extends GameObject implements Runnable {
+public abstract class DataRunnable extends DataObject implements Runnable {
 
     private static final long serialVersionUID = -6366203475094728409L;
 
-    private static final Logger logger = Logger.getLogger(GameRunnable.class);
+    private static final Logger logger = Logger.getLogger(DataRunnable.class);
 
     long submitTimeL;
 
@@ -29,7 +29,7 @@ public abstract class GameRunnable extends GameObject implements Runnable {
      *
      * @param Name 任务名称
      */
-    public GameRunnable(String Name) {
+    public DataRunnable(String Name) {
         super(Name);
         submitTimeL = System.currentTimeMillis();
     }

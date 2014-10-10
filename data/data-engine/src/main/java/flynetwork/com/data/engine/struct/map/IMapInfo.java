@@ -13,22 +13,22 @@ package flynetwork.com.data.engine.struct.map;
 public interface IMapInfo {
 
     /**
-     * 
-     * @param serverId 
+     *
+     * @param serverId
      */
     void setServerId(int serverId);
 
     /**
-     * 
-     * @param mapId 
+     *
+     * @param mapId
      */
-    void setMapId(int mapId);
+    void setMapId(long mapId);
 
     /**
-     * 
-     * @param lineId 
+     *
+     * @param lineId
      */
-    void setLineId(int lineId);
+    void setLineId(long lineId);
 
     /**
      * 获取服务器ID
@@ -42,12 +42,12 @@ public interface IMapInfo {
      *
      * @return
      */
-    int getMapId();
+    long getMapId();
 
     /**
      * 获取所在地图的线
      *
      * @return
      */
-    int getLineId();
+    long getLineId();
 }

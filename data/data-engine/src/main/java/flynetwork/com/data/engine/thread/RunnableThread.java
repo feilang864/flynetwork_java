@@ -5,9 +5,9 @@
  */
 package flynetwork.com.data.engine.thread;
 
-import flynetwork.com.data.engine.manager.ThreadManager;
-import flynetwork.com.data.engine.struct.GameObject;
-import flynetwork.com.data.engine.struct.thread.GameRunnable;
+import flynetwork.com.data.engine.manager.GlobalManager;
+import flynetwork.com.data.engine.struct.DataObject;
+import flynetwork.com.data.engine.struct.thread.DataRunnable;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,14 +19,14 @@ import org.apache.log4j.Logger;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public class RunnableThread extends GameObject implements Runnable {
+public class RunnableThread extends DataObject implements Runnable {
 
     private static final long serialVersionUID = 7479446431965332788L;
 
     private static final Logger logger = Logger.getLogger(RunnableThread.class);
 
     /* 任务列表 */
-    protected final List<GameRunnable> taskQueue = Collections.synchronizedList(new LinkedList<GameRunnable>());
+    protected final List<DataRunnable> taskQueue = Collections.synchronizedList(new LinkedList<DataRunnable>());
 
     boolean free = true;
 
@@ -49,21 +49,21 @@ public class RunnableThread extends GameObject implements Runnable {
      *
      * @param runnable
      */
-    public void addTask(GameRunnable runnable) {
+    public void addTask(DataRunnable runnable) {
         synchronized (taskQueue) {
             taskQueue.add(runnable);
             /* 唤醒队列, 开始执行 */
             taskQueue.notify();
         }
-        logger.debug("新增任务 任务ID<" + runnable.getID() + ">");
+        logger.debug(this.getName() + " 接受任务 任务ID<" + runnable.getID() + ">");
     }
 
     @Override
     public void run() {
-        while (ThreadManager.isRunning()) {
-            GameRunnable r = null;
+        while (GlobalManager.getInstance().isRunning()) {
+            DataRunnable r = null;
             synchronized (taskQueue) {
-                while (taskQueue.isEmpty() && ThreadManager.isRunning()) {
+                while (taskQueue.isEmpty() && GlobalManager.getInstance().isRunning()) {
                     try {
                         /* 任务队列为空，则等待有新任务加入从而被唤醒 */
                         taskQueue.wait(500);
@@ -72,7 +72,7 @@ public class RunnableThread extends GameObject implements Runnable {
                     }
                 }
                 /* 取出任务执行 */
-                if (ThreadManager.isRunning()) {
+                if (GlobalManager.getInstance().isRunning()) {
                     r = taskQueue.remove(0);
                 }
             }

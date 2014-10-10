@@ -15,7 +15,7 @@ import java.util.Random;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public abstract class GameObject implements Serializable {
+public abstract class DataObject implements Serializable {
 
     private static final long serialVersionUID = 6613390145680665678L;
     private static final Object obj = new Object();
@@ -31,15 +31,15 @@ public abstract class GameObject implements Serializable {
         }
     }
 
-    public GameObject() {
+    public DataObject() {
         this(getCreateId(), "");
     }
 
-    public GameObject(String Name) {
+    public DataObject(String Name) {
         this(getCreateId(), Name);
     }
 
-    public GameObject(long ID, String Name) {
+    public DataObject(long ID, String Name) {
         this.ID = ID;
         this.Name = Name;
         tempAttribute = new GameAttribute();

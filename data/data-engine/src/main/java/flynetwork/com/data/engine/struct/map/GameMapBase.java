@@ -5,9 +5,9 @@
  */
 package flynetwork.com.data.engine.struct.map;
 
-import flynetwork.com.data.engine.struct.GameObject;
-import flynetwork.com.data.engine.struct.thread.GameRunnable;
 import flynetwork.com.data.engine.manager.ThreadManager;
+import flynetwork.com.data.engine.struct.DataObject;
+import flynetwork.com.data.engine.struct.thread.DataRunnable;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -19,12 +19,12 @@ import org.apache.log4j.Logger;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public abstract class GameMapBase extends GameObject {
+public abstract class GameMapBase extends DataObject {
 
     private static final long serialVersionUID = -7873171982824356220L;
     private static final ThreadGroup MAP_THREAD_GROUP = new ThreadGroup("地图线程");
 
-    class GameMapLine extends GameObject implements IMapInfo {
+    class GameMapLine extends DataObject implements IMapInfo {
 
         private static final long serialVersionUID = 6142938426497360665L;
 
@@ -36,11 +36,14 @@ public abstract class GameMapBase extends GameObject {
         long mapThreadMove;
 
         int serverId;
-        int mapId;
-        int lineId;
+        long mapId;
+        long lineId;
 
-        public GameMapLine(ThreadGroup threadGroup, long ID, String mapName) {
-            super(ID, mapName);
+        public GameMapLine(ThreadGroup threadGroup, int serverid, long mapId, int lineId, String mapName) {
+            super(lineId, mapName);
+            this.lineId = lineId;
+            this.mapId = mapId;
+            this.serverId = serverid;
             ThreadGroup tempThreadGroup = new ThreadGroup(threadGroup, mapName);
             logger.info("加载地图：" + mapName + " 阻挡信息");
             logger.info("地图：" + mapName + " 创建完成");
@@ -54,7 +57,7 @@ public abstract class GameMapBase extends GameObject {
          *
          * @param run
          */
-        public void addMessage(GameRunnable run) {
+        public void addMessage(DataRunnable run) {
             ThreadManager.getInstance().addTask(this.mapThreadMain, run);
         }
 
@@ -69,12 +72,12 @@ public abstract class GameMapBase extends GameObject {
         }
 
         @Override
-        public int getMapId() {
+        public long getMapId() {
             return mapId;
         }
 
         @Override
-        public int getLineId() {
+        public long getLineId() {
             return lineId;
         }
 
@@ -84,12 +87,12 @@ public abstract class GameMapBase extends GameObject {
         }
 
         @Override
-        public void setMapId(int mapId) {
+        public void setMapId(long mapId) {
             this.mapId = mapId;
         }
 
         @Override
-        public void setLineId(int lineId) {
+        public void setLineId(long lineId) {
             this.lineId = lineId;
         }
 
@@ -99,11 +102,25 @@ public abstract class GameMapBase extends GameObject {
 
     Map<Long, GameMapLine> gameMap = new HashMap<>();
 
-    public GameMapBase(int ID, int lineCount, String mapName) {
-        super(ID, mapName);
+    private int mapModelID;
+
+    public int getMapModelID() {
+        return mapModelID;
+    }
+
+    /**
+     *
+     * @param serverid
+     * @param mapModelId map的模板ID
+     * @param lineCount map共有几条线
+     * @param mapName map的名称
+     */
+    public GameMapBase(int serverid, int mapModelId, int lineCount, String mapName) {
+        super(mapName);
+        mapModelID = mapModelId;
         ThreadGroup mapGroup = new ThreadGroup(MAP_THREAD_GROUP, mapName);
         for (int i = 1; i <= lineCount; i++) {
-            GameMapLine gameMapLine = new GameMapLine(mapGroup, i, mapName + " " + i + "线");
+            GameMapLine gameMapLine = new GameMapLine(mapGroup, serverid, this.getID(), i, mapName + " " + i + " 线");
             gameMap.put(gameMapLine.getID(), gameMapLine);
         }
     }
@@ -114,7 +131,7 @@ public abstract class GameMapBase extends GameObject {
      * @param lineid 分线ID
      * @param run 需要执行的任务
      */
-    public void addMessage(long lineid, GameRunnable run) {
+    public void addMessage(long lineid, DataRunnable run) {
         if (lineid > 0) {
             gameMap.get(lineid).addMessage(run);
         } else if (lineid == 0) {

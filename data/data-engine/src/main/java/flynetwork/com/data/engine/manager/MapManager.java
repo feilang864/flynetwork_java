@@ -6,7 +6,8 @@
 package flynetwork.com.data.engine.manager;
 
 import flynetwork.com.data.engine.struct.map.GameMapBase;
-import flynetwork.com.data.engine.struct.thread.GameRunnable;
+import flynetwork.com.data.engine.struct.map.IMapInfo;
+import flynetwork.com.data.engine.struct.thread.DataRunnable;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -28,44 +29,59 @@ public class MapManager {
     }
 
     public MapManager() {
-        gameMaphHashMap = new HashMap<>();
+        gameMapHashMap = new HashMap<>();
     }
 
-    HashMap<Long, GameMapBase> gameMaphHashMap;
+    HashMap<Long, GameMapBase> gameMapHashMap;
 
     public boolean addMap(GameMapBase gameMap) {
-        gameMaphHashMap.put(gameMap.getID(), gameMap);
+        gameMapHashMap.put(gameMap.getID(), gameMap);
         return true;
     }
 
     /**
      * 增加消息
      *
-     * @param mapid
-     * @param lineid
+     * @param mapInfo
      * @param run
      * @return
      */
-    public boolean addMessage(long mapid, long lineid, GameRunnable run) {
-        if (gameMaphHashMap.containsKey(mapid)) {
-            gameMaphHashMap.get(mapid).addMessage(lineid, run);
-        } else if (mapid == 0) {
-            for (Map.Entry<Long, GameMapBase> entry : gameMaphHashMap.entrySet()) {
+    public boolean addMessage(IMapInfo mapInfo, DataRunnable run) {
+        if (mapInfo == null || mapInfo.getMapId() == 0) {
+            for (Map.Entry<Long, GameMapBase> entry : gameMapHashMap.entrySet()) {
                 entry.getValue().addMessage(0, run);
             }
+        } else if (gameMapHashMap.containsKey(mapInfo.getMapId())) {
+            gameMapHashMap.get(mapInfo.getMapId()).addMessage(mapInfo.getLineId(), run);
+        } else {
+            logger.error("地图管理器分派任务 未能找到地图 地图ID：" + mapInfo.getMapId());
         }
         return true;
     }
 
-    /**
-     *
-     * @param mapid
-     * @param lineid
-     * @param run
-     * @return
-     */
-    public static boolean registerMessage(long mapid, int lineid, GameRunnable run) {
-
+    public boolean addMessage(DataRunnable run) {
+        ThreadManager.getInstance().addTask(run);
         return true;
+    }
+
+    public HashMap<Long, GameMapBase> getGameMapHashMap() {
+        return gameMapHashMap;
+    }
+
+    public GameMapBase getGameMap(int mapModelid) {
+        for (Map.Entry<Long, GameMapBase> entrySet : gameMapHashMap.entrySet()) {
+            GameMapBase map = entrySet.getValue();
+            if (map.getMapModelID() == mapModelid) {
+                return map;
+            }
+        }
+        return null;
+    }
+
+    public GameMapBase getGameMap(long mapid) {
+        if (gameMapHashMap.containsKey(mapid)) {
+            return gameMapHashMap.get(mapid);
+        }
+        return null;
     }
 }
