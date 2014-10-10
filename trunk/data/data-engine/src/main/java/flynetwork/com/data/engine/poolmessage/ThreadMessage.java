@@ -6,8 +6,8 @@
 package flynetwork.com.data.engine.poolmessage;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import flynetwork.com.data.engine.manager.ThreadManager;
-import flynetwork.com.data.engine.struct.GameObject;
+import flynetwork.com.data.engine.manager.GlobalManager;
+import flynetwork.com.data.engine.struct.DataObject;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,14 +17,14 @@ import org.apache.log4j.Logger;
  *
  * @author fly_ty
  */
-public class ThreadMessage extends GameObject implements Runnable {
+public class ThreadMessage extends DataObject implements Runnable {
 
     private static final long serialVersionUID = 3715744847097492073L;
     private static final Logger logger = Logger.getLogger(ThreadMessage.class);
 
     public ThreadMessage(String Name) {
         super(Name);
-        Thread thread = new Thread(ThreadManager.getGlobeThreadGroup(), this, Name);
+        Thread thread = new Thread(GlobalManager.getInstance().getGlobeThreadGroup(), this, Name);
         thread.start();
     }
 
@@ -47,10 +47,10 @@ public class ThreadMessage extends GameObject implements Runnable {
 
     @Override
     public void run() {
-        while (ThreadManager.getInstance().isRunning()) {
+        while (GlobalManager.getInstance().isRunning()) {
             MessageBean messageBean = null;
             synchronized (taskQueue) {
-                while (taskQueue.isEmpty() && ThreadManager.getInstance().isRunning()) {
+                while (taskQueue.isEmpty() && GlobalManager.getInstance().isRunning()) {
                     try {
                         /* 任务队列为空，则等待有新任务加入从而被唤醒 */
                         taskQueue.wait(500);
@@ -59,7 +59,7 @@ public class ThreadMessage extends GameObject implements Runnable {
                     }
                 }
                 /* 取出任务执行 */
-                if (ThreadManager.getInstance().isRunning()) {
+                if (GlobalManager.getInstance().isRunning()) {
                     messageBean = taskQueue.remove(0);
                 }
             }

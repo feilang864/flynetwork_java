@@ -21,7 +21,8 @@ public class Test {
         ThreadManager.getInstance();
         TimerManager.getInstance();
         NettyTcpClient tcpClient = new NettyTcpClient("127.0.0.1", 9527);
-        MapManager.getInstance().addMap(new GameMapBase(1, 3, "新手村") {
+        tcpClient.Connect();
+        MapManager.getInstance().addMap(new GameMapBase(1, 1, 3, "新手村") {
             private static final long serialVersionUID = 1L;
         });
 //        MapManager.getInstance().addMap(new GameMapBase(2, 2, "金银岛") {

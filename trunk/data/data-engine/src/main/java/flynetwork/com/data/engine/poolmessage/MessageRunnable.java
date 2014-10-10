@@ -5,14 +5,14 @@
  */
 package flynetwork.com.data.engine.poolmessage;
 
-import flynetwork.com.data.engine.struct.thread.GameRunnable;
+import flynetwork.com.data.engine.struct.thread.DataRunnable;
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author fly_ty
  */
-public class MessageRunnable extends GameRunnable {
+public class MessageRunnable extends DataRunnable {
 
     private static final long serialVersionUID = 1707463603605340445L;
     private static final Logger logger = Logger.getLogger(MessageRunnable.class);

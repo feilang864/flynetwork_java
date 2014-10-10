@@ -5,7 +5,7 @@
  */
 package flynetwork.com.data.engine.manager;
 
-import flynetwork.com.data.engine.struct.thread.GameRunnable;
+import flynetwork.com.data.engine.struct.thread.DataRunnable;
 import flynetwork.com.data.engine.thread.BackThread;
 import flynetwork.com.data.engine.thread.MapThread;
 import flynetwork.com.data.engine.thread.RunnableThread;
@@ -29,6 +29,7 @@ public class ThreadManager {
     }
     BackThread backThread;
     HashMap<Long, RunnableThread> workHashMaps;
+    private long noneThreadID;
     private long mapThreadID;
     private long chatThreadID;
     private long socialThreadID;
@@ -38,9 +39,19 @@ public class ThreadManager {
         MapThread mapThread = new MapThread();
         workHashMaps.put(mapThread.getID(), mapThread);
         mapThreadID = mapThread.getID();
-        chatThreadID = getMapThread(GlobeThreadGroup, "聊天线程执行器");
-        socialThreadID = getMapThread(GlobeThreadGroup, "社交线程执行器");
-//        backThread = new BackThread(5);
+        noneThreadID = getMapThread(GlobalManager.getInstance().getGlobeThreadGroup(), "无名执行器");
+        chatThreadID = getMapThread(GlobalManager.getInstance().getGlobeThreadGroup(), "聊天执行器");
+        socialThreadID = getMapThread(GlobalManager.getInstance().getGlobeThreadGroup(), "社交执行器");
+        backThread = new BackThread(5);
+    }
+
+    /**
+     * 返回无名执行器
+     *
+     * @return
+     */
+    public long getNoneThreadID() {
+        return noneThreadID;
     }
 
     /**
@@ -70,35 +81,23 @@ public class ThreadManager {
         return socialThreadID;
     }
 
-    private static boolean running = true;
-
-    public static boolean isRunning() {
-        return running;
-    }
-
-    public void StopServer() {
-        running = false;
-    }
-
-    private static ThreadGroup GlobeThreadGroup = new ThreadGroup("全局线程");
-
-    public static ThreadGroup getGlobeThreadGroup() {
-        return GlobeThreadGroup;
-    }
-
     public final Long getMapThread(ThreadGroup threadGroup, String workName) {
         RunnableThread wk = new RunnableThread(threadGroup, workName);
         workHashMaps.put(wk.getID(), wk);
         return wk.getID();
     }
 
-    public final void addTask(long threadID, GameRunnable gameRunnable) {
+    public final void addTask(long threadID, DataRunnable gameRunnable) {
         if (workHashMaps.containsKey(threadID)) {
             workHashMaps.get(threadID).addTask(gameRunnable);
         }
     }
 
-    public final void addBackTask(GameRunnable gameRunnable) {
+    public final void addTask(DataRunnable gameRunnable) {
+        workHashMaps.get(this.getNoneThreadID()).addTask(gameRunnable);
+    }
+
+    public final void addBackTask(DataRunnable gameRunnable) {
         backThread.addTask(gameRunnable);
     }
 }

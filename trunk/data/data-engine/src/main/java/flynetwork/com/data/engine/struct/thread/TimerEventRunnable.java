@@ -5,6 +5,7 @@
  */
 package flynetwork.com.data.engine.struct.thread;
 
+import flynetwork.com.data.engine.manager.ThreadManager;
 import flynetwork.com.data.engine.struct.map.IMapInfo;
 import org.apache.log4j.Logger;
 
@@ -15,17 +16,34 @@ import org.apache.log4j.Logger;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public abstract class TimerEvent extends GameRunnable implements IMapInfo {
+public abstract class TimerEventRunnable extends DataRunnable implements IMapInfo {
 
-    private static final Logger logger = Logger.getLogger(TimerEvent.class);
+    private static final Logger logger = Logger.getLogger(TimerEventRunnable.class);
     private static final long serialVersionUID = -8331296295264699207L;
 
     private boolean initExec;
     private int execcount;
     private long jiangetime;
     private int serverId;
-    private int mapId;
-    private int lineId;
+    private long mapId;
+    private long lineId;
+    private long threadID;
+
+    public long getThreadID() {
+        return threadID;
+    }
+
+    public boolean isInitExec() {
+        return initExec;
+    }
+
+    public int getExeccount() {
+        return execcount;
+    }
+
+    public long getJiangetime() {
+        return jiangetime;
+    }
 
     /**
      * 全局执行，所有地图的地图线会执行的定时器
@@ -35,7 +53,7 @@ public abstract class TimerEvent extends GameRunnable implements IMapInfo {
      * @param jiangetime 间隔执行时间 最短5毫秒
      * @param Name 任务名称
      */
-    public TimerEvent(boolean initExec, int execcount, long jiangetime, String Name) {
+    public TimerEventRunnable(boolean initExec, int execcount, long jiangetime, String Name) {
         super(Name);
         this.initExec = initExec;
         this.execcount = execcount;
@@ -43,6 +61,7 @@ public abstract class TimerEvent extends GameRunnable implements IMapInfo {
         this.serverId = 0;
         this.mapId = 0;
         this.lineId = 0;
+        threadID = ThreadManager.getInstance().getNoneThreadID();
         if (initExec) {
             this.run();
         }
@@ -59,17 +78,12 @@ public abstract class TimerEvent extends GameRunnable implements IMapInfo {
      * @param lineId
      * @param Name
      */
-    public TimerEvent(boolean initExec, int execcount, long jiangetime, int serverId, int mapId, int lineId, String Name) {
-        super(Name);
-        this.initExec = initExec;
-        this.execcount = execcount;
-        this.jiangetime = jiangetime;
+    public TimerEventRunnable(boolean initExec, int execcount, long jiangetime, int serverId, long mapId, long lineId, String Name) {
+        this(initExec, execcount, jiangetime, Name);
         this.serverId = serverId;
         this.mapId = mapId;
         this.lineId = lineId;
-        if (initExec) {
-            this.run();
-        }
+        threadID = ThreadManager.getInstance().getMapThreadID();
     }
 
     @Override
@@ -78,12 +92,12 @@ public abstract class TimerEvent extends GameRunnable implements IMapInfo {
     }
 
     @Override
-    public void setMapId(int mapId) {
+    public void setMapId(long mapId) {
         this.mapId = mapId;
     }
 
     @Override
-    public void setLineId(int lineId) {
+    public void setLineId(long lineId) {
         this.lineId = lineId;
     }
 
@@ -93,12 +107,12 @@ public abstract class TimerEvent extends GameRunnable implements IMapInfo {
     }
 
     @Override
-    public int getMapId() {
+    public long getMapId() {
         return mapId;
     }
 
     @Override
-    public int getLineId() {
+    public long getLineId() {
         return lineId;
     }
 }

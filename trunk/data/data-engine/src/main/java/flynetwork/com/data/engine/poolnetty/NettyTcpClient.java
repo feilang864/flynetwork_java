@@ -5,10 +5,11 @@
  */
 package flynetwork.com.data.engine.poolnetty;
 
-import flynetwork.com.data.engine.manager.ThreadManager;
+import flynetwork.com.data.engine.manager.MapManager;
+import flynetwork.com.data.engine.manager.TimerManager;
 import flynetwork.com.data.engine.poolmessage.MessageBean;
 import flynetwork.com.data.engine.poolmessage.MessagePool;
-import flynetwork.com.data.engine.struct.thread.GameRunnable;
+import flynetwork.com.data.engine.struct.thread.TimerEventRunnable;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -77,7 +78,7 @@ public class NettyTcpClient {
                              */
                             @Override
                             public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-                                logger.info("发送内部错误");
+                                logger.error("发送内部错误");
                             }
 
                             /**
@@ -88,19 +89,29 @@ public class NettyTcpClient {
                              */
                             @Override
                             public void channelUnregistered(ChannelHandlerContext ctx) {
-                                ThreadManager.getInstance().addBackTask(new GameRunnable("重新连接登录服务器") {
-                                    private static final long serialVersionUID = 3322702144147294040L;
+                                logger.error("与登录服务器连接断开 500ms 重新连接~！");
+
+                                TimerManager.getInstance().addTimerTask(new TimerEventRunnable(false, 1, 500, 0, MapManager.getInstance().getGameMap(1).getID(), 1, "重新连接登录服务器") {
+                                    private static final long serialVersionUID = 8936220264259089420L;
 
                                     @Override
                                     public void run() {
-                                        try {
-                                            logger.info("与登录服务器连接断开 500ms 重新连接~！");
-                                            Thread.sleep(500);
-                                        } catch (InterruptedException ex) {
-                                        }
                                         Connect();
                                     }
                                 });
+//                                ThreadManager.getInstance().addBackTask(new GameRunnable("重新连接登录服务器") {
+//                                    private static final long serialVersionUID = 3322702144147294040L;
+//
+//                                    @Override
+//                                    public void run() {
+//                                        try {
+//                                            logger.info("与登录服务器连接断开 500ms 重新连接~！");
+//                                            Thread.sleep(500);
+//                                        } catch (InterruptedException ex) {
+//                                        }
+//                                        Connect();
+//                                    }
+//                                });
                             }
 
                             @Override
