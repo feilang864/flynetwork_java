@@ -7,6 +7,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>data-engine</module>
+        <module>game-engine</module>
+        <module>game-logic</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
