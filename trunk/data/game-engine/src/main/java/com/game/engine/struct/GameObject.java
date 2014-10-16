@@ -6,7 +6,6 @@
 package com.game.engine.struct;
 
 import java.io.Serializable;
-import java.util.Random;
 
 /**
  * 基类
@@ -18,25 +17,13 @@ import java.util.Random;
 public abstract class GameObject implements Serializable {
 
     private static final long serialVersionUID = 6613390145680665678L;
-    private static final Object obj = new Object();
-
-    private static long staticID = 0;
-
-    private static int serverID = new Random().nextInt(1000000);
-
-    public static long getCreateId() {
-        synchronized (obj) {
-            staticID += 1;
-            return (serverID & 0xFFFF) << 48 | (System.currentTimeMillis() / 1000L & 0xFFFFFFFF) << 16 | staticID & 0xFFFF;
-        }
-    }
 
     public GameObject() {
-        this(getCreateId(), "");
+        this(GameGlobal.getInstance().getCreateId(), "");
     }
 
     public GameObject(String Name) {
-        this(getCreateId(), Name);
+        this(GameGlobal.getInstance().getCreateId(), Name);
     }
 
     public GameObject(long ID, String Name) {

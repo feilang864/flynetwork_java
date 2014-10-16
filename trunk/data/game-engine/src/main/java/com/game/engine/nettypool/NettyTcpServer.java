@@ -6,7 +6,6 @@
 package com.game.engine.nettypool;
 
 import com.game.engine.messagepool.MessageBean;
-import com.game.engine.messagepool.MessagePool;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
@@ -30,17 +29,11 @@ public class NettyTcpServer {
 
     private static final Logger logger = Logger.getLogger(NettyTcpServer.class);
     private int port = 9527;
+    NettyMessageHandler nettyMessageHandler;
 
-    public NettyTcpServer(int serverid, int port) {
+    public NettyTcpServer(int port, NettyMessageHandler messageHandler) {
         this.port = port;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
+        this.nettyMessageHandler = messageHandler;
     }
 
     public void start() {
@@ -75,7 +68,7 @@ public class NettyTcpServer {
                                  */
                                 @Override
                                 protected void channelRead0(ChannelHandlerContext ctx, MessageBean msg) throws Exception {
-                                    MessagePool.getInstance().registerMessage(msg);
+                                    nettyMessageHandler.readMessage(ctx, msg);
                                 }
 
                                 /**
@@ -86,7 +79,7 @@ public class NettyTcpServer {
                                  */
                                 @Override
                                 public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-                                    logger.info("发送内部错误");
+                                    nettyMessageHandler.exceptionCaught(ctx, cause);
                                 }
 
                                 /**
@@ -97,7 +90,7 @@ public class NettyTcpServer {
                                  */
                                 @Override
                                 public void channelUnregistered(ChannelHandlerContext ctx) {
-
+                                    nettyMessageHandler.closeSession(ctx);
                                 }
 
                                 /**
@@ -108,7 +101,7 @@ public class NettyTcpServer {
                                  */
                                 @Override
                                 public void channelActive(ChannelHandlerContext ctx) {
-                                    logger.info("新建连接成功 ");
+                                    nettyMessageHandler.channelActive(ctx);
                                 }
                             });
                         }
@@ -120,12 +113,12 @@ public class NettyTcpServer {
             // Bind and start to accept incoming connections
             //ChannelFuture cf = bs.bind(this.port).sync();
             bs.bind(this.port).sync();
-            logger.info("开启端口 " + this.port);
+            logger.info("开启Tcp服务端口 " + this.port + " 监听");
             // Wait until the session socket is closed.
             // shut down your session.
 //            cf.channel().closeFuture().sync();
         } catch (InterruptedException ex) {
-            logger.info("开启端口 " + this.port + " xxxxxxxxxxxxxxxx" + ex);
+            logger.error("开启Tcp服务端口 " + this.port + " 监听 失败:" + ex);
         } finally {
             //关闭相关资源
 //            workerGroup.shutdownGracefully();

@@ -6,7 +6,6 @@
 package com.game.engine.nettypool;
 
 import com.game.engine.messagepool.MessageBean;
-import com.game.engine.messagepool.MessagePool;
 import com.game.engine.struct.thread.TimerEventRunnable;
 import com.game.engine.threadpool.TimerManager;
 import io.netty.bootstrap.Bootstrap;
@@ -36,15 +35,18 @@ public class NettyTcpClient {
     private Bootstrap bootstrap;
     private Channel channel;
     private boolean reConnect;
+    NettyMessageHandler nettyMessageHandler;
 
     @Override
     public String toString() {
         return " Host=" + Host + ", Port=" + Port;
     }
 
-    public NettyTcpClient(String host, int port) {
+    public NettyTcpClient(String host, int port, boolean isReConnect, NettyMessageHandler messageHandler) {
         this.Host = host;
         this.Port = port;
+        this.nettyMessageHandler = messageHandler;
+        reConnect = isReConnect;
         EventLoopGroup group = new NioEventLoopGroup(4);
         bootstrap = new Bootstrap();
         bootstrap.group(group).channel(NioSocketChannel.class);
@@ -53,7 +55,8 @@ public class NettyTcpClient {
                     @Override
                     protected void initChannel(Channel ch) throws Exception {
                         ChannelPipeline pipeline = ch.pipeline();
-                        pipeline.addLast("Decoder", new NettyDecoder())
+                        pipeline
+                        .addLast("Decoder", new NettyDecoder())
                         .addLast("Encoder", new NettyEncoder())
                         .addLast("handler", new SimpleChannelInboundHandler<MessageBean>() {
 
@@ -66,7 +69,7 @@ public class NettyTcpClient {
                              */
                             @Override
                             protected void channelRead0(ChannelHandlerContext ctx, MessageBean msg) throws Exception {
-                                MessagePool.getInstance().registerMessage(msg);
+                                nettyMessageHandler.readMessage(ctx, msg);
                             }
 
                             /**
@@ -77,7 +80,7 @@ public class NettyTcpClient {
                              */
                             @Override
                             public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-                                logger.error("发送内部错误");
+                                nettyMessageHandler.exceptionCaught(ctx, cause);
                             }
 
                             /**
@@ -88,34 +91,22 @@ public class NettyTcpClient {
                              */
                             @Override
                             public void channelUnregistered(ChannelHandlerContext ctx) {
-                                logger.error("与登录服务器连接断开 500ms 重新连接~！");
+                                nettyMessageHandler.closeSession(ctx);
+                                if (reConnect) {
+                                    TimerManager.getInstance().addTimerTask(new TimerEventRunnable(false, 1, 500, 0, 0, 1, "重新连接登录服务器") {
+                                        private static final long serialVersionUID = 8936220264259089420L;
 
-                                TimerManager.getInstance().addTimerTask(new TimerEventRunnable(false, 1, 500, 0, 0, 1, "重新连接登录服务器") {
-                                    private static final long serialVersionUID = 8936220264259089420L;
-
-                                    @Override
-                                    public void run() {
-                                        Connect();
-                                    }
-                                });
-//                                ThreadManager.getInstance().addBackTask(new GameRunnable("重新连接登录服务器") {
-//                                    private static final long serialVersionUID = 3322702144147294040L;
-//
-//                                    @Override
-//                                    public void run() {
-//                                        try {
-//                                            logger.info("与登录服务器连接断开 500ms 重新连接~！");
-//                                            Thread.sleep(500);
-//                                        } catch (InterruptedException ex) {
-//                                        }
-//                                        Connect();
-//                                    }
-//                                });
+                                        @Override
+                                        public void run() {
+                                            Connect();
+                                        }
+                                    });
+                                }
                             }
 
                             @Override
                             public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-                                logger.error("连接闲置");
+                                //logger.error("连接闲置");
                             }
 
                             /**
@@ -126,10 +117,11 @@ public class NettyTcpClient {
                              */
                             @Override
                             public void channelActive(ChannelHandlerContext ctx) {
-                                logger.info("向登录服务器注册成功~！");
-                                MessageBean bean = new MessageBean(ctx, 100201);
-                                bean.setMsgbuffer(new byte[5]);
-                                sendMsg(bean);
+                                nettyMessageHandler.channelActive(ctx);
+                                //logger.info("向登录服务器注册成功~！");
+//                                MessageBean bean = new MessageBean(ctx, 100201);
+//                                bean.setMsgbuffer(new byte[5]);
+//                                sendMsg(bean);
                             }
                         });
                     }
@@ -145,35 +137,11 @@ public class NettyTcpClient {
         }
         if (channel == null) {
             try {
-                logger.info("向服务器注册" + this.toString());
+                logger.info("向 " + this.toString() + " 服务器注册");
                 channel = bootstrap.connect(this.Host, this.Port).channel();
             } catch (Exception e) {
             }
         }
-    }
-
-    public boolean isReConnect() {
-        return reConnect;
-    }
-
-    public void setReConnect(boolean reConnect) {
-        this.reConnect = reConnect;
-    }
-
-    public String getHost() {
-        return Host;
-    }
-
-    public void setHost(String Host) {
-        this.Host = Host;
-    }
-
-    public int getPort() {
-        return Port;
-    }
-
-    public void setPort(int Port) {
-        this.Port = Port;
     }
 
     public void sendMsg(MessageBean msg) {
