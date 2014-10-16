@@ -5,6 +5,8 @@
  */
 package com.game.engine.struct;
 
+import java.util.Random;
+
 /**
  * 游戏常用全局数据
  *
@@ -23,6 +25,19 @@ public class GameGlobal {
 
     public ThreadGroup getGlobeThreadGroup() {
         return GlobeThreadGroup;
+    }
+
+    private final Object obj = new Object();
+
+    private long staticID = 0;
+
+    private int serverID = new Random().nextInt(1000000);
+
+    public long getCreateId() {
+        synchronized (obj) {
+            staticID += 1;
+            return (serverID & 0xFFFF) << 48 | (System.currentTimeMillis() / 1000L & 0xFFFFFFFF) << 16 | staticID & 0xFFFF;
+        }
     }
 
     private boolean running = true;
