@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Administrator
  */
-public class BackTaskThread implements Runnable {
+class BackTaskThread implements Runnable {
 
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(TaskThread.class);
     /* 任务列表 */

@@ -31,7 +31,10 @@ public class NettyTcpServer {
     private static final Logger logger = Logger.getLogger(NettyTcpServer.class);
     private int port = 9527;
 
-    public NettyTcpServer(int serverid, int port) {
+    public NettyTcpServer() {
+    }
+
+    public NettyTcpServer(int port) {
         this.port = port;
     }
 
@@ -75,7 +78,7 @@ public class NettyTcpServer {
                                  */
                                 @Override
                                 protected void channelRead0(ChannelHandlerContext ctx, MessageBean msg) throws Exception {
-                                    MessagePool.getInstance().registerMessage(msg);
+                                    MessagePool.getInstance().addRecvMessage(msg);
                                 }
 
                                 /**
@@ -119,7 +122,7 @@ public class NettyTcpServer {
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
             // Bind and start to accept incoming connections
             //ChannelFuture cf = bs.bind(this.port).sync();
-            bs.bind(this.port).sync();
+            bs.bind("0.0.0.0", this.port).sync();
             logger.info("开启端口 " + this.port);
             // Wait until the session socket is closed.
             // shut down your session.

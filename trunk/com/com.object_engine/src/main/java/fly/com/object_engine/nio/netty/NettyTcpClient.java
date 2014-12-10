@@ -65,7 +65,7 @@ public class NettyTcpClient {
                              */
                             @Override
                             protected void channelRead0(ChannelHandlerContext ctx, MessageBean msg) throws Exception {
-                                MessagePool.getInstance().registerMessage(msg);
+                                MessagePool.getInstance().addRecvMessage(msg);
                             }
 
                             /**

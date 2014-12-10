@@ -21,8 +21,8 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
  */
 public class MinaTcpServer {
 
-    IoAcceptor _acceptor;
     private static final Logger logger = Logger.getLogger(MinaTcpServer.class);
+    IoAcceptor _acceptor;
 
     public MinaTcpServer() {
         //创建一个nio异步的socket监听服务器
@@ -39,6 +39,10 @@ public class MinaTcpServer {
         _acceptor.setHandler(new MinaIOHandler());
     }
 
+    public boolean Start() {
+        return Start(9527);
+    }
+
     /**
      * 启动 socket 监听
      *
@@ -48,7 +52,7 @@ public class MinaTcpServer {
     public boolean Start(int port) {
         try {
             ///绑定一个监听端口号
-            _acceptor.bind(new InetSocketAddress(port));
+            _acceptor.bind(new InetSocketAddress("0.0.0.0", port));
             logger.info("开启端口为 " + port + " 监听服务");
             return true;
         } catch (IOException ex) {
