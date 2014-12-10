@@ -18,7 +18,7 @@ public class MinaIOHandler implements IoHandler {
 
     private static final Logger logger = Logger.getLogger(MinaIOHandler.class);
 
-    public MinaIOHandler() {        
+    public MinaIOHandler() {
 
     }
 

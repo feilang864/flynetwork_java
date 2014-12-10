@@ -5,6 +5,9 @@
  */
 package fly.com.object_engine;
 
+import fly.com.object_engine.nio.MessagePool;
+import fly.com.object_engine.nio.mina.MinaTcpServer;
+import fly.com.object_engine.nio.netty.NettyTcpServer;
 import fly.com.object_engine.thread.TaskHandlerBase;
 import fly.com.object_engine.thread.TaskThread;
 import fly.com.object_engine.thread.ThreadManager;
@@ -19,6 +22,12 @@ public class TestMain {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(TestMain.class);
 
     public static void main(String[] args) {
+        MessagePool.getInstance();
+        NettyTcpServer nettyTcpServer = new NettyTcpServer(9527);
+        nettyTcpServer.start();
+
+        MinaTcpServer minaTcpServer = new MinaTcpServer();
+        minaTcpServer.Start(9528);
 
         MapMainThread mapMainThread = new MapMainThread();
 

@@ -8,7 +8,6 @@ package fly.com.object_engine.nio;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import fly.com.object_engine.struct.ObjectConfig;
-import fly.com.object_engine.thread.TaskHandlerBase;
 import fly.com.object_engine.thread.TaskThread;
 import fly.com.object_engine.thread.ThreadManager;
 import java.util.Collections;
@@ -32,30 +31,30 @@ public class MessagePool {
     public static MessagePool getInstance() {
         return instance;
     }
-    Map<Long, MessageHandler> handlerMap = new HashMap<>();
-    MessageThread messageThread;
+    Map<Long, ProtobufMessageConstructor> handlerMap = new HashMap<>(0);
+    RecvActionMessageThread messageThread;
 
     public MessagePool() {
-        messageThread = new MessageThread(ObjectConfig.getThreadGroup(), "Netty消息处理器");
+        messageThread = new RecvActionMessageThread(ObjectConfig.getThreadGroup(), "全局消息处理器");
         ThreadManager.getInstance().addActionThread(messageThread);
     }
 
-    public void registerMessage(MessageBean messageBean) {
+    public void addRecvMessage(MessageBean messageBean) {
         messageThread.addTask(messageBean);
     }
 
-    public void registerHandlerMessage(long messageId, Class<? extends HandlerAction> handel, Class<? extends com.google.protobuf.Message> message) {
-        MessageHandler messageHandler = new MessageHandler(messageId, handel, message);
+    public void registerHandlerMessage(long messageId, Class<? extends MessageHandler> handel, Class<? extends com.google.protobuf.Message> message) {
+        ProtobufMessageConstructor messageHandler = new ProtobufMessageConstructor(messageId, handel, message);
         handlerMap.put(messageId, messageHandler);
     }
 
-    class MessageHandler {
+    class ProtobufMessageConstructor {
 
         long messageId;
-        Class<? extends HandlerAction> handel;
+        Class<? extends MessageHandler> handel;
         Class<? extends com.google.protobuf.Message> message;
 
-        public MessageHandler(long messageId, Class<? extends HandlerAction> handel, Class<? extends com.google.protobuf.Message> message) {
+        public ProtobufMessageConstructor(long messageId, Class<? extends MessageHandler> handel, Class<? extends com.google.protobuf.Message> message) {
             this.messageId = messageId;
             this.handel = handel;
             this.message = message;
@@ -69,11 +68,11 @@ public class MessagePool {
             this.messageId = messageId;
         }
 
-        public Class<? extends HandlerAction> getHandel() {
+        public Class<? extends MessageHandler> getHandel() {
             return handel;
         }
 
-        public void setHandel(Class<? extends HandlerAction> handel) {
+        public void setHandel(Class<? extends MessageHandler> handel) {
             this.handel = handel;
         }
 
@@ -87,14 +86,14 @@ public class MessagePool {
 
     }
 
-    public class MessageThread extends TaskThread {
-
-        public MessageThread(ThreadGroup threadGroup, String threadName) {
-            super(threadGroup, threadName);
-        }
+    public class RecvActionMessageThread extends TaskThread {
 
         /* 任务列表 */
         private final List<MessageBean> messageQueue = Collections.synchronizedList(new LinkedList<MessageBean>());
+
+        public RecvActionMessageThread(ThreadGroup threadGroup, String threadName) {
+            super(threadGroup, threadName);
+        }
 
         /**
          * 增加新的任务 每增加一个新任务，都要唤醒任务队列
@@ -125,9 +124,9 @@ public class MessagePool {
                     }
                 }
                 if (msg != null) {
-                    MessageHandler get = handlerMap.get(msg.getMsgid());
+                    ProtobufMessageConstructor get = handlerMap.get(msg.getMsgid());
                     try {
-                        HandlerAction newInstance = get.getHandel().newInstance();
+                        MessageHandler newInstance = get.getHandel().newInstance();
                         Message parseFrom = get.getMessage().newInstance().getParserForType().parseFrom(msg.getMsgbuffer());
                         newInstance.setTCPHandler(parseFrom, get);
                         newInstance.action();

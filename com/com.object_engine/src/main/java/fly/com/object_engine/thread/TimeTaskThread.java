@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
  *
  * @author Administrator
  */
-public class TimeTaskThread implements Runnable {
+class TimeTaskThread implements Runnable {
 
     private static final Logger logger = Logger.getLogger(TimeTaskThread.class);
     /* 任务列表 */
