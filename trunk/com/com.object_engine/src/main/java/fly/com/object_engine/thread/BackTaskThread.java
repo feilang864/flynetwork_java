@@ -5,6 +5,7 @@
  */
 package fly.com.object_engine.thread;
 
+import fly.com.object_engine.struct.ObjectConfig;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,17 +14,16 @@ import java.util.List;
  *
  * @author Administrator
  */
-public class BackTaskThread {
+public class BackTaskThread implements Runnable {
 
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(TaskThread.class);
     /* 任务列表 */
     private final List<TaskHandlerBase> taskQueue = Collections.synchronizedList(new LinkedList<TaskHandlerBase>());
 
     public BackTaskThread(String threadName, int count) {
-        ThreadGroup group = new ThreadGroup(threadName);
+        ThreadGroup group = new ThreadGroup(ObjectConfig.getThreadGroup(), threadName);
         for (int i = 0; i < count; i++) {
-            ThreadGroup threadGroup = new ThreadGroup(group, threadName + i);
-            Thread thread = new Thread(threadGroup, new ThreadRun(), threadName);
+            Thread thread = new Thread(group, this, threadName + i);
             thread.start();
         }
     }
@@ -42,27 +42,26 @@ public class BackTaskThread {
         logger.debug("提交任务 任务<" + newTask.getID() + ">: " + newTask.getName());
     }
 
-    class ThreadRun implements Runnable {
-
-        @Override
-        public void run() {
-            while (true) {
-                TaskHandlerBase taskHandler = null;
-                synchronized (taskQueue) {
-                    if (taskQueue.isEmpty()) {
-                        try {
-                            taskQueue.wait(200);
-                        } catch (InterruptedException ex) {
-                        }
-                    } else {
-                        taskHandler = taskQueue.remove(0);
+    @Override
+    public void run() {
+        while (true) {
+            TaskHandlerBase taskHandler = null;
+            synchronized (taskQueue) {
+                if (taskQueue.isEmpty()) {
+                    try {
+                        taskQueue.wait(200);
+                    } catch (InterruptedException ex) {
                     }
+                } else {
+                    taskHandler = taskQueue.remove(0);
                 }
-                if (taskHandler != null) {
-                    long startTime = System.currentTimeMillis();
-                    taskHandler.action();
-                    long endTime = System.currentTimeMillis();
-                    logger.trace("执行任务 任务<" + taskHandler.getID() + ">: " + taskHandler.getName() + " 耗时：" + (endTime - startTime));
+            }
+            if (taskHandler != null) {
+                long startTime = System.currentTimeMillis();
+                taskHandler.action();
+                long endTime = System.currentTimeMillis();
+                if (endTime - startTime > 3000) {
+                    logger.info("执行任务 任务<" + taskHandler.getID() + ">: " + taskHandler.getName() + " 耗时：" + (endTime - startTime));
                 }
             }
         }

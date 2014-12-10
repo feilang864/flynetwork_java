@@ -24,6 +24,29 @@ public abstract class TimeTaskHandlerBase extends TaskHandlerBase {
     private int intervalTime;
 
     /**
+     * 永久间隔时间执行
+     *
+     * @param startTime
+     * @param isStartAction
+     * @param intervalTime
+     */
+    public TimeTaskHandlerBase(long startTime, boolean isStartAction, int intervalTime) {
+        this(startTime, isStartAction, 0L, 0, intervalTime, 0);
+    }
+
+    /**
+     * 永久间隔时间执行
+     *
+     * @param startTime
+     * @param isStartAction
+     * @param intervalTime
+     * @param name
+     */
+    public TimeTaskHandlerBase(long startTime, boolean isStartAction, int intervalTime, String name) {
+        this(startTime, isStartAction, 0L, 0, intervalTime, 0, name);
+    }
+
+    /**
      * 指定执行次数的任务
      *
      * @param startTime
@@ -72,6 +95,19 @@ public abstract class TimeTaskHandlerBase extends TaskHandlerBase {
      */
     public TimeTaskHandlerBase(long startTime, boolean isStartAction, long endTime, int intervalTime, int actionThreadId, String Name) {
         this(startTime, isStartAction, endTime, 0, intervalTime, actionThreadId, Name);
+    }
+
+    /**
+     * 指定结束时间的任务
+     *
+     * @param startTime 开始时间
+     * @param isStartAction 是否加入队列前执行一次
+     * @param endTime 结束时间
+     * @param intervalTime 间隔时间
+     * @param Name 任务名字
+     */
+    public TimeTaskHandlerBase(long startTime, boolean isStartAction, long endTime, int intervalTime, String Name) {
+        this(startTime, isStartAction, endTime, 0, intervalTime, 0, Name);
     }
 
     /**

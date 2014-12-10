@@ -21,7 +21,7 @@ public abstract class ObjectBase implements Serializable {
 
     private Long ID;
     private String Name;
-    private transient ObjectAttribute gameAttribute = new ObjectAttribute();
+    private transient ObjectAttribute tempObjectAttribute = new ObjectAttribute();
 
     public ObjectBase() {
         this.ID = ObjectConfig.getId();
@@ -32,8 +32,12 @@ public abstract class ObjectBase implements Serializable {
         this.Name = Name;
     }
 
-    public ObjectAttribute getGameAttribute() {
-        return gameAttribute;
+    public Long getID() {
+        return ID;
+    }
+
+    public void setID(Long ID) {
+        this.ID = ID;
     }
 
     public String getName() {
@@ -44,17 +48,17 @@ public abstract class ObjectBase implements Serializable {
         this.Name = Name;
     }
 
-    public void setID(Long ID) {
-        this.ID = ID;
+    public ObjectAttribute getTempObjectAttribute() {
+        return tempObjectAttribute;
     }
 
-    public Long getID() {
-        return ID;
+    public void setTempObjectAttribute(ObjectAttribute tempObjectAttribute) {
+        this.tempObjectAttribute = tempObjectAttribute;
     }
 
     @Override
     public String toString() {
-        return "GameObject{" + "ID=" + ID + ", Name=" + Name + ", gameAttribute=" + gameAttribute + '}';
+        return "ObjectBase{" + "ID=" + ID + ", Name=" + Name + ", tempObjectAttribute=" + tempObjectAttribute + '}';
     }
 
 }

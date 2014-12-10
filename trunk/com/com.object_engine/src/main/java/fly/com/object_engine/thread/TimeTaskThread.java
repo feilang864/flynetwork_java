@@ -16,15 +16,14 @@ import org.apache.log4j.Logger;
  *
  * @author Administrator
  */
-public class TimeTaskThread {
+public class TimeTaskThread implements Runnable {
 
     private static final Logger logger = Logger.getLogger(TimeTaskThread.class);
     /* 任务列表 */
     private final List<TimeTaskHandlerBase> taskQueue = Collections.synchronizedList(new LinkedList<TimeTaskHandlerBase>());
 
     public TimeTaskThread() {
-        ThreadGroup threadGroup = new ThreadGroup("全局定时器执行线程");
-        Thread thread = new Thread(threadGroup, new taskrun(), "全局定时器执行线程");
+        Thread thread = new Thread(ObjectConfig.getThreadGroup(), this, "全局定时器执行线程");
         thread.start();
     }
 
@@ -42,34 +41,45 @@ public class TimeTaskThread {
         logger.debug("提交任务 任务<" + newTask.getID() + ">: " + newTask.getName());
     }
 
-    class taskrun implements Runnable {
-
-        @Override
-        public void run() {
-            while (ObjectConfig.isRunning()) {
-                List<TimeTaskHandlerBase> tempTimerEvents = null;
-                synchronized (taskQueue) {
-                    if (taskQueue.isEmpty()) {
-                        try {
-                            /* 任务队列为空，则等待有新任务加入从而被唤醒 */
-                            taskQueue.wait(200);
-                        } catch (InterruptedException ie) {
-                            logger.error(ie);
+    @Override
+    public void run() {
+        while (ObjectConfig.isRunning()) {
+            List<TimeTaskHandlerBase> tempTimerEvents = null;
+            synchronized (taskQueue) {
+                if (taskQueue.isEmpty()) {
+                    try {
+                        /* 任务队列为空，则等待有新任务加入从而被唤醒 */
+                        taskQueue.wait(200);
+                    } catch (InterruptedException ie) {
+                        logger.error(ie);
+                    }
+                } else {
+                    //队列不为空的情况下  取出队列定时器任务
+                    tempTimerEvents = new ArrayList<>(taskQueue);
+                }
+            }
+            if (tempTimerEvents != null && !tempTimerEvents.isEmpty()) {
+                for (TimeTaskHandlerBase timerEvent : tempTimerEvents) {
+                    int actionCount = timerEvent.getTempObjectAttribute().getIntValue("actionCount");
+                    if ((timerEvent.getEndTime() > 0 && System.currentTimeMillis() > timerEvent.getEndTime()) || (timerEvent.getActionCount() > 0 && actionCount > timerEvent.getActionCount())) {
+                        //任务过期
+                        synchronized (taskQueue) {
+                            taskQueue.remove(timerEvent);
+                            continue;
                         }
-                    } else {
-                        //队列不为空的情况下  取出队列定时器任务
-                        tempTimerEvents = new ArrayList<>(taskQueue);
                     }
-                }
-                if (tempTimerEvents != null && !tempTimerEvents.isEmpty()) {
-                    for (TimeTaskHandlerBase timerEvent : tempTimerEvents) {
-                        ThreadManager.getInstance().addTask(timerEvent.getActionThreadId(), timerEvent);
+                    long lastactiontime = timerEvent.getTempObjectAttribute().getLongValue("lastactiontime");
+                    if (lastactiontime != 0 && Math.abs(System.currentTimeMillis() - lastactiontime) < timerEvent.getIntervalTime()) {
+                        continue;
                     }
+                    timerEvent.getTempObjectAttribute().setValue("actionCount", ++actionCount);
+                    timerEvent.getTempObjectAttribute().setValue("lastactiontime", System.currentTimeMillis());
+                    ThreadManager.getInstance().addTask(timerEvent);
                 }
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException ex) {
-                }
+            }
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {
             }
         }
     }
