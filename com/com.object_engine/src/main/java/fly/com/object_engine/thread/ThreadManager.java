@@ -26,8 +26,13 @@ public class ThreadManager {
     public ThreadManager() {
     }
 
-    public void addTask(int threadId, TaskHandlerBase task) {
-        TaskThread thread = taskHashMap.get(threadId);
+    /**
+     *
+     * @param threadId
+     * @param task
+     */
+    public void addTask(TaskHandlerBase task) {
+        TaskThread thread = taskHashMap.get(task.getActionThreadId());
         if (thread != null) {
             thread.addTask(task);
         } else {
@@ -35,16 +40,52 @@ public class ThreadManager {
         }
     }
 
+    /**
+     *
+     * @param task
+     */
     public void addBackTask(TaskHandlerBase task) {
         backTaskThread.addTask(task);
     }
 
+    /**
+     *
+     * @param newTask
+     */
     public void addTimeTask(TimeTaskHandlerBase newTask) {
         timeTaskThread.addTask(newTask);
     }
 
+    /**
+     *
+     * @param threadGroup
+     * @param threadName
+     * @return
+     */
+    public int getActionThread(ThreadGroup threadGroup, String threadName) {
+        TaskThread taskThread = new TaskThread(threadGroup, threadName);
+        taskHashMap.put(taskThread.getId(), taskThread);
+        return taskThread.getId();
+    }
+
+    /**
+     *
+     * @param threadName
+     * @return
+     */
     public int getActionThread(String threadName) {
         TaskThread taskThread = new TaskThread(threadName);
+        taskHashMap.put(taskThread.getId(), taskThread);
+        return taskThread.getId();
+    }
+
+    /**
+     *
+     * @param taskThread
+     * @return
+     */
+    public int addActionThread(TaskThread taskThread) {
+        taskHashMap.put(taskThread.getId(), taskThread);
         return taskThread.getId();
     }
 }

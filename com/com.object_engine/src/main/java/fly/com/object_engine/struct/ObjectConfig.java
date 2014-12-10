@@ -16,6 +16,7 @@ public class ObjectConfig {
     private static final Object obj = new Object();
     private static long staticID = 0;
     private static int serverID = new Random().nextInt(1000000);
+    private static ThreadGroup threadGroup = new ThreadGroup("全局执行线程");
 
     public static long getId() {
         synchronized (obj) {
@@ -28,6 +29,10 @@ public class ObjectConfig {
 
     public static boolean isRunning() {
         return running;
+    }
+
+    public static ThreadGroup getThreadGroup() {
+        return threadGroup;
     }
 
 }

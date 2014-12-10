@@ -16,31 +16,41 @@ import fly.com.object_engine.thread.TimeTaskHandlerBase;
  */
 public class TestMain {
 
+    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(TestMain.class);
+
     public static void main(String[] args) {
 
-        ThreadManager.getInstance().addBackTask(new TaskHandlerBase() {
+        MapMainThread mapMainThread = new MapMainThread();
+
+        ThreadManager.getInstance().addActionThread(mapMainThread);
+
+        ThreadManager.getInstance().addTimeTask(new TimeTaskHandlerBase(System.currentTimeMillis(), true, 2, 1000, mapMainThread.getId(), "执行次数定时器") {
+            private static final long serialVersionUID = -4078196804052284070L;
 
             @Override
             public void action() {
-                System.out.println("dddd");
+                logger.error("TimeTask");
             }
         });
 
-        ThreadManager.getInstance().addBackTask(new TaskHandlerBase() {
+        ThreadManager.getInstance().addTimeTask(new TimeTaskHandlerBase(System.currentTimeMillis(), false, 2000, "结束时间定时器") {
+            private static final long serialVersionUID = -4078196804052284070L;
 
             @Override
             public void action() {
-                System.out.println("dddd");
+                logger.error("TimeTask");
             }
         });
 
-        ThreadManager.getInstance().addTimeTask(new TimeTaskHandlerBase(System.currentTimeMillis(), true, 10, 1000) {
+        ThreadManager.getInstance().addTimeTask(new TimeTaskHandlerBase(System.currentTimeMillis(), false, System.currentTimeMillis() + 2 * 1000, 100, "结束时间定时器") {
+            private static final long serialVersionUID = -4078196804052284070L;
+
             @Override
             public void action() {
-                System.out.println("TimeTask");
+                logger.error("TimeTask");
             }
         });
 
-        System.out.println("dddd");
+        logger.error("dddd");
     }
 }
