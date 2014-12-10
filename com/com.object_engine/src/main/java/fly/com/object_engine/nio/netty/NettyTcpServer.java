@@ -30,11 +30,14 @@ public class NettyTcpServer {
 
     private static final Logger logger = Logger.getLogger(NettyTcpServer.class);
     private int port = 9527;
+    MessagePool _messagePool;
 
-    public NettyTcpServer() {
+    public NettyTcpServer(MessagePool messagePool) {
+        this(messagePool, 9527);
     }
 
-    public NettyTcpServer(int port) {
+    public NettyTcpServer(MessagePool messagePool, int port) {
+        this._messagePool = messagePool;
         this.port = port;
     }
 
@@ -78,7 +81,7 @@ public class NettyTcpServer {
                                  */
                                 @Override
                                 protected void channelRead0(ChannelHandlerContext ctx, MessageBean msg) throws Exception {
-                                    MessagePool.getInstance().addRecvMessage(msg);
+                                    _messagePool.addRecvMessage(msg);
                                 }
 
                                 /**

@@ -34,6 +34,7 @@ public class NettyTcpClient {
     private String Host = "127.0.0.1";
     private int Port = 9527;
     private Bootstrap bootstrap;
+    MessagePool _messagePool;
     private Channel channel;
     private boolean reConnect;
 
@@ -42,8 +43,9 @@ public class NettyTcpClient {
         return " Host=" + Host + ", Port=" + Port;
     }
 
-    public NettyTcpClient(int port) {
+    public NettyTcpClient(MessagePool messagePool, int port) {
         this.Port = port;
+        this._messagePool = messagePool;
         EventLoopGroup group = new NioEventLoopGroup(4);
         bootstrap = new Bootstrap();
         bootstrap.group(group).channel(NioSocketChannel.class);
@@ -65,7 +67,7 @@ public class NettyTcpClient {
                              */
                             @Override
                             protected void channelRead0(ChannelHandlerContext ctx, MessageBean msg) throws Exception {
-                                MessagePool.getInstance().addRecvMessage(msg);
+                                _messagePool.addRecvMessage(msg);
                             }
 
                             /**
