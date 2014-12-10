@@ -3,15 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fly.com.object_engine.nio;
+package fly.com.object_engine;
 
-import com.google.protobuf.Message;
+import fly.com.object_engine.nio.MessagePool;
 
 /**
  *
  * @author Administrator
  */
-public abstract class MessageHandler {
+public class RecvMessagePool extends MessagePool {
 
-    public abstract void action(Message message);
+    @Override
+    public void run() {
+
+    }
+
 }

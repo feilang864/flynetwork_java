@@ -9,7 +9,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import fly.com.object_engine.struct.ObjectConfig;
 import fly.com.object_engine.thread.TaskThread;
-import fly.com.object_engine.thread.ThreadManager;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -23,124 +22,75 @@ import org.apache.log4j.Logger;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public class MessagePool {
+public abstract class MessagePool extends TaskThread {
 
-    private static final MessagePool instance = new MessagePool();
     private static final Logger logger = Logger.getLogger(MessagePool.class);
 
-    public static MessagePool getInstance() {
-        return instance;
-    }
-    Map<Long, ProtobufMessageConstructor> handlerMap = new HashMap<>(0);
-    RecvActionMessageThread messageThread;
+    /* 任务列表 */
+    protected final List<MessageBean> messageQueue = Collections.synchronizedList(new LinkedList<MessageBean>());
+
+    protected final Map<Long, ProtobufMessageConstructor> handlerMap = new HashMap<>(0);
 
     public MessagePool() {
-        messageThread = new RecvActionMessageThread(ObjectConfig.getThreadGroup(), "全局消息处理器");
-        ThreadManager.getInstance().addActionThread(messageThread);
     }
 
-    public void addRecvMessage(MessageBean messageBean) {
-        messageThread.addTask(messageBean);
-    }
-
-    public void registerHandlerMessage(long messageId, Class<? extends MessageHandler> handel, Class<? extends com.google.protobuf.Message> message) {
+    /**
+     * 增加消息id和消息构造器，消息处理器
+     *
+     * @param messageId
+     * @param handel
+     * @param message
+     */
+    public void registerHandlerMessage(long messageId, Class<? extends com.google.protobuf.Message> message, Class<? extends MessageHandler> handel) {
         ProtobufMessageConstructor messageHandler = new ProtobufMessageConstructor(messageId, handel, message);
         handlerMap.put(messageId, messageHandler);
     }
 
-    class ProtobufMessageConstructor {
-
-        long messageId;
-        Class<? extends MessageHandler> handel;
-        Class<? extends com.google.protobuf.Message> message;
-
-        public ProtobufMessageConstructor(long messageId, Class<? extends MessageHandler> handel, Class<? extends com.google.protobuf.Message> message) {
-            this.messageId = messageId;
-            this.handel = handel;
-            this.message = message;
+    /**
+     * 增加新的任务 每增加一个新任务，都要唤醒任务队列
+     *
+     * @param mesg
+     */
+    public void addRecvMessage(MessageBean mesg) {
+        synchronized (messageQueue) {
+            messageQueue.add(mesg);
+            /* 唤醒队列, 开始执行 */
+            messageQueue.notify();
         }
-
-        public long getMessageId() {
-            return messageId;
-        }
-
-        public void setMessageId(long messageId) {
-            this.messageId = messageId;
-        }
-
-        public Class<? extends MessageHandler> getHandel() {
-            return handel;
-        }
-
-        public void setHandel(Class<? extends MessageHandler> handel) {
-            this.handel = handel;
-        }
-
-        public Class<? extends com.google.protobuf.Message> getMessage() {
-            return message;
-        }
-
-        public void setMessage(Class<? extends com.google.protobuf.Message> message) {
-            this.message = message;
-        }
-
+        logger.debug("接受消息 消息ID <" + mesg.getMsgid() + ">");
     }
 
-    public class RecvActionMessageThread extends TaskThread {
-
-        /* 任务列表 */
-        private final List<MessageBean> messageQueue = Collections.synchronizedList(new LinkedList<MessageBean>());
-
-        public RecvActionMessageThread(ThreadGroup threadGroup, String threadName) {
-            super(threadGroup, threadName);
-        }
-
-        /**
-         * 增加新的任务 每增加一个新任务，都要唤醒任务队列
-         *
-         * @param mesg
-         */
-        public void addTask(MessageBean mesg) {
+    @Override
+    public void run() {
+        while (ObjectConfig.isRunning()) {
+            MessageBean msg = null;
             synchronized (messageQueue) {
-                messageQueue.add(mesg);
-                /* 唤醒队列, 开始执行 */
-                messageQueue.notify();
-            }
-            logger.debug("接受消息 消息ID <" + mesg.getMsgid() + ">");
-        }
-
-        @Override
-        public void run() {
-            while (ObjectConfig.isRunning()) {
-                MessageBean msg = null;
-                synchronized (messageQueue) {
-                    if (messageQueue.isEmpty()) {
-                        try {
-                            messageQueue.wait(200);
-                        } catch (InterruptedException ex) {
-                        }
-                    } else {
-                        msg = messageQueue.remove(0);
-                    }
-                }
-                if (msg != null) {
-                    ProtobufMessageConstructor get = handlerMap.get(msg.getMsgid());
+                if (messageQueue.isEmpty()) {
                     try {
-                        MessageHandler newInstance = get.getHandel().newInstance();
-                        Message parseFrom = get.getMessage().newInstance().getParserForType().parseFrom(msg.getMsgbuffer());
-                        newInstance.setTCPHandler(parseFrom, get);
-                        newInstance.action();
-                    } catch (InstantiationException | IllegalAccessException | InvalidProtocolBufferException e) {
-                        logger.error("工人<“" + Thread.currentThread().getName() + "”> 执行任务<" + msg.getMsgid() + "(“" + get.getMessage().getName() + "”)> 遇到错误: " + e);
-                        e.printStackTrace();
-                    } catch (Exception ex) {
-                        logger.error("工人<“" + Thread.currentThread().getName() + "”> 执行任务<" + msg.getMsgid() + "(“" + get.getMessage().getName() + "”)> 遇到错误: " + ex);
-                        ex.printStackTrace();
+                        messageQueue.wait(200);
+                    } catch (InterruptedException ex) {
                     }
-                    msg = null;
+                } else {
+                    msg = messageQueue.remove(0);
                 }
             }
-            logger.error("线程结束, 工人<“" + Thread.currentThread().getName() + "”>退出");
+            if (msg != null) {
+                ProtobufMessageConstructor get = handlerMap.get(msg.getMsgid());
+                try {
+                    //MessageHandler newInstance = get.getHandel().newInstance();
+                    Message parseFrom = get.getMessage().newInstance().getParserForType().parseFrom(msg.getMsgbuffer());
+                    //newInstance.setTCPHandler(parseFrom, get);
+                    //newInstance.action();
+                } catch (InstantiationException | IllegalAccessException | InvalidProtocolBufferException e) {
+                    logger.error("工人<“" + Thread.currentThread().getName() + "”> 执行任务<" + msg.getMsgid() + "(“" + get.getMessage().getName() + "”)> 遇到错误: " + e);
+                    e.printStackTrace();
+                } catch (Exception ex) {
+                    logger.error("工人<“" + Thread.currentThread().getName() + "”> 执行任务<" + msg.getMsgid() + "(“" + get.getMessage().getName() + "”)> 遇到错误: " + ex);
+                    ex.printStackTrace();
+                }
+                msg = null;
+            }
         }
+        logger.error("线程结束, 工人<“" + Thread.currentThread().getName() + "”>退出");
     }
 }
