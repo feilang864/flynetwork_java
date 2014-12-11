@@ -5,8 +5,6 @@
  */
 package fly.com.object_engine;
 
-import fly.com.object_engine.nio.MessagePool;
-import fly.com.object_engine.nio.mina.MinaTcpServer;
 import fly.com.object_engine.nio.netty.NettyTcpServer;
 import fly.com.object_engine.thread.ThreadManager;
 import fly.com.object_engine.thread.TimeTaskHandlerBase;
@@ -32,7 +30,7 @@ public class TestMain {
 
             @Override
             public void action() {
-                logger.error("TimeTask");
+                logger.error("执行次数定时器");
             }
         });
 
@@ -41,7 +39,7 @@ public class TestMain {
 
             @Override
             public void action() {
-                logger.error("TimeTask");
+                logger.error("结束时间定时器");
             }
         });
 
@@ -50,7 +48,7 @@ public class TestMain {
 
             @Override
             public void action() {
-                logger.error("TimeTask");
+                logger.error("结束时间定时器");
             }
         });
 
