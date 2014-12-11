@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fly.com.object_engine;
+package fly.game_logic;
 
 import fly.com.object_engine.thread.TaskHandlerBase;
 
