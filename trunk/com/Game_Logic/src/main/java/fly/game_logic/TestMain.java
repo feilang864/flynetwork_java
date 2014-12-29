@@ -34,12 +34,12 @@ public class TestMain {
             }
         });
 
-        ThreadManager.getInstance().addTimeTask(new TimeTaskHandlerBase(System.currentTimeMillis(), false, 2000, "结束时间定时器") {
+        ThreadManager.getInstance().addTimeTask(new TimeTaskHandlerBase(System.currentTimeMillis(), false, 2000, "无限执行") {
             private static final long serialVersionUID = -4078196804052284070L;
 
             @Override
             public void action() {
-                logger.error("结束时间定时器");
+                logger.error("无限执行");
             }
         });
 
