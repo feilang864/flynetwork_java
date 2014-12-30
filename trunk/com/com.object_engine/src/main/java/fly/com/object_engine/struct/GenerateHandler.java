@@ -46,7 +46,7 @@ public class GenerateHandler extends AbstractMojo {
      * @required
      * @readonly
      */
-    private File basedir;
+    private File basedir = new File(System.getProperty("user.dir"));
     /**
      * 项目资源目录
      *
@@ -140,19 +140,7 @@ public class GenerateHandler extends AbstractMojo {
                     int indexOf0 = readLine.indexOf("class ") + 6;
                     int indexOf1 = readLine.indexOf(" extends");
                     String className = readLine.substring(indexOf0, indexOf1);
-                    if (className.startsWith("Req") && basedir.getName().endsWith("game-gamesr")) {
-                        classNames.add(className);
-                    } else if (className.startsWith("LG") && basedir.getName().endsWith("game-gamesr")) {
-                        classNames.add(className);
-                    } else if (className.startsWith("GL") && basedir.getName().endsWith("game-loginsr")) {
-                        classNames.add(className);
-                    } else if (className.startsWith("LD") && basedir.getName().endsWith("game-datasr")) {
-                        classNames.add(className);
-                    } else if (className.startsWith("DL") && basedir.getName().endsWith("game-loginsr")) {
-                        classNames.add(className);
-                    } else if (className.startsWith("DG") && basedir.getName().endsWith("game-loginsr")) {
-                        classNames.add(className);
-                    } else if (className.startsWith("GD") && basedir.getName().endsWith("game-datasr")) {
+                    if (className.startsWith("Req") || className.startsWith("LG") || className.startsWith("GL") || className.startsWith("LD")) {
                         classNames.add(className);
                     }
                 }
