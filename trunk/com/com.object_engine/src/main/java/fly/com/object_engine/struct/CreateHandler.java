@@ -20,7 +20,7 @@ import org.apache.maven.plugin.MojoFailureException;
  * @phase compile
  * @requiresProject true
  */
-public class GenerateHandler extends AbstractMojo {
+public class CreateHandler extends AbstractMojo {
 
     private static final String[] DEFAULT_INCLUDES = new String[]{"Message.java"};
     private static final String packagePatten = "package ";

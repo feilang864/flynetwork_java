@@ -5,7 +5,7 @@
  */
 package fly.com.object_engine.thread;
 
-import fly.com.object_engine.struct.ObjectConfig;
+import fly.com.object_engine.struct.ObjectBase;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,18 +14,23 @@ import java.util.List;
  *
  * @author Administrator
  */
-class BackTaskThread implements Runnable {
+public class RunnableBase extends ObjectBase implements Runnable {
 
-    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(TaskThread.class);
+    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(RunnableBase.class);
+    private static final long serialVersionUID = 4183065253405130872L;
+
     /* 任务列表 */
-    private final List<TaskHandlerBase> taskQueue = Collections.synchronizedList(new LinkedList<TaskHandlerBase>());
+    protected final List<TaskHandlerBase> taskQueue = Collections.synchronizedList(new LinkedList<TaskHandlerBase>());
 
-    public BackTaskThread(String threadName, int count) {
-        ThreadGroup group = new ThreadGroup(ObjectConfig.getThreadGroup(), threadName);
-        for (int i = 0; i < count; i++) {
-            Thread thread = new Thread(group, this, threadName + i);
-            thread.start();
-        }
+    public RunnableBase() {
+    }
+
+    public RunnableBase(String Name) {
+        super(Name);
+    }
+
+    public List<TaskHandlerBase> getTaskQueue() {
+        return taskQueue;
     }
 
     /**
@@ -60,10 +65,11 @@ class BackTaskThread implements Runnable {
                 long startTime = System.currentTimeMillis();
                 taskHandler.action();
                 long endTime = System.currentTimeMillis();
-                if (endTime - startTime > 3000) {
-                    logger.info("执行任务 任务<" + taskHandler.getID() + ">: " + taskHandler.getName() + " 耗时：" + (endTime - startTime));
-                }
+                //if (endTime - startTime > 300) {
+                logger.info("执行任务 任务<" + taskHandler.toString() + "> 耗时：" + (endTime - startTime));
+                //}
             }
         }
     }
+
 }

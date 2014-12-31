@@ -15,7 +15,7 @@ public abstract class TimeTaskHandlerBase extends TaskHandlerBase {
     //开始时间
     private long startTime;
     //是否一开始执行一次
-    private boolean isStartAction;
+    private boolean startAction;
     //结束时间
     private long endTime;
     //执行次数
@@ -38,100 +38,100 @@ public abstract class TimeTaskHandlerBase extends TaskHandlerBase {
      * 永久间隔时间执行
      *
      * @param startTime
-     * @param isStartAction
+     * @param startAction
      * @param intervalTime
      * @param name
      */
-    public TimeTaskHandlerBase(long startTime, boolean isStartAction, int intervalTime, String name) {
-        this(startTime, isStartAction, 0L, 0, intervalTime, 0, name);
+    public TimeTaskHandlerBase(long startTime, boolean startAction, int intervalTime, String name) {
+        this(startTime, startAction, 0L, 0, intervalTime, 0, name);
     }
 
     /**
      * 指定执行次数的任务
      *
      * @param startTime
-     * @param isStartAction
+     * @param startAction
      * @param actionCount
      * @param intervalTime
      */
-    public TimeTaskHandlerBase(long startTime, boolean isStartAction, int actionCount, int intervalTime) {
-        this(startTime, isStartAction, 0L, actionCount, intervalTime, 0);
+    public TimeTaskHandlerBase(long startTime, boolean startAction, int actionCount, int intervalTime) {
+        this(startTime, startAction, 0L, actionCount, intervalTime, 0);
     }
 
     /**
      * 指定结束时间的任务
      *
      * @param startTime
-     * @param isStartAction
+     * @param startAction
      * @param endTime
      * @param intervalTime
      */
-    public TimeTaskHandlerBase(long startTime, boolean isStartAction, long endTime, int intervalTime) {
-        this(startTime, isStartAction, endTime, 0, intervalTime, 0);
+    public TimeTaskHandlerBase(long startTime, boolean startAction, long endTime, int intervalTime) {
+        this(startTime, startAction, endTime, 0, intervalTime, 0);
     }
 
     /**
      * 指定执行次数的任务
      *
      * @param startTime
-     * @param isStartAction
+     * @param startAction
      * @param actionCount
      * @param intervalTime
      * @param actionThreadId
      */
-    public TimeTaskHandlerBase(long startTime, boolean isStartAction, int actionCount, int intervalTime, int actionThreadId) {
-        this(startTime, isStartAction, 0, actionCount, intervalTime, actionThreadId);
+    public TimeTaskHandlerBase(long startTime, boolean startAction, int actionCount, int intervalTime, int actionThreadId) {
+        this(startTime, startAction, 0, actionCount, intervalTime, actionThreadId);
     }
 
     /**
      * 指定结束时间的任务
      *
      * @param startTime 开始时间
-     * @param isStartAction 是否加入队列前执行一次
+     * @param startAction 是否加入队列前执行一次
      * @param endTime 结束时间
      * @param intervalTime 间隔时间
      * @param actionThreadId 执行线程
      * @param Name 任务名字
      */
-    public TimeTaskHandlerBase(long startTime, boolean isStartAction, long endTime, int intervalTime, int actionThreadId, String Name) {
-        this(startTime, isStartAction, endTime, 0, intervalTime, actionThreadId, Name);
+    public TimeTaskHandlerBase(long startTime, boolean startAction, long endTime, int intervalTime, int actionThreadId, String Name) {
+        this(startTime, startAction, endTime, 0, intervalTime, actionThreadId, Name);
     }
 
     /**
      * 指定结束时间的任务
      *
      * @param startTime 开始时间
-     * @param isStartAction 是否加入队列前执行一次
+     * @param startAction 是否加入队列前执行一次
      * @param endTime 结束时间
      * @param intervalTime 间隔时间
      * @param Name 任务名字
      */
-    public TimeTaskHandlerBase(long startTime, boolean isStartAction, long endTime, int intervalTime, String Name) {
-        this(startTime, isStartAction, endTime, 0, intervalTime, 0, Name);
+    public TimeTaskHandlerBase(long startTime, boolean startAction, long endTime, int intervalTime, String Name) {
+        this(startTime, startAction, endTime, 0, intervalTime, 0, Name);
     }
 
     /**
      * 指定执行次数的任务
      *
      * @param startTime
-     * @param isStartAction
+     * @param startAction
      * @param actionCount
      * @param intervalTime
      * @param actionThreadId
      * @param Name
      */
-    public TimeTaskHandlerBase(long startTime, boolean isStartAction, int actionCount, int intervalTime, int actionThreadId, String Name) {
-        this(startTime, isStartAction, 0, actionCount, intervalTime, actionThreadId, Name);
+    public TimeTaskHandlerBase(long startTime, boolean startAction, int actionCount, int intervalTime, int actionThreadId, String Name) {
+        this(startTime, startAction, 0, actionCount, intervalTime, actionThreadId, Name);
     }
 
-    private TimeTaskHandlerBase(long startTime, boolean isStartAction, long endTime, int actionCount, int intervalTime, int actionThreadId) {
-        this(startTime, isStartAction, endTime, actionCount, intervalTime, actionThreadId, null);
+    private TimeTaskHandlerBase(long startTime, boolean startAction, long endTime, int actionCount, int intervalTime, int actionThreadId) {
+        this(startTime, startAction, endTime, actionCount, intervalTime, actionThreadId, null);
     }
 
-    private TimeTaskHandlerBase(long startTime, boolean isStartAction, long endTime, int actionCount, int intervalTime, int actionThreadId, String Name) {
+    private TimeTaskHandlerBase(long startTime, boolean startAction, long endTime, int actionCount, int intervalTime, int actionThreadId, String Name) {
         super(actionThreadId, Name);
         this.startTime = startTime;
-        this.isStartAction = isStartAction;
+        this.startAction = startAction;
         this.endTime = endTime;
         this.actionCount = actionCount;
         this.intervalTime = intervalTime;
@@ -145,12 +145,12 @@ public abstract class TimeTaskHandlerBase extends TaskHandlerBase {
         this.startTime = startTime;
     }
 
-    public boolean isIsStartAction() {
-        return isStartAction;
+    public boolean isStartAction() {
+        return startAction;
     }
 
-    public void setIsStartAction(boolean isStartAction) {
-        this.isStartAction = isStartAction;
+    public void setStartAction(boolean startAction) {
+        this.startAction = startAction;
     }
 
     public long getEndTime() {
@@ -175,6 +175,11 @@ public abstract class TimeTaskHandlerBase extends TaskHandlerBase {
 
     public void setIntervalTime(int intervalTime) {
         this.intervalTime = intervalTime;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + super.toString() + ", 指定开始时间=" + startTime + ", 指定结束时间=" + endTime + ", 指定执行次数=" + actionCount + ", 指定间隔时间=" + intervalTime + '}';
     }
 
 }

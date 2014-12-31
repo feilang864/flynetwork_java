@@ -8,7 +8,7 @@ package fly.com.object_engine.nio;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import fly.com.object_engine.struct.ObjectConfig;
-import fly.com.object_engine.thread.TaskThread;
+import fly.com.object_engine.thread.RunnableBase;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public abstract class MessagePool extends TaskThread {
+public abstract class MessagePool extends RunnableBase {
 
     private static final Logger logger = Logger.getLogger(MessagePool.class);
 

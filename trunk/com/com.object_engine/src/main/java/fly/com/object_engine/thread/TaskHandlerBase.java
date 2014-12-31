@@ -39,4 +39,9 @@ public abstract class TaskHandlerBase extends ObjectBase {
         this.actionThreadId = actionThreadId;
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
 }

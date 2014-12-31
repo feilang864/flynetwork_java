@@ -5,7 +5,9 @@
  */
 package fly.com.object_engine.thread;
 
+import fly.com.object_engine.struct.ObjectConfig;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  *
@@ -13,39 +15,58 @@ import java.util.HashMap;
  */
 public class ThreadManager {
 
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThreadManager.class);
     private static final ThreadManager instance = new ThreadManager();
+    private static int threadId = 0;
 
     public static ThreadManager getInstance() {
         return instance;
     }
+    private Object THREADID_OBJECT = new Object();
 
-    private BackTaskThread backTaskThread = new BackTaskThread("后台线程", 10);
-    private TimeTaskThread timeTaskThread = new TimeTaskThread();
-    private HashMap<Integer, TaskThread> taskHashMap = new HashMap<>(0);
+    private RunnableBase back_RunnableBase = new RunnableBase();
+    private HashMap<Integer, ObjectThread> taskThreadHashMap = new HashMap<>(0);
+    private HashMap<Integer, RunnableBase> taskRunnableHashMap = new HashMap<>(0);
+    private TimeRunnable time_Runnable = new TimeRunnable();
 
     public ThreadManager() {
-    }
-
-    /**
-     *
-     * @param threadId
-     * @param task
-     */
-    public void addTask(TaskHandlerBase task) {
-        TaskThread thread = taskHashMap.get(task.getActionThreadId());
-        if (thread != null) {
-            thread.addTask(task);
-        } else {
-            addBackTask(task);
+        synchronized (THREADID_OBJECT) {
+            ObjectThread time_Thread = new ObjectThread(++threadId, ObjectConfig.getThreadGroup(), time_Runnable, "全局定时器线程执行器");
+            taskThreadHashMap.put((int) time_Thread.getId(), time_Thread);
+            time_Thread.start();
+            log.error("线程管理器 全局定时器线程执行器");
+            ThreadGroup back_Group = new ThreadGroup(ObjectConfig.getThreadGroup(), "后台线程");
+            for (int i = 0; i < 10; i++) {
+                ObjectThread thread = new ObjectThread(++threadId, back_Group, back_RunnableBase, "后台线程" + i);
+                taskThreadHashMap.put((int) thread.getId(), thread);
+                thread.start();
+                log.error("线程管理器 初始化后台线程 " + thread.getId());
+            }
         }
     }
 
     /**
+     * 添加任务
+     *
+     * @param task
+     */
+    public void addTask(TaskHandlerBase task) {
+        RunnableBase thread = taskRunnableHashMap.get(task.getActionThreadId());
+        if (thread != null) {
+            thread.addTask(task);
+        } else {
+            addBackTask(task);
+            log.error("未找到指定线程，放到后台处理");
+        }
+    }
+
+    /**
+     * 添加后台执行的 任务
      *
      * @param task
      */
     public void addBackTask(TaskHandlerBase task) {
-        backTaskThread.addTask(task);
+        back_RunnableBase.addTask(task);
     }
 
     /**
@@ -53,39 +74,27 @@ public class ThreadManager {
      * @param newTask
      */
     public void addTimeTask(TimeTaskHandlerBase newTask) {
-        timeTaskThread.addTask(newTask);
+        time_Runnable.addTask(newTask);
     }
 
-    /**
-     *
-     * @param threadGroup
-     * @param threadName
-     * @return
-     */
-    public int getActionThread(ThreadGroup threadGroup, String threadName) {
-        TaskThread taskThread = new TaskThread(threadGroup, threadName);
-        taskHashMap.put(taskThread.getId(), taskThread);
-        return taskThread.getId();
+    public int getThread(RunnableBase run, String threadName) {
+        return this.getThread(ObjectConfig.getThreadGroup(), run, threadName);
     }
 
-    /**
-     *
-     * @param threadName
-     * @return
-     */
-    public int getActionThread(String threadName) {
-        TaskThread taskThread = new TaskThread(threadName);
-        taskHashMap.put(taskThread.getId(), taskThread);
-        return taskThread.getId();
+    public int getThread(RunnableBase run) {
+        return this.getThread(run, "无名线程");
     }
 
-    /**
-     *
-     * @param taskThread
-     * @return
-     */
-    public int addActionThread(TaskThread taskThread) {
-        taskHashMap.put(taskThread.getId(), taskThread);
-        return taskThread.getId();
+    public int getThread(ThreadGroup threadGroup, RunnableBase run, String threadName) {
+        int id = 0;
+        synchronized (THREADID_OBJECT) {
+            id = ++threadId;
+        }
+        ObjectThread thread = new ObjectThread(id, threadGroup, run, threadName);
+        taskThreadHashMap.put(id, thread);
+        taskRunnableHashMap.put(id, run);
+        thread.start();
+        return id;
     }
+
 }

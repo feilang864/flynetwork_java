@@ -17,31 +17,45 @@ import java.util.Map;
  */
 public class ObjectAttribute {
 
-    private Map<String, Object> attributesMap = new HashMap<>(0);
+    private HashMap<String, Object> attributesMap = new HashMap<>(0);
 
     public ObjectAttribute() {
     }
 
-    public Object getValue(String key) {
+    public Object get(String key) {
         return attributesMap.get(key);
     }
 
-    public void setValue(String key, Object attribute) {
+    public void put(String key, Object attribute) {
         this.attributesMap.put(key, attribute);
     }
 
-    public int getIntValue(String key) {
+    public int getintValue(String key) {
         if (attributesMap.containsKey(key)) {
             return (int) (attributesMap.get(key));
         }
         return 0;
     }
 
-    public double getDoubleValue(String key) {
+    public Integer getIntegerValue(String key) {
+        if (attributesMap.containsKey(key)) {
+            return (int) (attributesMap.get(key));
+        }
+        return null;
+    }
+
+    public double getdoubleValue(String key) {
         if (attributesMap.containsKey(key)) {
             return (double) (attributesMap.get(key));
         }
         return 0.0;
+    }
+
+    public Double getDoubleValue(String key) {
+        if (attributesMap.containsKey(key)) {
+            return (double) (attributesMap.get(key));
+        }
+        return null;
     }
 
     public String getStringValue(String key) {
@@ -51,30 +65,51 @@ public class ObjectAttribute {
         return null;
     }
 
-    public long getLongValue(String key) {
+    public long getlongValue(String key) {
         if (attributesMap.containsKey(key)) {
             return (long) (attributesMap.get(key));
         }
         return 0;
     }
 
-    public float getFloatValue(String key) {
+    public Long getLongValue(String key) {
+        if (attributesMap.containsKey(key)) {
+            return (long) (attributesMap.get(key));
+        }
+        return null;
+    }
+
+    public float getfloatValue(String key) {
         if (attributesMap.containsKey(key)) {
             return (float) (attributesMap.get(key));
         }
         return 0;
     }
 
-    public boolean getBooleanValue(String key) {
+    public Float getFloatValue(String key) {
+        if (attributesMap.containsKey(key)) {
+            return (float) (attributesMap.get(key));
+        }
+        return null;
+    }
+
+    public boolean getbooleanValue(String key) {
         if (attributesMap.containsKey(key)) {
             return (boolean) (attributesMap.get(key));
         }
         return false;
     }
 
+    public Boolean getBooleanValue(String key) {
+        if (attributesMap.containsKey(key)) {
+            return (boolean) (attributesMap.get(key));
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
-        return "ObjectAttribute{" + "attributesMap=" + attributesMap + '}';
+        return attributesMap.toString();
     }
 
 }
