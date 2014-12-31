@@ -6,7 +6,6 @@
 package fly.com.object_engine.struct;
 
 import java.io.Serializable;
-import java.util.Random;
 
 /**
  * 基类
@@ -58,7 +57,7 @@ public abstract class ObjectBase implements Serializable {
 
     @Override
     public String toString() {
-        return "ObjectBase{" + "ID=" + ID + ", Name=" + Name + ", tempObjectAttribute=" + tempObjectAttribute + '}';
+        return "" + "ID=" + ID + ", Name=" + Name + ", 零时数据=" + tempObjectAttribute.toString();
     }
 
 }
