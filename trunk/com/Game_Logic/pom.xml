@@ -52,7 +52,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.gamesr_logic.main.Main</mainClass>
+                            <mainClass>fly.game_logic.TestMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
