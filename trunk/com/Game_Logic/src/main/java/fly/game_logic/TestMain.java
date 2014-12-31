@@ -6,7 +6,8 @@
 package fly.game_logic;
 
 import fly.com.object_engine.nio.netty.NettyTcpServer;
-import fly.com.object_engine.struct.GenerateHandler;
+import fly.com.object_engine.struct.CreateHandler;
+import fly.com.object_engine.struct.ObjectConfig;
 import fly.com.object_engine.thread.ThreadManager;
 import fly.com.object_engine.thread.TimeTaskHandlerBase;
 import java.io.File;
@@ -25,7 +26,7 @@ public class TestMain {
 
     public static void main(String[] args) {
         try {
-            new GenerateHandler().execute();
+            new CreateHandler().execute();
         } catch (MojoExecutionException | MojoFailureException ex) {
             Logger.getLogger(TestMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -33,11 +34,12 @@ public class TestMain {
         NettyTcpServer nettyTcpServer = new NettyTcpServer(new RecvMessagePool(), 9527);
         nettyTcpServer.start();
 
-        MapMainThread mapMainThread = new MapMainThread();
+        ThreadGroup mapThreadGroup = new ThreadGroup(ObjectConfig.getThreadGroup(), "地图线程");
+        MapMainRunnable mapMainThread = new MapMainRunnable();
+        ThreadManager.getInstance();
+        int threadId = ThreadManager.getInstance().getThread(mapThreadGroup, mapMainThread, "新手村");
 
-        ThreadManager.getInstance().addActionThread(mapMainThread);
-
-        ThreadManager.getInstance().addTimeTask(new TimeTaskHandlerBase(System.currentTimeMillis(), true, 2, 1000, mapMainThread.getId(), "执行次数定时器") {
+        ThreadManager.getInstance().addTimeTask(new TimeTaskHandlerBase(System.currentTimeMillis(), false, 2, 1000, threadId, "执行次数定时器") {
             private static final long serialVersionUID = -4078196804052284070L;
 
             @Override
@@ -55,7 +57,7 @@ public class TestMain {
             }
         });
 
-        ThreadManager.getInstance().addTimeTask(new TimeTaskHandlerBase(System.currentTimeMillis(), false, System.currentTimeMillis() + 2 * 1000, 100, "结束时间定时器") {
+        ThreadManager.getInstance().addTimeTask(new TimeTaskHandlerBase(System.currentTimeMillis(), true, System.currentTimeMillis() + 2 * 1000, 100, "结束时间定时器") {
             private static final long serialVersionUID = -4078196804052284070L;
 
             @Override
