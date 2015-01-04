@@ -11,12 +11,16 @@ import fly.game_logic.struct.Position;
 /**
  * 地图精灵对象
  *
- * @author Administrator
+ * @author Troy.Chen
  */
 public class MapSpirit extends ObjectBase {
 
     private static final long serialVersionUID = 591540596011671140L;
     private Position position;
+    private long mapId;
+    private int mapModelId;
+    private int lineId;
+    private int serverId;
 
     public MapSpirit() {
     }
@@ -36,6 +40,38 @@ public class MapSpirit extends ObjectBase {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public long getMapId() {
+        return mapId;
+    }
+
+    public void setMapId(long mapId) {
+        this.mapId = mapId;
+    }
+
+    public int getMapModelId() {
+        return mapModelId;
+    }
+
+    public void setMapModelId(int mapModelId) {
+        this.mapModelId = mapModelId;
+    }
+
+    public int getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(int lineId) {
+        this.lineId = lineId;
+    }
+
+    public int getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(int serverId) {
+        this.serverId = serverId;
     }
 
 }
