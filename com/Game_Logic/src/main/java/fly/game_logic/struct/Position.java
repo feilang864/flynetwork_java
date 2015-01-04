@@ -53,4 +53,9 @@ public class Position implements Serializable {
         this.z = z;
     }
 
+    @Override
+    public String toString() {
+        return "坐标{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
+    }
+
 }

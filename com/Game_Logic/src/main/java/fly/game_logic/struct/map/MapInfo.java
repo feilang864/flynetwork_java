@@ -6,12 +6,11 @@
 package fly.game_logic.struct.map;
 
 import fly.com.object_engine.struct.ObjectBase;
-import fly.game_logic.struct.map.monster.Monster;
 import java.util.HashMap;
 
 /**
  *
- * @author Administrator
+ * @author Troy.Chen
  */
 public class MapInfo extends ObjectBase {
 
