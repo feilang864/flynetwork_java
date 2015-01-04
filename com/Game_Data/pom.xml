@@ -45,7 +45,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>fly.game_logic.TestMain</mainClass>
+                            <mainClass>fly.game_data.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
