@@ -5,7 +5,7 @@
  */
 package fly.com.object_engine.nio;
 
-import com.google.protobuf.Message;
+import fly.com.object_engine.struct.ObjectAttribute;
 
 /**
  *
@@ -13,5 +13,16 @@ import com.google.protobuf.Message;
  */
 public abstract class MessageHandler {
 
-    public abstract void action(Message message);
+    private ObjectAttribute others = new ObjectAttribute();
+
+    public ObjectAttribute getOthers() {
+        return others;
+    }
+
+    public void setOthers(ObjectAttribute others) {
+        this.others = others;
+    }
+
+    public abstract void run();
+
 }

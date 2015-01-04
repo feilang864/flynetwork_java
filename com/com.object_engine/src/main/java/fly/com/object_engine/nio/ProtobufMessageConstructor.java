@@ -19,9 +19,9 @@ public class ProtobufMessageConstructor {
     //消息执行器
     private Class<? extends MessageHandler> handel;
     //消息
-    private Class<? extends com.google.protobuf.Message> message;
+    private Class<? extends com.google.protobuf.GeneratedMessage> message;
 
-    public ProtobufMessageConstructor(long messageId, Class<? extends MessageHandler> handel, Class<? extends com.google.protobuf.Message> message) {
+    public ProtobufMessageConstructor(long messageId, Class<? extends MessageHandler> handel, Class<? extends com.google.protobuf.GeneratedMessage> message) {
         this.messageId = messageId;
         this.handel = handel;
         this.message = message;
@@ -47,7 +47,7 @@ public class ProtobufMessageConstructor {
         return message;
     }
 
-    public void setMessage(Class<? extends com.google.protobuf.Message> message) {
+    public void setMessage(Class<? extends com.google.protobuf.GeneratedMessage> message) {
         this.message = message;
     }
 
