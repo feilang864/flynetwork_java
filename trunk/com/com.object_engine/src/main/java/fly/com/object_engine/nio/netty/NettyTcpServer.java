@@ -30,15 +30,17 @@ public class NettyTcpServer {
 
     private static final Logger logger = Logger.getLogger(NettyTcpServer.class);
     private int port = 9527;
-    MessagePool _messagePool;
+    private MessagePool _messagePool;
+    private long actionThreadId;
 
-    public NettyTcpServer(MessagePool messagePool) {
-        this(messagePool, 9527);
+    public NettyTcpServer(MessagePool messagePool, long threadId) {
+        this(messagePool, 9527, threadId);
     }
 
-    public NettyTcpServer(MessagePool messagePool, int port) {
+    public NettyTcpServer(MessagePool messagePool, int port, long threadId) {
         this._messagePool = messagePool;
         this.port = port;
+        this.actionThreadId = threadId;
     }
 
     public int getPort() {
@@ -103,7 +105,7 @@ public class NettyTcpServer {
                                  */
                                 @Override
                                 public void channelUnregistered(ChannelHandlerContext ctx) {
-
+                                    _messagePool.removeConnection(ctx);
                                 }
 
                                 /**
@@ -115,6 +117,7 @@ public class NettyTcpServer {
                                 @Override
                                 public void channelActive(ChannelHandlerContext ctx) {
                                     logger.info("新建连接成功 ");
+                                    _messagePool.addConnection(ctx);
                                 }
                             });
                         }
@@ -131,7 +134,7 @@ public class NettyTcpServer {
             // shut down your session.
 //            cf.channel().closeFuture().sync();
         } catch (InterruptedException ex) {
-            logger.info("开启端口 " + this.port + " xxxxxxxxxxxxxxxx" + ex);
+            logger.error("开启端口 " + this.port + " xxxxxxxxxxxxxxxx", ex);
         } finally {
             //关闭相关资源
 //            workerGroup.shutdownGracefully();

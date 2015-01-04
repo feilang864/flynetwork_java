@@ -5,15 +5,13 @@
  */
 package fly.com.object_engine.nio;
 
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.Message;
 import fly.com.object_engine.struct.ObjectConfig;
 import fly.com.object_engine.thread.RunnableBase;
+import io.netty.channel.ChannelHandlerContext;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import org.apache.log4j.Logger;
 
 /**
@@ -25,13 +23,31 @@ import org.apache.log4j.Logger;
 public abstract class MessagePool extends RunnableBase {
 
     private static final Logger logger = Logger.getLogger(MessagePool.class);
+    private static final long serialVersionUID = -3912073846429079071L;
 
     /* 任务列表 */
     protected final List<MessageBean> messageQueue = Collections.synchronizedList(new LinkedList<MessageBean>());
 
-    protected final Map<Long, ProtobufMessageConstructor> handlerMap = new HashMap<>(0);
+    protected final HashMap<Long, ProtobufMessageConstructor> handlerMap = new HashMap<>(0);
+    private final HashMap<ChannelHandlerContext, Long> connectionIdMap = new HashMap<>(0);
+    private final HashMap<Long, ChannelHandlerContext> connectionMap = new HashMap<>(0);
 
     public MessagePool() {
+    }
+
+    public void addConnection(ChannelHandlerContext context) {
+        synchronized (connectionMap) {
+            long id = ObjectConfig.getId();
+            connectionIdMap.put(context, id);
+            connectionMap.put(id, context);
+        }
+    }
+
+    public void removeConnection(ChannelHandlerContext context) {
+        synchronized (connectionMap) {
+            Long remove = connectionIdMap.remove(context);
+            connectionMap.remove(remove);
+        }
     }
 
     /**
@@ -40,8 +56,12 @@ public abstract class MessagePool extends RunnableBase {
      * @param messageId
      * @param handel
      * @param message
+     * @param threadId 执行线程id，默认可以是0,表示后台执行
      */
-    public void registerHandlerMessage(long messageId, Class<? extends com.google.protobuf.Message> message, Class<? extends MessageHandler> handel) {
+    public void registerHandlerMessage(long messageId,
+            Class<? extends com.google.protobuf.GeneratedMessage> message,
+            Class<? extends MessageHandler> handel,
+            long threadId) {
         ProtobufMessageConstructor messageHandler = new ProtobufMessageConstructor(messageId, handel, message);
         handlerMap.put(messageId, messageHandler);
     }
@@ -77,20 +97,17 @@ public abstract class MessagePool extends RunnableBase {
             if (msg != null) {
                 ProtobufMessageConstructor get = handlerMap.get(msg.getMsgid());
                 try {
-                    //MessageHandler newInstance = get.getHandel().newInstance();
-                    Message parseFrom = get.getMessage().newInstance().getParserForType().parseFrom(msg.getMsgbuffer());
-                    //newInstance.setTCPHandler(parseFrom, get);
-                    //newInstance.action();
-                } catch (InstantiationException | IllegalAccessException | InvalidProtocolBufferException e) {
-                    logger.error("工人<“" + Thread.currentThread().getName() + "”> 执行任务<" + msg.getMsgid() + "(“" + get.getMessage().getName() + "”)> 遇到错误: " + e);
-                    e.printStackTrace();
+                    this.action(msg);
                 } catch (Exception ex) {
                     logger.error("工人<“" + Thread.currentThread().getName() + "”> 执行任务<" + msg.getMsgid() + "(“" + get.getMessage().getName() + "”)> 遇到错误: " + ex);
                     ex.printStackTrace();
                 }
-                msg = null;
             }
         }
         logger.error("线程结束, 工人<“" + Thread.currentThread().getName() + "”>退出");
     }
+
+    public abstract void action(MessageBean msg);
+
+    public abstract void write(MessageBean msg);
 }

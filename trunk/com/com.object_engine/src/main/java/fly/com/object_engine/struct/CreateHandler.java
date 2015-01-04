@@ -229,22 +229,20 @@ public class CreateHandler extends AbstractMojo {
 
         StringBuilder code = new StringBuilder();
         code.append("package ").append(packageName).append(".handler.").append(module).append(";\n\n");
-        code.append("import com.game.engine.io.commmand.TcpHandler;\n");
+        code.append("import fly.com.object_engine.nio.MessageHandler;\n");
         code.append("import ").append(importProto).append(";\n");
-        code.append("import org.slf4j.Logger;\n");
-        code.append("import org.slf4j.LoggerFactory;\n\n");
         code.append("/**\n");
         code.append(" *\n");
-        code.append(" * @author Vicky\n");
-        code.append(" * @mail eclipser@163.com\n");
-        code.append(" * @phone 13618074943\n");
+        code.append(" * @author Troy.Chen\n");
+        code.append(" * @mail 492794628@qq.com\n");
+        code.append(" * @phone 13882122019\n");
         code.append(" */\n");
-        code.append("public final class ").append(reqClassName).append("Handler extends TcpHandler {\n\n");
-        code.append("    private static final Logger log = LoggerFactory.getLogger(").append(reqClassName).append("Handler.class);\n\n");
+        code.append("public final class ").append(reqClassName).append("Handler extends MessageHandler {\n\n");
         code.append("    @Override\n");
         code.append("    public void run() {\n");
         code.append("        // TODO 处理").append(reqMessageName).append("消息\n");
-        code.append("        ").append(reqMessageName).append("Message reqMessage = (").append(reqMessageName).append("Message) getMessage();\n");
+        code.append("        ").append(reqMessageName).append("Message reqMessage = (").append(reqMessageName).append("Message) getOthers().get(\"Message\");\n");
+        //code.append("        ").append("Player player = (").append("Player) getOthers().get(\"Player\");\n");
         if (resClassName != null) {
             code.append("        ").append(resMessageName).append(".Builder builder4Res = ").append(resMessageName).append(".newBuilder();\n");
         }
