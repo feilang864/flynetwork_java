@@ -9,6 +9,7 @@
         <module>com.object_engine</module>
         <module>Game_Logic</module>
         <module>Game_Data</module>
+        <module>Game_Login</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
