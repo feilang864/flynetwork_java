@@ -10,6 +10,8 @@
         <module>Game_Logic</module>
         <module>Game_Data</module>
         <module>Game_Login</module>
+        <module>game.engine</module>
+        <module>game.model</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
