@@ -15,109 +15,174 @@ import java.util.Map;
  * @phone 13882122019
  * @email 492794628@qq.com
  */
-public class ObjectAttribute {
+public class ObjectAttribute extends HashMap<String, Object> {
 
-    private HashMap<String, Object> attributesMap = new HashMap<>(0);
-
-    public HashMap<String, Object> getAttributesMap() {
-        return attributesMap;
-    }
-
-    public void setAttributesMap(HashMap<String, Object> attributesMap) {
-        this.attributesMap = attributesMap;
-    }
+    private static final long serialVersionUID = -6282823840742731975L;
 
     public ObjectAttribute() {
     }
 
-    public Object get(String key) {
-        return attributesMap.get(key);
+    /**
+     * 调用此方法 删除值是需要保证存在key值和value值 否则空指针报错
+     *
+     * @param <T>
+     * @param key
+     * @param clazz
+     * @return
+     * @deprecated 需要保证存在key值和value值 否则空指针报错 慎重
+     */
+    @Deprecated
+    public <T extends Object> T remove(String key, Class<T> clazz) {
+        Object remove = this.remove(key);
+        return (T) remove;
     }
 
-    public void put(String key, Object attribute) {
-        this.attributesMap.put(key, attribute);
-    }
-
-    public int getintValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (int) (attributesMap.get(key));
-        }
-        return 0;
-    }
-
+    /**
+     * 未找打为 null
+     *
+     * @param key
+     * @return
+     */
     public Integer getIntegerValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (int) (attributesMap.get(key));
+        if (super.containsKey(key)) {
+            return (Integer) (super.get(key));
         }
         return null;
     }
 
+    /**
+     * 未找打为0
+     *
+     * @param key
+     * @return
+     */
+    public int getIntValue(String key) {
+        if (super.containsKey(key)) {
+            return (int) (super.get(key));
+        }
+        return 0;
+    }
+
+    /**
+     * 未找打为 null
+     *
+     * @param key
+     * @return
+     */
+    public String getStringValue(String key) {
+        if (super.containsKey(key)) {
+            return super.get(key).toString();
+        }
+        return null;
+    }
+
+    /**
+     * 未找打为 null
+     *
+     * @param key
+     * @return
+     */
+    public Long getLongValue(String key) {
+        if (super.containsKey(key)) {
+            return (Long) (super.get(key));
+        }
+        return null;
+    }
+
+    /**
+     * 未找到返回0
+     *
+     * @param key
+     * @return
+     */
+    public long getlongValue(String key) {
+        if (super.containsKey(key)) {
+            return (long) (super.get(key));
+        }
+        return 0;
+    }
+
+    /**
+     * 未找到返回0
+     *
+     * @param key
+     * @return
+     */
+    public Double getDoubleValue(String key) {
+        if (super.containsKey(key)) {
+            return (Double) (super.get(key));
+        }
+        return null;
+    }
+
+    /**
+     * 未找到返回0
+     *
+     * @param key
+     * @return
+     */
     public double getdoubleValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (double) (attributesMap.get(key));
+        if (super.containsKey(key)) {
+            return (double) (super.get(key));
         }
         return 0.0;
     }
 
-    public Double getDoubleValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (double) (attributesMap.get(key));
-        }
-        return null;
-    }
-
-    public String getStringValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return attributesMap.get(key).toString();
-        }
-        return null;
-    }
-
-    public long getlongValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (long) (attributesMap.get(key));
-        }
-        return 0;
-    }
-
-    public Long getLongValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (long) (attributesMap.get(key));
-        }
-        return null;
-    }
-
-    public float getfloatValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (float) (attributesMap.get(key));
-        }
-        return 0;
-    }
-
+    /**
+     * 未找打为 null
+     *
+     * @param key
+     * @return
+     */
     public Float getFloatValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (float) (attributesMap.get(key));
+        if (super.containsKey(key)) {
+            return (Float) (super.get(key));
         }
         return null;
     }
 
+    /**
+     * 未找到返回0
+     *
+     * @param key
+     * @return
+     */
+    public float getfloatValue(String key) {
+        if (super.containsKey(key)) {
+            return (float) (super.get(key));
+        }
+        return 0;
+    }
+
+    /**
+     * 未找到返回 null
+     *
+     * @param key
+     * @return
+     */
+    public Boolean getBooleanValue(String key) {
+        if (super.containsKey(key)) {
+            return (Boolean) (super.get(key));
+        }
+        return null;
+    }
+
+    /**
+     * 未找到返回 false
+     *
+     * @param key
+     * @return
+     */
     public boolean getbooleanValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (boolean) (attributesMap.get(key));
+        if (super.containsKey(key)) {
+            return (boolean) (super.get(key));
         }
         return false;
     }
 
-    public Boolean getBooleanValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (boolean) (attributesMap.get(key));
-        }
-        return null;
-    }
-
     @Override
-    public String toString() {
-        return attributesMap.toString();
+    public Object clone() {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
