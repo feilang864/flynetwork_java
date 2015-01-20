@@ -34,8 +34,7 @@ public class BaseAttribute implements Serializable {
      *
      */
     public void clearZero() {
-        HashMap<String, Object> attributesMap = attributeMap.getAttributesMap();
-        for (Map.Entry<String, Object> entrySet : attributesMap.entrySet()) {
+        for (Map.Entry<String, Object> entrySet : attributeMap.entrySet()) {
             String key = entrySet.getKey();
             attributeMap.put(key, 0);
         }
@@ -45,10 +44,9 @@ public class BaseAttribute implements Serializable {
      * 属性小于0的处理
      */
     public void zeroAbility() {
-        HashMap<String, Object> attributesMap = attributeMap.getAttributesMap();
-        for (Map.Entry<String, Object> entrySet : attributesMap.entrySet()) {
+        for (Map.Entry<String, Object> entrySet : attributeMap.entrySet()) {
             String key = entrySet.getKey();
-            int intValue = attributeMap.getintValue(key);
+            int intValue = attributeMap.getIntValue(key);
             if (intValue < 0) {
                 intValue = 0;
                 attributeMap.put(key, intValue);

@@ -38,7 +38,7 @@ public class ObjectAttribute extends HashMap<String, Object> {
     }
 
     /**
-     * 未找打为 null
+     * 未找到为 null
      *
      * @param key
      * @return
@@ -51,7 +51,7 @@ public class ObjectAttribute extends HashMap<String, Object> {
     }
 
     /**
-     * 未找打为0
+     * 未找到为0
      *
      * @param key
      * @return
@@ -64,7 +64,7 @@ public class ObjectAttribute extends HashMap<String, Object> {
     }
 
     /**
-     * 未找打为 null
+     * 未找到为 null
      *
      * @param key
      * @return
@@ -77,7 +77,7 @@ public class ObjectAttribute extends HashMap<String, Object> {
     }
 
     /**
-     * 未找打为 null
+     * 未找到为 null
      *
      * @param key
      * @return
@@ -129,7 +129,7 @@ public class ObjectAttribute extends HashMap<String, Object> {
     }
 
     /**
-     * 未找打为 null
+     * 未找到为 null
      *
      * @param key
      * @return

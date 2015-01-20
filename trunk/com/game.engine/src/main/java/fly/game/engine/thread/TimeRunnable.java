@@ -29,7 +29,7 @@ class TimeRunnable extends RunnableBase {
     private void action(TaskHandlerBase taskBase) {
         if (taskBase instanceof TimeTaskHandlerBase) {
             TimeTaskHandlerBase timerEvent = (TimeTaskHandlerBase) taskBase;
-            int actionCount = timerEvent.getTempObjectAttribute().getintValue("actionCount");
+            int actionCount = timerEvent.getTempObjectAttribute().getIntValue("actionCount");
             if ((timerEvent.getEndTime() > 0 && System.currentTimeMillis() > timerEvent.getEndTime()) || (timerEvent.getActionCount() > 0 && actionCount >= timerEvent.getActionCount())) {
                 //任务过期
                 log.error("定时器管理器 定时器任务执行过期 移除 " + timerEvent.toString());
