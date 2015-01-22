@@ -9,10 +9,6 @@ import java.io.Serializable;
 
 /**
  * 基类
- *
- * @author Troy.Chen
- * @phone 13882122019
- * @email 492794628@qq.com
  */
 public abstract class GameObject implements Serializable {
 

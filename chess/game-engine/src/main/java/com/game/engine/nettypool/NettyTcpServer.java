@@ -20,10 +20,6 @@ import org.apache.log4j.Logger;
 /**
  * 基于 netty 4.0.21 的 netty 服务
  *
- * @author Troy.Chen
- * @phone 13882122019
- * @email 492794628@qq.com
- *
  */
 public class NettyTcpServer {
 

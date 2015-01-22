@@ -22,9 +22,6 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author Troy.Chen
- * @phone 13882122019
- * @email 492794628@qq.com
  */
 public class NettyTcpClient {
 

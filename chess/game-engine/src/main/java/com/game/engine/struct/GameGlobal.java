@@ -9,10 +9,6 @@ import java.util.Random;
 
 /**
  * 游戏常用全局数据
- *
- * @author Troy.Chen
- * @phone 13882122019
- * @email 492794628@qq.com
  */
 public class GameGlobal {
 
