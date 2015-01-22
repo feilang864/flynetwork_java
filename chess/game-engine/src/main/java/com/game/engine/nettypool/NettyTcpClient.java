@@ -90,7 +90,7 @@ public class NettyTcpClient {
                             public void channelUnregistered(ChannelHandlerContext ctx) {
                                 nettyMessageHandler.closeSession(ctx);
                                 if (reConnect) {
-                                    TimerManager.getInstance().addTimerTask(new TimerEventRunnable(false, 1, 500, 0, 0, 1, "重新连接登录服务器") {
+                                    TimerManager.getInstance().addTimerTask(new TimerEventRunnable(false, 1, 500, "重新连接登录服务器") {
                                         private static final long serialVersionUID = 8936220264259089420L;
 
                                         @Override

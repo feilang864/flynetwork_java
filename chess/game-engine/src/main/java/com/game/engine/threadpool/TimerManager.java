@@ -73,15 +73,15 @@ public class TimerManager extends GameObject implements Runnable {
                 for (TimerEventRunnable timerEvent : tempTimerEvents) {
                     int execCount = timerEvent.getTempAttribute().getintValue("Execcount");
                     long lastTime = timerEvent.getTempAttribute().getlongValue("LastExecTime");
-                    if (System.currentTimeMillis() - lastTime >= timerEvent.getJiangetime()) {
+                    if (System.currentTimeMillis() - lastTime >= timerEvent.getIntervalTime()) {
 
                         //ThreadManager.getInstance().addTask(timerEvent.getThreadID(), timerEvent);
                         execCount++;
-                        if (timerEvent.getExeccount() == execCount) {
+                        if (timerEvent.getActionCount() == execCount) {
                             taskQueue.remove(timerEvent);
                         } else {
-                            timerEvent.getTempAttribute().setValue("Execcount", execCount);
-                            timerEvent.getTempAttribute().setValue("LastExecTime", System.currentTimeMillis());
+                            timerEvent.getTempAttribute().put("Execcount", execCount);
+                            timerEvent.getTempAttribute().put("LastExecTime", System.currentTimeMillis());
                         }
                     }
                 }

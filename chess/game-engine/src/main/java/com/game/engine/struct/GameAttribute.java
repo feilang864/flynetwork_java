@@ -6,41 +6,22 @@
 package com.game.engine.struct;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 属性类
+ *
  */
-public class GameAttribute {
-
-    Map<String, Object> attributesMap;
+public class GameAttribute extends HashMap<String, Object> {
 
     public GameAttribute() {
-        attributesMap = new HashMap<>();
     }
 
-    /**
-     * 如果未找到也返回 null
-     *
-     * @param key
-     * @return
-     */
-    public Object getValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return attributesMap.get(key);
-        }
-        return null;
-    }
-
-    /**
-     *
-     * @param key
-     * @param attribute
-     */
-    public void setValue(String key, Object attribute) {
-        this.attributesMap.put(key, attribute);
-    }
-
+//    public Class<? extends Object> remove(String key, Class<? extends Object> t) {
+//        if (this.containsKey(key)) {
+//            return (t)this.get(key);
+//        }
+//        return null;
+//    }
     /**
      * 如果未找到也返回 null
      *
@@ -48,8 +29,8 @@ public class GameAttribute {
      * @return
      */
     public String getStringValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return attributesMap.get(key).toString();
+        if (this.containsKey(key)) {
+            return this.get(key).toString();
         }
         return null;
     }
@@ -61,8 +42,8 @@ public class GameAttribute {
      * @return
      */
     public int getintValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (int) (attributesMap.get(key));
+        if (this.containsKey(key)) {
+            return (int) (this.get(key));
         }
         return 0;
     }
@@ -74,8 +55,8 @@ public class GameAttribute {
      * @return
      */
     public Integer getIntegerValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (Integer) (attributesMap.get(key));
+        if (this.containsKey(key)) {
+            return (Integer) (this.get(key));
         }
         return null;
     }
@@ -87,8 +68,8 @@ public class GameAttribute {
      * @return
      */
     public long getlongValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (long) (attributesMap.get(key));
+        if (this.containsKey(key)) {
+            return (long) (this.get(key));
         }
         return 0;
     }
@@ -100,8 +81,8 @@ public class GameAttribute {
      * @return
      */
     public Long getLongValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (Long) (attributesMap.get(key));
+        if (this.containsKey(key)) {
+            return (Long) (this.get(key));
         }
         return null;
     }
@@ -113,8 +94,8 @@ public class GameAttribute {
      * @return
      */
     public float getfloatValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (float) (attributesMap.get(key));
+        if (this.containsKey(key)) {
+            return (float) (this.get(key));
         }
         return 0;
     }
@@ -126,8 +107,8 @@ public class GameAttribute {
      * @return
      */
     public Float getFloatValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (Float) (attributesMap.get(key));
+        if (this.containsKey(key)) {
+            return (Float) (this.get(key));
         }
         return null;
     }
@@ -139,8 +120,8 @@ public class GameAttribute {
      * @return
      */
     public boolean getbooleanValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (boolean) (attributesMap.get(key));
+        if (this.containsKey(key)) {
+            return (boolean) (this.get(key));
         }
         return false;
     }
@@ -152,8 +133,8 @@ public class GameAttribute {
      * @return
      */
     public Boolean getBooleanValue(String key) {
-        if (attributesMap.containsKey(key)) {
-            return (Boolean) (attributesMap.get(key));
+        if (this.containsKey(key)) {
+            return (Boolean) (this.get(key));
         }
         return null;
     }

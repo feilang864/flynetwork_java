@@ -14,33 +14,16 @@ public abstract class DataRunnable extends GameObject implements Runnable {
 
     private static final long serialVersionUID = -6366203475094728409L;
 
-    long submitTime;
-
-    long finishTime;
-
     /**
      *
      * @param Name 任务名称
      */
     public DataRunnable(String Name) {
         super(Name);
-        submitTime = System.currentTimeMillis();
+        this.getTempAttribute().put(" submitTime", System.currentTimeMillis());
     }
 
     public long getSubmitTime() {
-        return submitTime;
+        return this.getTempAttribute().getlongValue(" submitTime");
     }
-
-    public void setSubmitTime() {
-        this.submitTime = System.currentTimeMillis();
-    }
-
-    public long getFinishTime() {
-        return finishTime;
-    }
-
-    public void setFinishTime() {
-        this.finishTime = System.currentTimeMillis();
-    }
-
 }

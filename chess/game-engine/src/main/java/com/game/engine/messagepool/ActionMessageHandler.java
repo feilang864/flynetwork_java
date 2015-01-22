@@ -16,7 +16,7 @@ public abstract class ActionMessageHandler {
 
     private com.google.protobuf.Message message;
     private GameAttribute parameter;
-    public static final String SESION_Value = "SESION";
+    public static final String SESION_VALUE = "SESION";
 
     public Message getMessage() {
         return message;
