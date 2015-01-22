@@ -6,7 +6,6 @@
 package com.game.engine.struct.thread;
 
 import com.game.engine.struct.GameObject;
-import org.apache.log4j.Logger;
 
 /**
  * 任务执行
@@ -14,8 +13,6 @@ import org.apache.log4j.Logger;
 public abstract class DataRunnable extends GameObject implements Runnable {
 
     private static final long serialVersionUID = -6366203475094728409L;
-
-    private static final Logger logger = Logger.getLogger(DataRunnable.class);
 
     long submitTime;
 
