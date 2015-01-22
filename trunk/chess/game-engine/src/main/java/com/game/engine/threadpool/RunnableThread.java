@@ -77,15 +77,15 @@ public class RunnableThread extends GameObject implements Runnable {
                 try {
                     /* 执行任务 */
                     //r.setSubmitTimeL();
+                    long submitTime = System.currentTimeMillis();
                     r.run();
-                    r.setFinishTime();
-                    long timeL = r.getFinishTime() - r.getSubmitTime();
-                    if (timeL <= 100L) {
-                        logger.debug("工人<“" + this.getName() + "”> 完成了任务：" + r.toString() + " 耗时：" + (timeL));
+                    long timeL = System.currentTimeMillis() - r.getSubmitTime();
+                    if (timeL <= 1L) {
+                        logger.info("工人<“" + this.getName() + "”> 完成了任务：" + r.toString() + " 耗时：" + (timeL));
                     } else if (timeL <= 1000L) {
-                        logger.debug("工人<“" + this.getName() + "”> 长时间执行 完成任务：" + r.toString() + " “考虑”任务脚本逻辑 耗时：" + (timeL));
+                        logger.info("工人<“" + this.getName() + "”> 长时间执行 完成任务：" + r.toString() + " “考虑”任务脚本逻辑 耗时：" + (timeL));
                     } else if (timeL <= 4000L) {
-                        logger.debug("工人<“" + this.getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “检查”任务脚本逻辑 耗时：" + (timeL));
+                        logger.info("工人<“" + this.getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “检查”任务脚本逻辑 耗时：" + (timeL));
                     } else {
                         logger.error("工人<“" + this.getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “考虑是否应该删除”任务脚本 耗时：" + (timeL));
                     }

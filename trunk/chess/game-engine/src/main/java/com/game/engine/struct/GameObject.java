@@ -31,7 +31,7 @@ public abstract class GameObject implements Serializable {
     private Long ID;
     private String Name;
     //
-    private transient GameAttribute tempAttribute;
+    private transient GameAttribute tempAttribute = new GameAttribute();
 
     /**
      * 返回运行时属性值

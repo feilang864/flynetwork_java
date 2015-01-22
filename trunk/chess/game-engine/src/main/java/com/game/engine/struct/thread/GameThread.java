@@ -14,7 +14,6 @@ public class GameThread extends Thread {
     private static int threadID = 0;
     private static final Object SYN_OBJECT = new Object();
     private int tid = 0;
-    //private
 
     public GameThread(ThreadGroup group, Runnable target, String name) {
         super(group, target, name);

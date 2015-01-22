@@ -67,7 +67,7 @@ public class ThreadMessage extends GameObject implements Runnable {
             if (messageBean != null) {
                 HandlerInfo handlerInfo = HandlerManager.getInstance().getHandlerInfo(messageBean.getMsgid());
                 ActionMessageHandler messageHandler = handlerInfo.getHandel();
-                messageHandler.getParameter().setValue(ActionMessageHandler.SESION_Value, messageBean.getChannelHandlerContext());
+                messageHandler.getParameter().put(ActionMessageHandler.SESION_VALUE, messageBean.getChannelHandlerContext());
                 try {
                     messageHandler.setMessage(handlerInfo.getMessage(messageBean.getMsgbuffer()));
                     MessageRunnable messageRunnable = new MessageRunnable(handlerInfo.threadID, messageHandler);

@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
  */
 public class BackThread {
 
-    private static final Logger logger = Logger.getLogger(BackThread.class);
+    private static final Logger log = Logger.getLogger(BackThread.class);
 
     /* 任务列表 */
     List<DataRunnable> taskQueue = Collections.synchronizedList(new LinkedList<DataRunnable>());
@@ -28,7 +28,7 @@ public class BackThread {
         for (int i = 1; i <= threadcountI; i++) {
             BackThreadRunnable backThreadRunnable = new BackThreadRunnable(threadGroup, "后台线程-" + i);
         }
-        logger.info("---初始化后台线程池--线程数量:" + threadcountI + "------------");
+        log.info("---初始化后台线程池--线程数量:" + threadcountI + "------------");
     }
 
     /**
@@ -42,7 +42,7 @@ public class BackThread {
             /* 唤醒队列, 开始执行 */
             taskQueue.notify();
         }
-        logger.debug(threadGroup.getName() + " 接受任务 任务<" + newTask.getID() + ">: " + newTask.getName());
+        log.debug(threadGroup.getName() + " 接受任务 任务<" + newTask.getID() + ">: " + newTask.getName());
     }
 
     class BackThreadRunnable extends GameObject implements Runnable {
@@ -68,7 +68,7 @@ public class BackThread {
                             /* 任务队列为空，则等待有新任务加入从而被唤醒 */
                             taskQueue.wait(500);
                         } catch (InterruptedException ie) {
-                            logger.error(ie);
+                            log.error(ie);
                         }
                     }
                     /* 取出任务执行 */
@@ -81,26 +81,26 @@ public class BackThread {
                     try {
                         /* 执行任务 */
                         //r.setSubmitTimeL();
+                        long submitTime = System.currentTimeMillis();
                         r.run();
-                        r.setFinishTime();
-                        long timeL = r.getFinishTime() - r.getSubmitTime();
+                        long timeL = System.currentTimeMillis() - r.getSubmitTime();
                         if (timeL <= 100L) {
-                            logger.debug("工人<“" + this.getName() + "”> 完成了任务：" + r.toString() + " 耗时：" + (timeL));
+                            log.debug("工人<“" + this.getName() + "”> 完成了任务：" + r.toString() + " 耗时：" + (timeL));
                         } else if (timeL <= 1000L) {
-                            logger.debug("工人<“" + this.getName() + "”> 长时间执行 完成任务：" + r.toString() + " “考虑”任务脚本逻辑 耗时：" + (timeL));
+                            log.debug("工人<“" + this.getName() + "”> 长时间执行 完成任务：" + r.toString() + " “考虑”任务脚本逻辑 耗时：" + (timeL));
                         } else if (timeL <= 4000L) {
-                            logger.debug("工人<“" + this.getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “检查”任务脚本逻辑 耗时：" + (timeL));
+                            log.debug("工人<“" + this.getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “检查”任务脚本逻辑 耗时：" + (timeL));
                         } else {
-                            logger.error("工人<“" + this.getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “考虑是否应该删除”任务脚本 耗时：" + (timeL));
+                            log.error("工人<“" + this.getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “考虑是否应该删除”任务脚本 耗时：" + (timeL));
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        logger.error("工人<“" + this.getName() + "”> 执行任务<" + r.getID() + "(“" + r.getName() + "”)> 遇到错误: " + e);
+                        log.error("工人<“" + this.getName() + "”> 执行任务<" + r.getID() + "(“" + r.getName() + "”)> 遇到错误: " + e);
                     }
                     r = null;
                 }
             }
-            logger.error("线程结束, 工人<“" + this.getName() + "”>退出");
+            log.error("线程结束, 工人<“" + this.getName() + "”>退出");
         }
     }
 }
