@@ -9,8 +9,6 @@ import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 /**
  * 编码器
  *
- * @author Troy.Chen
- *
  */
 public class BufferMarshalEncoder implements ProtocolEncoder {
 

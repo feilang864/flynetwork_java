@@ -15,10 +15,6 @@ import org.apache.log4j.Logger;
 
 /**
  * 编码器
- *
- * @author Troy.Chen
- * @phone 13882122019
- * @email 492794628@qq.com
  */
 class NettyEncoder extends MessageToByteEncoder<MessageBean> {
 

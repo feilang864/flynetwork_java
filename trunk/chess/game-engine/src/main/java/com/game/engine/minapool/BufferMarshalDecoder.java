@@ -8,8 +8,6 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
 /**
  * 解码器
- *
- * @author Troy.Chen
  */
 public class BufferMarshalDecoder implements ProtocolDecoder {
 

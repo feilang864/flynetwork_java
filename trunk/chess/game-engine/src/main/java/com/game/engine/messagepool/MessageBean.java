@@ -9,9 +9,6 @@ import io.netty.channel.ChannelHandlerContext;
 
 /**
  *
- * @author Troy.Chen
- * @phone 13882122019
- * @email 492794628@qq.com
  */
 public class MessageBean {
 
