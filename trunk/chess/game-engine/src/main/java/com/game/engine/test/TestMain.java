@@ -13,8 +13,7 @@ import org.apache.log4j.Logger;
  */
 public class TestMain {
 
-    private Logger log = Logger.getLogger(TestMain.class);
-
+    private static final Logger log = Logger.getLogger(TestMain.class);
     private static final TestMain instance = new TestMain();
 
     public static TestMain getInstance() {
@@ -22,6 +21,7 @@ public class TestMain {
     }
 
     public static void main(String[] args) {
+
         System.out.println("");
     }
 }

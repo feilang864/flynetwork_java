@@ -14,6 +14,9 @@ public abstract class DataRunnable extends GameObject implements Runnable {
 
     private static final long serialVersionUID = -6366203475094728409L;
 
+    public DataRunnable() {
+    }
+
     /**
      *
      * @param Name 任务名称
