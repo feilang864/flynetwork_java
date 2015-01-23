@@ -19,13 +19,19 @@ import org.apache.log4j.Logger;
 public class BackThread {
 
     private static final Logger log = Logger.getLogger(BackThread.class);
+    private static final BackThread instance = new BackThread();
 
+    private static final ThreadGroup threadGroup = new ThreadGroup(GameGlobal.getInstance().getGlobeThreadGroup(), "后台执行器");
     /* 任务列表 */
-    static final List<DataRunnable> taskQueue = Collections.synchronizedList(new LinkedList<DataRunnable>());
-    static final ThreadGroup threadGroup = new ThreadGroup(GameGlobal.getInstance().getGlobeThreadGroup(), "后台执行器");
-    static final BackThreadRunnable backThreadRunnable = new BackThreadRunnable();
+    private static final List<DataRunnable> taskQueue = Collections.synchronizedList(new LinkedList<DataRunnable>());
+    private static final BackThreadRunnable backThreadRunnable = new BackThreadRunnable();
 
-    public BackThread(int threadcountI) {
+    public static BackThread getInstance() {
+        return instance;
+    }
+
+    public BackThread() {
+        int threadcountI = 10;
         for (int i = 1; i <= threadcountI; i++) {
             GameThread<BackThreadRunnable> thread = new GameThread<>(threadGroup, backThreadRunnable, "后台线程-" + i);
             thread.start();
@@ -48,6 +54,8 @@ public class BackThread {
     }
 
     static class BackThreadRunnable extends DataRunnable {
+
+        private static final long serialVersionUID = 1L;
 
         public BackThreadRunnable() {
         }

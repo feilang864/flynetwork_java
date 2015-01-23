@@ -6,6 +6,7 @@
 package com.game.engine.threadpool;
 
 import com.game.engine.struct.GameGlobal;
+import com.game.engine.struct.thread.DataRunnable;
 import com.game.engine.struct.thread.GameThread;
 import com.game.engine.struct.thread.TimerEventRunnable;
 import java.util.ArrayList;
@@ -17,21 +18,21 @@ import org.apache.log4j.Logger;
 /**
  *
  */
-public class TimerManager {
+public class TimerThread {
 
-    private static final Logger log = Logger.getLogger(TimerManager.class);
+    private static final Logger log = Logger.getLogger(TimerThread.class);
 
-    static TimerManager instance = new TimerManager();
+    private static final TimerThread instance = new TimerThread();
 
-    public static TimerManager getInstance() {
+    /* 任务列表 */
+    private static final List<TimerEventRunnable> taskQueue = Collections.synchronizedList(new LinkedList<TimerEventRunnable>());
+    private static final TimerRunnable timerRunnable = new TimerRunnable();
+
+    public static TimerThread getInstance() {
         return instance;
     }
 
-    /* 任务列表 */
-    private final List<TimerEventRunnable> taskQueue = Collections.synchronizedList(new LinkedList<TimerEventRunnable>());
-    private final TimerRunnable timerRunnable = new TimerRunnable();
-
-    public TimerManager() {
+    public TimerThread() {
         GameThread<TimerRunnable> thread = new GameThread<>(GameGlobal.getInstance().getGlobeThreadGroup(), timerRunnable, "定时执行器");
         thread.start();
     }
@@ -47,10 +48,15 @@ public class TimerManager {
             /* 唤醒队列, 开始执行 */
             taskQueue.notify();
         }
-        log.debug(this.getName() + " 接受任务 任务<" + newTimerTask.getID() + ">: " + newTimerTask.getName());
+        log.debug(" 接受任务 任务<" + newTimerTask.getID() + ">: " + newTimerTask.getName());
     }
 
-    static class TimerRunnable implements DataRunnable {
+    static class TimerRunnable extends DataRunnable {
+
+        private static final long serialVersionUID = 1L;
+
+        public TimerRunnable() {
+        }
 
         @Override
         public void run() {
@@ -68,7 +74,6 @@ public class TimerManager {
                     //队列不为空的情况下  取出队列定时器任务
                     tempTimerEvents = new ArrayList<>(taskQueue);
                 }
-
                 if (GameGlobal.getInstance().isRunning() && !tempTimerEvents.isEmpty()) {
                     for (TimerEventRunnable timerEvent : tempTimerEvents) {
                         int execCount = timerEvent.getTempAttribute().getintValue("Execcount");
@@ -86,7 +91,6 @@ public class TimerManager {
                         }
                     }
                 }
-
                 try {
                     //定时器， 执行方式 间隔 10ms 执行一次 把需要处理的任务放到对应的处理线程
                     Thread.sleep(10);
