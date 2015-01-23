@@ -16,12 +16,21 @@ public class GameAttribute extends HashMap<String, Object> {
     public GameAttribute() {
     }
 
-//    public Class<? extends Object> remove(String key, Class<? extends Object> t) {
-//        if (this.containsKey(key)) {
-//            return (t)this.get(key);
-//        }
-//        return null;
-//    }
+    /**
+     * 调用此方法 删除值是需要保证存在key值和value值 否则空指针报错
+     *
+     * @param <T>
+     * @param key
+     * @param clazz
+     * @return
+     * @deprecated 需要保证存在key值和value值 否则空指针报错 慎重
+     */
+    @Deprecated
+    public <T extends Object> T remove(String key, Class<T> clazz) {
+        Object remove = this.remove(key);
+        return (T) remove;
+    }
+
     /**
      * 如果未找到也返回 null
      *

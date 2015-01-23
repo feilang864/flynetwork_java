@@ -6,6 +6,7 @@
 package com.game.engine.threadpool;
 
 import com.game.engine.struct.thread.DataRunnable;
+import com.game.engine.struct.thread.GameThread;
 import java.util.HashMap;
 import org.apache.log4j.Logger;
 
@@ -18,61 +19,25 @@ public class ThreadManager {
 
     static ThreadManager instance = new ThreadManager();
 
+    static final HashMap<Long, GameThread> workHashMaps = new HashMap<>(0);
+
     public static ThreadManager getInstance() {
         return instance;
     }
-    BackThread backThread;
-    HashMap<Long, RunnableThread> workHashMaps;
-    private long noneThreadID;
-    private long mapThreadID;
-    private long chatThreadID;
-    private long socialThreadID;
 
     public ThreadManager() {
-        workHashMaps = new HashMap<>();
-        backThread = new BackThread(5);
+
     }
 
-    /**
-     * 返回无名执行器
-     *
-     * @return
-     */
-    public long getNoneThreadID() {
-        return noneThreadID;
+    public final Long getThread(ThreadGroup threadGroup, String workName) {
+        GameThread wk = new GameThread(threadGroup, workName);
+        workHashMaps.put(wk.getId(), wk);
+        return wk.getId();
     }
 
-    /**
-     * 返回地图线程执行器
-     *
-     * @return
-     */
-    public long getMapThreadID() {
-        return mapThreadID;
-    }
-
-    /**
-     * 返回聊天线程执行器
-     *
-     * @return
-     */
-    public long getChatThreadID() {
-        return chatThreadID;
-    }
-
-    /**
-     * 返回社交线程执行器
-     *
-     * @return
-     */
-    public long getSocialThreadID() {
-        return socialThreadID;
-    }
-
-    public final Long getMapThread(ThreadGroup threadGroup, String workName) {
-        RunnableThread wk = new RunnableThread(threadGroup, workName);
-        workHashMaps.put(wk.getID(), wk);
-        return wk.getID();
+    public final Long addThread(GameThread thread) {
+        workHashMaps.put(thread.getId(), thread);
+        return thread.getId();
     }
 
     public final void addTask(long threadID, DataRunnable gameRunnable) {
@@ -81,11 +46,11 @@ public class ThreadManager {
         }
     }
 
-    public final void addTask(DataRunnable gameRunnable) {
-        workHashMaps.get(this.getNoneThreadID()).addTask(gameRunnable);
-    }
-
+    /**
+     *
+     * @param gameRunnable
+     */
     public final void addBackTask(DataRunnable gameRunnable) {
-        backThread.addTask(gameRunnable);
+        BackThread.getInstance().addTask(gameRunnable);
     }
 }
