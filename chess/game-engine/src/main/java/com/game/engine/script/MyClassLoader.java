@@ -12,7 +12,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
@@ -23,7 +22,7 @@ import org.apache.log4j.Logger;
 /**
  * class loader 容器 extends ClassLoader
  *
- * @author Administrator
+ * @author Troy.Chen
  */
 public class MyClassLoader extends ClassLoader {
 
@@ -81,7 +80,13 @@ public class MyClassLoader extends ClassLoader {
              * 编译选项，在编译java文件时，编译程序会自动的去寻找java文件引用的其他的java源文件或者class。
              * -sourcepath选项就是定义java源文件的查找目录， -classpath选项就是定义class文件的查找目录。
              */
-            Iterable<String> options = Arrays.asList("-d", this.OutDir, "-sourcepath", this.SourceDir);
+            ArrayList<String> options = new ArrayList<>();
+            options.add("-encoding");
+            options.add("UTF-8");
+            options.add("-sourcepath");
+            options.add(this.SourceDir); // jbsrc
+            options.add("-d");
+            options.add(this.OutDir); // bin/server
             JavaCompiler.CompilationTask compilationTask = compiler.getTask(null, fileManager, null, options, null, compilationUnits);
             // 运行编译任务
             compilationTask.call();
@@ -122,9 +127,11 @@ public class MyClassLoader extends ClassLoader {
                 });
                 // 递归调用
                 for (File childFile : childrenFiles) {
+
                     getJavaFiles(childFile, sourceFileList);
                 }
             } else {// 若file对象为文件
+
                 sourceFileList.add(sourceFile);
             }
         }
