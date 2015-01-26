@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.game.engine.script;
 
 import java.io.ByteArrayOutputStream;
@@ -35,19 +30,20 @@ public class MyClassLoader extends ClassLoader {
      *
      * @param sourceDir 源文件夹
      */
-    public MyClassLoader(String sourceDir) {
+    public MyClassLoader(String sourceDir) throws Exception {
+        if (stringIsEmpty(sourceDir)) {
+            log.error("指定 输入 输出 目录为空");
+            throw new Exception("目录为空");
+        }
         this.SourceDir = sourceDir;
         this.OutDir = this.SourceDir + "out";
         log.info("清理文件夹：" + this.OutDir);
-        new java.io.File(this.OutDir).delete();
-        if (stringIsEmpty(this.SourceDir) || stringIsEmpty(this.OutDir)) {
-            log.error("指定 输入 输出 目录为空");
-        }
+        DeleteFileUtil.deleteDirectory(this.OutDir);
         Compile();
     }
 
     final boolean stringIsEmpty(String str) {
-        return str == null || str.length() <= 0;
+        return str == null || str.length() <= 0 || "".equals(str.trim());
     }
 
     /**
@@ -63,9 +59,8 @@ public class MyClassLoader extends ClassLoader {
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
         try {
             List<File> sourceFileList = new ArrayList<>(0);
-            File sourceFile = null;
             //得到filePath目录下的所有java源文件
-            sourceFile = new File(this.SourceDir);
+            File sourceFile = new File(this.SourceDir);
             getJavaFiles(sourceFile, sourceFileList);
             // 没有java文件，直接返回
             if (sourceFileList.isEmpty()) {
@@ -80,7 +75,9 @@ public class MyClassLoader extends ClassLoader {
              * 编译选项，在编译java文件时，编译程序会自动的去寻找java文件引用的其他的java源文件或者class。
              * -sourcepath选项就是定义java源文件的查找目录， -classpath选项就是定义class文件的查找目录。
              */
-            ArrayList<String> options = new ArrayList<>();
+            ArrayList<String> options = new ArrayList<>(0);
+            options.add("-g");
+            //options.add("-verbose");
             options.add("-encoding");
             options.add("UTF-8");
             options.add("-sourcepath");
@@ -131,8 +128,8 @@ public class MyClassLoader extends ClassLoader {
                     getJavaFiles(childFile, sourceFileList);
                 }
             } else {// 若file对象为文件
-
                 sourceFileList.add(sourceFile);
+                log.info("java编译文件：" + sourceFile.getPath());
             }
         }
     }
