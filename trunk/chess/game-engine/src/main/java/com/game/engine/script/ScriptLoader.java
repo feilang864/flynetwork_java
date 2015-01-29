@@ -24,6 +24,8 @@ import org.apache.log4j.Logger;
  */
 public class ScriptLoader {
 
+    private static final Logger log = Logger.getLogger(ScriptLoader.class);
+
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, Exception {
         String property = System.getProperty("user.dir");
         System.out.println(property);
@@ -32,12 +34,7 @@ public class ScriptLoader {
         ArrayList<IBaseScript> scripts = scriptLoader.getScripts(IBaseScript.class.getName());
         Thread.sleep(5000);
         scriptLoader.dispose();
-        //scriptLoader.getClass("fly.script.ScriptMain").newInstance();
-//        System.in.read();
-
     }
-
-    private static final Logger log = Logger.getLogger(ScriptLoader.class);
     //源文件夹
     private String sourceDir;
     //输出文件夹
@@ -53,12 +50,6 @@ public class ScriptLoader {
 
     public ScriptLoader(String source) throws Exception {
         this(source, source + "\\out");
-    }
-
-    public void dispose() {
-        if (fly != null) {
-            fileMonitorOut.dispose();
-        }
     }
 
     /**
@@ -123,6 +114,12 @@ public class ScriptLoader {
         fileMonitorOut = new FlyFileMonitor(2000, fly, this.outDir);
         fileMonitorOut.start();
 
+    }
+
+    public void dispose() {
+        if (fly != null) {
+            fileMonitorOut.dispose();
+        }
     }
 
     public ArrayList<IBaseScript> getScripts(String scriptName) {
