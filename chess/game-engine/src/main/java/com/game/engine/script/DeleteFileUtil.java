@@ -51,7 +51,7 @@ public class DeleteFileUtil {
                 return false;
             }
         } else {
-            log.error("删除文件：" + fileName + "不存在！");
+            log.error("删除文件失败：" + fileName + "不存在！");
             return false;
         }
     }
