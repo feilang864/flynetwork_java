@@ -14,9 +14,10 @@ import com.google.protobuf.Message;
  */
 public abstract class ActionMessageHandler {
 
+    public static final String SESION_VALUE = "SESION";
+
     private com.google.protobuf.Message message;
     private GameAttribute parameter;
-    public static final String SESION_VALUE = "SESION";
 
     public Message getMessage() {
         return message;

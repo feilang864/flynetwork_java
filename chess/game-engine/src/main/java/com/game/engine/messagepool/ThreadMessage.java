@@ -22,19 +22,20 @@ public class ThreadMessage extends GameObject implements Runnable {
     private static final long serialVersionUID = 3715744847097492073L;
     private static final Logger logger = Logger.getLogger(ThreadMessage.class);
 
+
+    /* 任务列表 */
+    private final List<MessageBean> taskQueue = Collections.synchronizedList(new LinkedList<MessageBean>());
+
     public ThreadMessage(String Name) {
         super(Name);
         Thread thread = new Thread(GameGlobal.getInstance().getGlobeThreadGroup(), this, Name);
         thread.start();
     }
 
-    /* 任务列表 */
-    private final List<MessageBean> taskQueue = Collections.synchronizedList(new LinkedList<MessageBean>());
-
     /**
      * 增加新的任务 每增加一个新任务，都要唤醒任务队列
      *
-     * @param newTask
+     * @param mesg
      */
     public void addTask(MessageBean mesg) {
         synchronized (taskQueue) {
