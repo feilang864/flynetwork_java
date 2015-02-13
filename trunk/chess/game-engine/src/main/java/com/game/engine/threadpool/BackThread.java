@@ -6,8 +6,10 @@
 package com.game.engine.threadpool;
 
 import com.game.engine.struct.GameGlobal;
+import com.game.engine.struct.thread.BaseRunnable;
+import com.game.engine.struct.thread.BaseThread;
 import com.game.engine.struct.thread.DataRunnable;
-import com.game.engine.struct.thread.GameThread;
+import com.game.engine.struct.thread.ThreadRunnable;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,18 +24,18 @@ public class BackThread {
     private static final BackThread instance = new BackThread();
 
     private static final ThreadGroup threadGroup = new ThreadGroup(GameGlobal.getInstance().getGlobeThreadGroup(), "后台执行器");
-    /* 任务列表 */
-    private static final List<DataRunnable> taskQueue = Collections.synchronizedList(new LinkedList<DataRunnable>());
-    private static final BackThreadRunnable backThreadRunnable = new BackThreadRunnable();
 
     public static BackThread getInstance() {
         return instance;
     }
+    /* 任务列表 */
+    private final List<DataRunnable> taskQueue = Collections.synchronizedList(new LinkedList<DataRunnable>());
+    private final BackThreadRunnable backThreadRunnable = new BackThreadRunnable();
 
     public BackThread() {
         int threadcountI = 10;
         for (int i = 1; i <= threadcountI; i++) {
-            GameThread<BackThreadRunnable> thread = new GameThread<>(threadGroup, backThreadRunnable, "后台线程-" + i);
+            BaseThread thread = new BaseThread(threadGroup, backThreadRunnable, "后台线程-" + i);
             thread.start();
         }
         log.info("---初始化后台线程池--线程数量:" + threadcountI + "------------");
@@ -45,20 +47,15 @@ public class BackThread {
      * @param newTask
      */
     public void addTask(DataRunnable newTask) {
+        log.debug("后台线程 接受任务 " + newTask.toString());
         synchronized (taskQueue) {
             taskQueue.add(newTask);
             /* 唤醒队列, 开始执行 */
             taskQueue.notify();
         }
-        log.debug(threadGroup.getName() + " 接受任务 任务<" + newTask.getID() + ">: " + newTask.getName());
     }
 
-    static class BackThreadRunnable extends DataRunnable {
-
-        private static final long serialVersionUID = 1L;
-
-        public BackThreadRunnable() {
-        }
+    final class BackThreadRunnable extends BaseRunnable {
 
         /**
          * 循环执行任务 这也许是线程池的关键所在
@@ -81,22 +78,22 @@ public class BackThread {
                         r = taskQueue.remove(0);
                     }
                 }
-
                 if (r != null) {
                     try {
                         /* 执行任务 */
                         //r.setSubmitTimeL();
                         long submitTime = System.currentTimeMillis();
                         r.run();
-                        long timeL = System.currentTimeMillis() - r.getSubmitTime();
-                        if (timeL <= 100L) {
-                            log.debug("工人<“" + Thread.currentThread().getName() + "”> 完成了任务：" + r.toString() + " 耗时：" + (timeL));
-                        } else if (timeL <= 1000L) {
-                            log.debug("工人<“" + Thread.currentThread().getName() + "”> 长时间执行 完成任务：" + r.toString() + " “考虑”任务脚本逻辑 耗时：" + (timeL));
-                        } else if (timeL <= 4000L) {
-                            log.debug("工人<“" + Thread.currentThread().getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “检查”任务脚本逻辑 耗时：" + (timeL));
+                        long timeL1 = System.currentTimeMillis() - submitTime;
+                        long timeL2 = System.currentTimeMillis() - r.getSubmitTime();
+                        if (timeL1 <= 100L) {
+                            log.debug("工人<“" + Thread.currentThread().getName() + "”> 完成了任务：" + r.toString() + " 执行耗时：" + timeL1 + " 提交耗时：" + timeL2);
+                        } else if (timeL1 <= 1000L) {
+                            log.debug("工人<“" + Thread.currentThread().getName() + "”> 长时间执行 完成任务：" + r.toString() + " “考虑”任务脚本逻辑 耗时：" + timeL1 + " 提交耗时：" + timeL2);
+                        } else if (timeL1 <= 4000L) {
+                            log.debug("工人<“" + Thread.currentThread().getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “检查”任务脚本逻辑 耗时：" + timeL1 + " 提交耗时：" + timeL2);
                         } else {
-                            log.error("工人<“" + Thread.currentThread().getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “考虑是否应该删除”任务脚本 耗时：" + (timeL));
+                            log.error("工人<“" + Thread.currentThread().getName() + "”> 超长时间执行完成 任务：" + r.toString() + " “考虑是否应该删除”任务脚本 耗时：" + timeL1 + " 提交耗时：" + timeL2);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

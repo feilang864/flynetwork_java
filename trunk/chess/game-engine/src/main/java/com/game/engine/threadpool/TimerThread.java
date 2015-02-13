@@ -6,8 +6,8 @@
 package com.game.engine.threadpool;
 
 import com.game.engine.struct.GameGlobal;
-import com.game.engine.struct.thread.DataRunnable;
-import com.game.engine.struct.thread.GameThread;
+import com.game.engine.struct.thread.BaseRunnable;
+import com.game.engine.struct.thread.BaseThread;
 import com.game.engine.struct.thread.TimerEventRunnable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,16 +24,16 @@ public class TimerThread {
 
     private static final TimerThread instance = new TimerThread();
 
-    /* 任务列表 */
-    private static final List<TimerEventRunnable> taskQueue = Collections.synchronizedList(new LinkedList<TimerEventRunnable>());
-    private static final TimerRunnable timerRunnable = new TimerRunnable();
-
     public static TimerThread getInstance() {
         return instance;
     }
 
+    /* 任务列表 */
+    private final List<TimerEventRunnable> taskQueue = Collections.synchronizedList(new LinkedList<TimerEventRunnable>());
+    private final TimerRunnable timerRunnable = new TimerRunnable();
+
     public TimerThread() {
-        GameThread<TimerRunnable> thread = new GameThread<>(GameGlobal.getInstance().getGlobeThreadGroup(), timerRunnable, "定时执行器");
+        BaseThread thread = new BaseThread(GameGlobal.getInstance().getGlobeThreadGroup(), timerRunnable, "定时执行器");
         thread.start();
     }
 
@@ -43,20 +43,15 @@ public class TimerThread {
      * @param newTimerTask
      */
     public void addTimerTask(TimerEventRunnable newTimerTask) {
+        log.debug("定时执行器 接受任务 " + newTimerTask.toString());
         synchronized (taskQueue) {
             taskQueue.add(newTimerTask);
             /* 唤醒队列, 开始执行 */
             taskQueue.notify();
         }
-        log.debug(" 接受任务 任务<" + newTimerTask.getID() + ">: " + newTimerTask.getName());
     }
 
-    static class TimerRunnable extends DataRunnable {
-
-        private static final long serialVersionUID = 1L;
-
-        public TimerRunnable() {
-        }
+    class TimerRunnable extends BaseRunnable {
 
         @Override
         public void run() {
@@ -97,7 +92,7 @@ public class TimerThread {
                 } catch (InterruptedException ex) {
                 }
             }
-            log.error("线程结束, 工人<“" + this.getName() + "”>退出");
+            log.error("线程结束, 工人<“" + Thread.currentThread().getName() + "”>退出");
         }
     }
 }

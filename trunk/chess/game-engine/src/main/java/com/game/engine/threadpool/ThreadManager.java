@@ -1,25 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.game.engine.threadpool;
 
+import com.game.engine.struct.thread.BaseThread;
 import com.game.engine.struct.thread.DataRunnable;
-import com.game.engine.struct.thread.GameThread;
+import com.game.engine.struct.thread.ThreadRunnable;
 import java.util.HashMap;
 import org.apache.log4j.Logger;
 
 /**
  *
  */
-public class ThreadManager {
+public final class ThreadManager {
 
     private static final Logger logger = Logger.getLogger(ThreadManager.class);
 
     static ThreadManager instance = new ThreadManager();
 
-    static final HashMap<Long, GameThread> workHashMaps = new HashMap<>(0);
+    static final HashMap<Long, BaseThread> workHashMaps = new HashMap<>(0);
 
     public static ThreadManager getInstance() {
         return instance;
@@ -29,18 +25,28 @@ public class ThreadManager {
 
     }
 
-    public final Long getThread(ThreadGroup threadGroup, String workName) {
-        GameThread wk = new GameThread(threadGroup, workName);
+    public Long getThread(ThreadGroup threadGroup, ThreadRunnable target, String workName) {
+        BaseThread wk = new BaseThread(threadGroup, target, workName);
         workHashMaps.put(wk.getId(), wk);
         return wk.getId();
     }
 
-    public final Long addThread(GameThread thread) {
+    public Long getThread(ThreadGroup threadGroup, String workName) {
+        BaseThread thread = new BaseThread(threadGroup, new ThreadRunnable(), workName);
+        thread.start();
         workHashMaps.put(thread.getId(), thread);
         return thread.getId();
     }
 
-    public final void addTask(long threadID, DataRunnable gameRunnable) {
+    public boolean delete(long threadID) {
+        if (workHashMaps.containsKey(threadID)) {
+            workHashMaps.get(threadID).delete();
+            return true;
+        }
+        return false;
+    }
+
+    public void addTask(long threadID, DataRunnable gameRunnable) {
         if (workHashMaps.containsKey(threadID)) {
             workHashMaps.get(threadID).addTask(gameRunnable);
         }
@@ -50,7 +56,7 @@ public class ThreadManager {
      *
      * @param gameRunnable
      */
-    public final void addBackTask(DataRunnable gameRunnable) {
+    public void addBackTask(DataRunnable gameRunnable) {
         BackThread.getInstance().addTask(gameRunnable);
     }
 }
