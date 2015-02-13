@@ -5,14 +5,10 @@
  */
 package com.game.engine.struct.thread;
 
-import com.game.engine.struct.GameObject;
-
 /**
  * 任务执行
  */
-public abstract class DataRunnable extends GameObject implements Runnable {
-
-    private static final long serialVersionUID = -6366203475094728409L;
+public abstract class DataRunnable extends BaseRunnable {
 
     public DataRunnable() {
     }
@@ -23,10 +19,16 @@ public abstract class DataRunnable extends GameObject implements Runnable {
      */
     public DataRunnable(String Name) {
         super(Name);
-        this.getTempAttribute().put(" submitTime", System.currentTimeMillis());
+        this.getTempAttribute().put("submitTime", System.currentTimeMillis());
     }
 
     public long getSubmitTime() {
-        return this.getTempAttribute().getlongValue(" submitTime");
+        return this.getTempAttribute().getlongValue("submitTime");
     }
+
+    @Override
+    public String toString() {
+        return "任务" + super.toString();
+    }
+
 }
