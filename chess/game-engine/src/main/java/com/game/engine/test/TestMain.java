@@ -5,10 +5,12 @@
  */
 package com.game.engine.test;
 
-import com.game.engine.struct.GameGlobal;
+import com.game.engine.nettypool.NettyMessageHandler;
+import com.game.engine.nettypool.NettyTcpServer;
+import com.game.engine.nettypool.message.NettyMessageBean;
 import com.game.engine.struct.thread.DataRunnable;
 import com.game.engine.threadpool.ThreadManager;
-import java.util.logging.Level;
+import io.netty.channel.ChannelHandlerContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -25,6 +27,29 @@ public class TestMain {
     }
 
     public static void main(String[] args) {
+
+        NettyTcpServer tcpServer = new NettyTcpServer(9527, new NettyMessageHandler() {
+
+            @Override
+            public void channelActive(ChannelHandlerContext session) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void readMessage(NettyMessageBean msg) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void closeSession(ChannelHandlerContext session) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void exceptionCaught(ChannelHandlerContext session, Throwable cause) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
         ThreadManager.getInstance().addBackTask(new DataRunnable("测试的") {
 
             @Override

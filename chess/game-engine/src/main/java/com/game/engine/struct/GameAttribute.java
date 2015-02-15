@@ -13,6 +13,8 @@ import java.util.HashMap;
  */
 public class GameAttribute extends HashMap<String, Object> {
 
+    private static final long serialVersionUID = -5444009284370512800L;
+
     public GameAttribute() {
     }
 
@@ -146,5 +148,10 @@ public class GameAttribute extends HashMap<String, Object> {
             return (Boolean) (this.get(key));
         }
         return null;
+    }
+
+    @Override
+    public Object clone() {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 }

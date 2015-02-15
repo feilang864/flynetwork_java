@@ -21,10 +21,10 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
  */
 public class MinaTcpServer {
 
-    IoAcceptor _acceptor;
     private static final Logger logger = Logger.getLogger(MinaTcpServer.class);
+    IoAcceptor _acceptor;
 
-    public MinaTcpServer() {
+    public MinaTcpServer(int port) {
         //创建一个nio异步的socket监听服务器
         _acceptor = new NioSocketAcceptor();
         ///设置缓冲区大小，
@@ -37,23 +37,13 @@ public class MinaTcpServer {
         filterChain.addLast("codec", filter);
         ///添加实现类，客户端连接，断开，消息处理等
         _acceptor.setHandler(new MinaIOHandler());
-    }
-
-    /**
-     * 启动 socket 监听
-     *
-     * @param port 监听端口号
-     * @return 是否启动成功
-     */
-    public boolean Start(int port) {
         try {
             ///绑定一个监听端口号
             _acceptor.bind(new InetSocketAddress(port));
             logger.info("开启端口为 " + port + " 监听服务");
-            return true;
         } catch (IOException ex) {
             logger.error("监听端口 " + port + " 失败 Exception：" + ex);
-            return false;
+            System.exit(0);
         }
     }
 
