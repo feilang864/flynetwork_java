@@ -7,28 +7,28 @@ import io.netty.channel.ChannelHandlerContext;
  *
  * @author fly_ty
  */
-public interface NettyMessageHandler {
+public abstract class NettyMessageHandler {
 
     /**
      * 创建链接后，链接被激活
      *
      * @param session
      */
-    void channelActive(ChannelHandlerContext session);
+    public abstract void channelActive(ChannelHandlerContext session);
 
     /**
      * 收到消息
      *
      * @param msg
      */
-    void readMessage(NettyMessageBean msg);
+    public abstract void readMessage(NettyMessageBean msg);
 
     /**
      * 断开连接
      *
      * @param session
      */
-    void closeSession(ChannelHandlerContext session);
+    public abstract void closeSession(ChannelHandlerContext session);
 
     /**
      * 发现异常
@@ -36,5 +36,9 @@ public interface NettyMessageHandler {
      * @param session
      * @param cause
      */
-    void exceptionCaught(ChannelHandlerContext session, Throwable cause);
+    public abstract void exceptionCaught(ChannelHandlerContext session, Throwable cause);
+
+    public void send(ChannelHandlerContext session, com.google.protobuf.Message message) {
+
+    }
 }

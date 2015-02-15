@@ -1,5 +1,6 @@
 package com.game.engine.nettypool.message;
 
+import com.google.protobuf.Message;
 import io.netty.channel.ChannelHandlerContext;
 import org.apache.log4j.Logger;
 
