@@ -5,7 +5,7 @@
  */
 package com.game.engine.nettypool;
 
-import com.game.engine.messagepool.MessageBean;
+import com.game.engine.nettypool.message.NettyMessageBean;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -77,7 +77,7 @@ class NettyDecoder extends ByteToMessageDecoder {
             ZreoByteCount = 0;
             //重新组装字节数组
             ByteBuf buffercontent = bytesAction(inputBuf);
-            List<MessageBean> megsList = new ArrayList<>();
+            List<NettyMessageBean> megsList = new ArrayList<>(0);
             for (;;) {
                 //读取 消息长度（short）和消息ID（int） 需要 6 个字节
                 if (buffercontent.readableBytes() >= 6) {
@@ -86,7 +86,7 @@ class NettyDecoder extends ByteToMessageDecoder {
                     if (buffercontent.readableBytes() >= len) {
                         long messageid = buffercontent.readLong();///读取消息ID
                         ByteBuf buf = buffercontent.readBytes(len - 4);//读取可用字节数;
-                        megsList.add(new MessageBean(chc, messageid, buf.array()));
+                        megsList.add(new NettyMessageBean(chc, messageid, buf.array()));
                         //第二次重组
                         if (buffercontent.readableBytes() > 0) {
                             bytesAction(buffercontent, buffercontent.readerIndex(), buffercontent.readableBytes());

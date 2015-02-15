@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.game.engine.nettypool;
 
-import com.game.engine.messagepool.MessageBean;
+import com.game.engine.nettypool.message.NettyMessageBean;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -24,10 +19,9 @@ public interface NettyMessageHandler {
     /**
      * 收到消息
      *
-     * @param session
      * @param msg
      */
-    void readMessage(ChannelHandlerContext session, MessageBean msg);
+    void readMessage(NettyMessageBean msg);
 
     /**
      * 断开连接

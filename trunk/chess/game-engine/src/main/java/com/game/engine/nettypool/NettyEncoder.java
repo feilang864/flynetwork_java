@@ -5,7 +5,7 @@
  */
 package com.game.engine.nettypool;
 
-import com.game.engine.messagepool.MessageBean;
+import com.game.engine.nettypool.message.NettyMessageBean;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 /**
  * 编码器
  */
-class NettyEncoder extends MessageToByteEncoder<MessageBean> {
+class NettyEncoder extends MessageToByteEncoder<NettyMessageBean> {
 
     private static final Logger logger = Logger.getLogger(NettyEncoder.class);
     ByteOrder endianOrder = ByteOrder.LITTLE_ENDIAN;
@@ -26,7 +26,7 @@ class NettyEncoder extends MessageToByteEncoder<MessageBean> {
     }
 
     @Override
-    protected void encode(ChannelHandlerContext chc, MessageBean msg, ByteBuf out) throws Exception {
+    protected void encode(ChannelHandlerContext chc, NettyMessageBean msg, ByteBuf out) throws Exception {
         ByteBuf buffercontent = Unpooled.buffer();
         buffercontent.writeShort(msg.getMsgbuffer().length + 4)
                 .writeLong(msg.getMsgid())

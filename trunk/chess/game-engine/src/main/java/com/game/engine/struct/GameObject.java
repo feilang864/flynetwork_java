@@ -14,6 +14,11 @@ public abstract class GameObject implements Serializable {
 
     private static final long serialVersionUID = 6613390145680665678L;
 
+    private Long ID;
+    private String Name;
+    //
+    private transient GameAttribute tempAttribute = new GameAttribute();
+
     public GameObject() {
         this(GameGlobal.getInstance().getCreateId(), "");
     }
@@ -27,11 +32,6 @@ public abstract class GameObject implements Serializable {
         this.Name = Name;
         tempAttribute = new GameAttribute();
     }
-
-    private Long ID;
-    private String Name;
-    //
-    private transient GameAttribute tempAttribute = new GameAttribute();
 
     /**
      * 返回运行时属性值

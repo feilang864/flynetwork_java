@@ -5,7 +5,7 @@
  */
 package com.game.engine.nettypool;
 
-import com.game.engine.messagepool.MessageBean;
+import com.game.engine.nettypool.message.NettyMessageBean;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
  */
 public class NettyTcpServer {
 
-    private static final Logger logger = Logger.getLogger(NettyTcpServer.class);
+    private static final Logger log = Logger.getLogger(NettyTcpServer.class);
     private int port = 9527;
     NettyMessageHandler nettyMessageHandler;
 
@@ -53,7 +53,7 @@ public class NettyTcpServer {
                             ch.pipeline().addLast("Decoder", new NettyDecoder())
                             .addLast("Encoder", new NettyEncoder())
                             //.addLast("ping", new IdleStateHandler(10, 10, 10, TimeUnit.SECONDS))
-                            .addLast("handler", new SimpleChannelInboundHandler<MessageBean>() {
+                            .addLast("handler", new SimpleChannelInboundHandler<NettyMessageBean>() {
 
                                 /**
                                  * 收到消息
@@ -63,8 +63,8 @@ public class NettyTcpServer {
                                  * @throws Exception
                                  */
                                 @Override
-                                protected void channelRead0(ChannelHandlerContext ctx, MessageBean msg) throws Exception {
-                                    nettyMessageHandler.readMessage(ctx, msg);
+                                protected void channelRead0(ChannelHandlerContext ctx, NettyMessageBean msg) throws Exception {
+                                    nettyMessageHandler.readMessage(msg);
                                 }
 
                                 /**
@@ -107,18 +107,15 @@ public class NettyTcpServer {
                     //childOption()方法用于设置和客户端连接的套接字
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
             // Bind and start to accept incoming connections
-            //ChannelFuture cf = bs.bind(this.port).sync();
             bs.bind(this.port).sync();
-            logger.info("开启Tcp服务端口 " + this.port + " 监听");
-            // Wait until the session socket is closed.
-            // shut down your session.
-//            cf.channel().closeFuture().sync();
+            log.info("开启Tcp服务端口 " + this.port + " 监听");
         } catch (InterruptedException ex) {
-            logger.error("开启Tcp服务端口 " + this.port + " 监听 失败:" + ex);
+            log.error("开启Tcp服务端口 " + this.port + " 监听 失败:" + ex);
+            System.exit(0);
         } finally {
             //关闭相关资源
-//            workerGroup.shutdownGracefully();
-//            bossGroup.shutdownGracefully();
+            //workerGroup.shutdownGracefully();
+            //bossGroup.shutdownGracefully();
         }
     }
 }

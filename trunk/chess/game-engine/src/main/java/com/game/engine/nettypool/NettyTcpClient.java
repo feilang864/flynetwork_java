@@ -5,7 +5,7 @@
  */
 package com.game.engine.nettypool;
 
-import com.game.engine.messagepool.MessageBean;
+import com.game.engine.nettypool.message.NettyMessageBean;
 import com.game.engine.struct.thread.TimerEventRunnable;
 import com.game.engine.threadpool.TimerThread;
 import io.netty.bootstrap.Bootstrap;
@@ -34,11 +34,6 @@ public class NettyTcpClient {
     private boolean reConnect;
     NettyMessageHandler nettyMessageHandler;
 
-    @Override
-    public String toString() {
-        return " Host=" + Host + ", Port=" + Port;
-    }
-
     public NettyTcpClient(String host, int port, boolean isReConnect, NettyMessageHandler messageHandler) {
         this.Host = host;
         this.Port = port;
@@ -52,10 +47,9 @@ public class NettyTcpClient {
                     @Override
                     protected void initChannel(Channel ch) throws Exception {
                         ChannelPipeline pipeline = ch.pipeline();
-                        pipeline
-                        .addLast("Decoder", new NettyDecoder())
+                        pipeline.addLast("Decoder", new NettyDecoder())
                         .addLast("Encoder", new NettyEncoder())
-                        .addLast("handler", new SimpleChannelInboundHandler<MessageBean>() {
+                        .addLast("handler", new SimpleChannelInboundHandler<NettyMessageBean>() {
 
                             /**
                              * 收到消息
@@ -65,8 +59,8 @@ public class NettyTcpClient {
                              * @throws Exception
                              */
                             @Override
-                            protected void channelRead0(ChannelHandlerContext ctx, MessageBean msg) throws Exception {
-                                nettyMessageHandler.readMessage(ctx, msg);
+                            protected void channelRead0(ChannelHandlerContext ctx, NettyMessageBean msg) throws Exception {
+                                nettyMessageHandler.readMessage(msg);
                             }
 
                             /**
@@ -127,6 +121,11 @@ public class NettyTcpClient {
         bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
     }
 
+    @Override
+    public String toString() {
+        return " Host=" + Host + ", Port=" + Port;
+    }
+
     public void Connect() {
         if (channel != null) {
             channel.close();
@@ -141,7 +140,7 @@ public class NettyTcpClient {
         }
     }
 
-    public void sendMsg(MessageBean msg) {
+    public void sendMsg(NettyMessageBean msg) {
         if (channel != null && channel.isActive()) {
             channel.writeAndFlush(msg);
         } else {
