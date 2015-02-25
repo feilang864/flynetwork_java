@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.game.engine.threadpool;
 
 import com.game.engine.struct.GameGlobal;
 import com.game.engine.struct.thread.BaseRunnable;
 import com.game.engine.struct.thread.BaseThread;
 import com.game.engine.struct.thread.DataRunnable;
-import com.game.engine.struct.thread.ThreadRunnable;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
