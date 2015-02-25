@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
  */
 public final class ThreadManager {
 
-    private static final Logger logger = Logger.getLogger(ThreadManager.class);
+    private static final Logger log = Logger.getLogger(ThreadManager.class);
 
     static ThreadManager instance = new ThreadManager();
 
