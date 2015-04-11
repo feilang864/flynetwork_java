@@ -49,6 +49,8 @@ public final class ThreadManager {
     public void addTask(long threadID, DataRunnable gameRunnable) {
         if (workHashMaps.containsKey(threadID)) {
             workHashMaps.get(threadID).addTask(gameRunnable);
+        } else {
+            addBackTask(gameRunnable);
         }
     }
 

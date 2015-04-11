@@ -69,8 +69,7 @@ public class TimerThread {
                         int execCount = timerEvent.getTempAttribute().getintValue("Execcount");
                         long lastTime = timerEvent.getTempAttribute().getlongValue("LastExecTime");
                         if (System.currentTimeMillis() - lastTime >= timerEvent.getIntervalTime()) {
-
-                            //ThreadManager.getInstance().addTask(timerEvent.getThreadID(), timerEvent);
+                            ThreadManager.getInstance().addTask(timerEvent.gettID(), timerEvent);
                             execCount++;
                             if (timerEvent.getActionCount() == execCount) {
                                 taskQueue.remove(timerEvent);

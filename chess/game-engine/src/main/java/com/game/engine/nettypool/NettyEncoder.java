@@ -28,8 +28,8 @@ class NettyEncoder extends MessageToByteEncoder<NettyMessageBean> {
     @Override
     protected void encode(ChannelHandlerContext chc, NettyMessageBean msg, ByteBuf out) throws Exception {
         ByteBuf buffercontent = Unpooled.buffer();
-        buffercontent.writeShort(msg.getMsgbuffer().length + 4)
-                .writeLong(msg.getMsgid())
+        buffercontent.writeInt(msg.getMsgbuffer().length + 4)
+                .writeInt(msg.getMsgid())
                 .writeBytes(msg.getMsgbuffer());
         logger.debug("发送消息长度 " + (msg.getMsgbuffer().length + 4));
         out.writeBytes(buffercontent);

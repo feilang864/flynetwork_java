@@ -20,11 +20,18 @@ import org.apache.log4j.Logger;
  */
 class NettyDecoder extends ByteToMessageDecoder {
 
+    private static final Logger logger = Logger.getLogger(NettyDecoder.class);
+
+    private byte ZreoByteCount = 0;
+    private ByteBuf bytes;
+    private final ByteOrder endianOrder = ByteOrder.LITTLE_ENDIAN;
+    private long reveLastTime = 0;
+    private long secondTime = 0;
+    private int reveCount = 0;
+
     public NettyDecoder() {
 
     }
-
-    private static final Logger logger = Logger.getLogger(NettyDecoder.class);
 
     ByteBuf bytesAction(ByteBuf inputBuf) {
         ByteBuf bufferLen = Unpooled.buffer();
@@ -50,16 +57,8 @@ class NettyDecoder extends ByteToMessageDecoder {
         }
     }
 
-    private byte ZreoByteCount = 0;
-    private ByteBuf bytes;
-    private final ByteOrder endianOrder = ByteOrder.LITTLE_ENDIAN;
-    private long reveLastTime = 0;
-    private long secondTime = 0;
-    private int reveCount = 0;
-
     @Override
     protected void decode(ChannelHandlerContext chc, ByteBuf inputBuf, List<Object> outputMessage) {
-
         if (System.currentTimeMillis() - secondTime < 1000L) {
             reveCount++;
         } else {
@@ -67,7 +66,7 @@ class NettyDecoder extends ByteToMessageDecoder {
             reveCount = 0;
         }
 
-        if (reveCount > 50 || System.currentTimeMillis() - reveLastTime < 5L) {
+        if (reveCount > 50) {
             logger.error("发送消息过于频繁");
             chc.disconnect();
             return;
@@ -79,12 +78,12 @@ class NettyDecoder extends ByteToMessageDecoder {
             ByteBuf buffercontent = bytesAction(inputBuf);
             List<NettyMessageBean> megsList = new ArrayList<>(0);
             for (;;) {
-                //读取 消息长度（short）和消息ID（int） 需要 6 个字节
-                if (buffercontent.readableBytes() >= 6) {
+                //读取 消息长度（short）和消息ID（int） 需要 8 个字节
+                if (buffercontent.readableBytes() >= 8) {
                     ///读取消息长度
-                    int len = buffercontent.readShort();
+                    int len = buffercontent.readInt();
                     if (buffercontent.readableBytes() >= len) {
-                        long messageid = buffercontent.readLong();///读取消息ID
+                        int messageid = buffercontent.readInt();///读取消息ID
                         ByteBuf buf = buffercontent.readBytes(len - 4);//读取可用字节数;
                         megsList.add(new NettyMessageBean(chc, messageid, buf.array()));
                         //第二次重组

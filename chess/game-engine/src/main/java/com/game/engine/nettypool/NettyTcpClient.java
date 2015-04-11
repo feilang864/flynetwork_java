@@ -84,7 +84,7 @@ public class NettyTcpClient {
                             public void channelUnregistered(ChannelHandlerContext ctx) {
                                 nettyMessageHandler.closeSession(ctx);
                                 if (reConnect) {
-                                    TimerThread.getInstance().addTimerTask(new TimerEventRunnable(false, 1, 500, "重新连接登录服务器") {
+                                    TimerThread.getInstance().addTimerTask(new TimerEventRunnable(0, false, 1, 500, "重新连接登录服务器") {
                                         private static final long serialVersionUID = 8936220264259089420L;
 
                                         @Override
@@ -136,6 +136,7 @@ public class NettyTcpClient {
                 logger.info("向 " + this.toString() + " 服务器注册");
                 channel = bootstrap.connect(this.Host, this.Port).channel();
             } catch (Exception e) {
+                logger.error("Connect", e);
             }
         }
     }
@@ -147,5 +148,4 @@ public class NettyTcpClient {
             logger.warn("消息发送失败,连接尚未建立!");
         }
     }
-
 }
