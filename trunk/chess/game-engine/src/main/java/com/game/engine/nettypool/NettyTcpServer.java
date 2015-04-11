@@ -59,6 +59,7 @@ public class NettyTcpServer {
                                  */
                                 @Override
                                 protected void channelRead0(ChannelHandlerContext ctx, NettyMessageBean msg) throws Exception {
+                                    msg.setChannelHandlerContext(ctx);
                                     nettyMessageHandler.readMessage(msg);
                                 }
 

@@ -1,5 +1,7 @@
 package com.game.engine.struct.thread;
 
+import com.sun.xml.internal.ws.streaming.TidyXMLStreamReader;
+
 /**
  * 定时器执行器
  */
@@ -7,33 +9,38 @@ public abstract class TimerEventRunnable extends DataRunnable {
 
     private static final long serialVersionUID = -8331296295264699207L;
 
-    /// <summary>
-    /// 开始执行的时间
-    /// </summary>
+    /**
+     * 线程ID
+     */
+    private long tID;
+    /**
+     * 开始执行的时间
+     */
     private long startTime;
 
-    /// <summary>
-    /// 是否一开始执行一次
-    /// </summary>
+    /**
+     * 是否一开始执行一次
+     */
     private boolean isStartAction;
 
-    /// <summary>
-    /// 结束时间
-    /// </summary>
+    /**
+     * 结束时间
+     */
     private long endTime;
 
-    /// <summary>
-    /// 执行次数
-    /// </summary>
+    /**
+     * 执行次数
+     */
     private int actionCount;
 
-    /// <summary>
-    /// 间隔执行时间
-    /// </summary>
+    /**
+     * 间隔执行时间
+     */
     private int intervalTime;
 
     /**
      *
+     * @param tid
      * @param startTime
      * @param isStartAction
      * @param endTime
@@ -41,8 +48,9 @@ public abstract class TimerEventRunnable extends DataRunnable {
      * @param intervalTime
      * @param Name
      */
-    public TimerEventRunnable(long startTime, boolean isStartAction, long endTime, int actionCount, int intervalTime, String Name) {
+    public TimerEventRunnable(long tid, long startTime, boolean isStartAction, long endTime, int actionCount, int intervalTime, String Name) {
         super(Name);
+        this.tID = tid;
         this.startTime = startTime;
         this.isStartAction = isStartAction;
         this.endTime = endTime;
@@ -52,14 +60,16 @@ public abstract class TimerEventRunnable extends DataRunnable {
 
     /**
      *
+     * @param tid
      * @param startTime
      * @param isStartAction
      * @param endTime
      * @param intervalTime
      * @param Name
      */
-    public TimerEventRunnable(long startTime, boolean isStartAction, long endTime, int intervalTime, String Name) {
+    public TimerEventRunnable(long tid, long startTime, boolean isStartAction, long endTime, int intervalTime, String Name) {
         super(Name);
+        this.tID = tid;
         this.startTime = startTime;
         this.isStartAction = isStartAction;
         this.endTime = endTime;
@@ -68,13 +78,15 @@ public abstract class TimerEventRunnable extends DataRunnable {
 
     /**
      *
+     * @param tid
      * @param isStartAction
      * @param actionCount
      * @param intervalTime
      * @param Name
      */
-    public TimerEventRunnable(boolean isStartAction, int actionCount, int intervalTime, String Name) {
+    public TimerEventRunnable(long tid, boolean isStartAction, int actionCount, int intervalTime, String Name) {
         super(Name);
+        this.tID = tid;
         this.isStartAction = isStartAction;
         this.actionCount = actionCount;
         this.intervalTime = intervalTime;
@@ -82,13 +94,15 @@ public abstract class TimerEventRunnable extends DataRunnable {
 
     /**
      *
+     * @param tid
      * @param startTime
      * @param endTime
      * @param intervalTime
      * @param Name
      */
-    public TimerEventRunnable(long startTime, long endTime, int intervalTime, String Name) {
+    public TimerEventRunnable(long tid, long startTime, long endTime, int intervalTime, String Name) {
         super(Name);
+        this.tID = tid;
         this.startTime = startTime;
         this.endTime = endTime;
         this.intervalTime = intervalTime;
@@ -96,16 +110,26 @@ public abstract class TimerEventRunnable extends DataRunnable {
 
     /**
      *
+     * @param tid 执行线程ID
      * @param startTime
      * @param actionCount
      * @param intervalTime
      * @param Name
      */
-    public TimerEventRunnable(long startTime, int actionCount, int intervalTime, String Name) {
+    public TimerEventRunnable(long tid, long startTime, int actionCount, int intervalTime, String Name) {
         super(Name);
+        this.tID = tid;
         this.startTime = startTime;
         this.actionCount = actionCount;
         this.intervalTime = intervalTime;
+    }
+
+    public long gettID() {
+        return tID;
+    }
+
+    public void settID(long tID) {
+        this.tID = tID;
     }
 
     public long getStartTime() {

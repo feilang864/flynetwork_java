@@ -12,21 +12,26 @@ public class NettyMessageBean {
     private static final Logger log = Logger.getLogger(NettyMessageBean.class);
 
     private ChannelHandlerContext channelHandlerContext;
-    private long msgid;
+    private int msgid;
     private byte[] msgbuffer;
 
-    public NettyMessageBean(ChannelHandlerContext channelHandlerContext, long msgid) {
+    public NettyMessageBean(int msgid, byte[] msgbuffer) {
+        this.msgid = msgid;
+        this.msgbuffer = msgbuffer;
+    }
+
+    public NettyMessageBean(ChannelHandlerContext channelHandlerContext, int msgid) {
         this.channelHandlerContext = channelHandlerContext;
         this.msgid = msgid;
     }
 
-    public NettyMessageBean(ChannelHandlerContext channelHandlerContext, long msgid, byte[] msgbuffer) {
+    public NettyMessageBean(ChannelHandlerContext channelHandlerContext, int msgid, byte[] msgbuffer) {
         this.channelHandlerContext = channelHandlerContext;
         this.msgid = msgid;
         this.msgbuffer = msgbuffer;
     }
 
-    public long getMsgid() {
+    public int getMsgid() {
         return msgid;
     }
 

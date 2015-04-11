@@ -1,6 +1,7 @@
 package com.game.engine.test;
 
 import com.game.engine.nettypool.NettyMessageHandler;
+import com.game.engine.nettypool.NettyTcpClient;
 import com.game.engine.nettypool.NettyTcpServer;
 import com.game.engine.nettypool.message.NettyMessageBean;
 import com.game.engine.struct.thread.DataRunnable;
@@ -27,24 +28,51 @@ public class TestMain {
 
             @Override
             public void channelActive(ChannelHandlerContext session) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                log.info("channelActive -> ");
             }
 
             @Override
             public void readMessage(NettyMessageBean msg) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                log.info("tcpServer readMessage -> " + msg.getMsgid() + " -> " + new String(msg.getMsgbuffer()));
+                msg.getChannelHandlerContext().writeAndFlush(msg);
             }
 
             @Override
             public void closeSession(ChannelHandlerContext session) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                log.info("closeSession -> ");
             }
 
             @Override
             public void exceptionCaught(ChannelHandlerContext session, Throwable cause) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                log.info("exceptionCaught -> " + cause.getMessage());
             }
         });
+//        tcpServer.start();
+        NettyTcpClient tcpClient = new NettyTcpClient("127.0.0.1", 9527, true, new NettyMessageHandler() {
+
+            @Override
+            public void channelActive(ChannelHandlerContext session) {
+                String string = "dfsfsfsdf";
+                session.channel().writeAndFlush(new NettyMessageBean(10001, string.getBytes()));
+            }
+
+            @Override
+            public void readMessage(NettyMessageBean msg) {
+                log.info("tcpClient readMessage -> " + msg.getMsgid() + " -> " + new String(msg.getMsgbuffer()));
+            }
+
+            @Override
+            public void closeSession(ChannelHandlerContext session) {
+            }
+
+            @Override
+            public void exceptionCaught(ChannelHandlerContext session, Throwable cause) {
+            }
+        });
+        tcpClient.Connect();
+//
+//        String string = "dfsfsfsdf";
+//        tcpClient.sendMsg(new NettyMessageBean(10001, string.getBytes()));
 
         ThreadManager.getInstance().addBackTask(new DataRunnable("测试的") {
 
