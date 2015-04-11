@@ -25,7 +25,6 @@ class NettyDecoder extends ByteToMessageDecoder {
     private byte ZreoByteCount = 0;
     private ByteBuf bytes;
     private final ByteOrder endianOrder = ByteOrder.LITTLE_ENDIAN;
-    private long reveLastTime = 0;
     private long secondTime = 0;
     private int reveCount = 0;
 
@@ -112,6 +111,5 @@ class NettyDecoder extends ByteToMessageDecoder {
                 chc.close();
             }
         }
-        reveLastTime = System.currentTimeMillis();
     }
 }

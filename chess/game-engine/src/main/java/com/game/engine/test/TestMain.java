@@ -24,7 +24,7 @@ public class TestMain {
 
     public static void main(String[] args) {
 
-        NettyTcpServer tcpServer = new NettyTcpServer(9527, new NettyMessageHandler() {
+        NettyTcpServer tcpServer = new NettyTcpServer(9528, new NettyMessageHandler() {
 
             @Override
             public void channelActive(ChannelHandlerContext session) {
@@ -47,7 +47,7 @@ public class TestMain {
                 log.info("exceptionCaught -> " + cause.getMessage());
             }
         });
-//        tcpServer.start();
+        tcpServer.start();
         NettyTcpClient tcpClient = new NettyTcpClient("127.0.0.1", 9527, true, new NettyMessageHandler() {
 
             @Override
