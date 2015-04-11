@@ -89,7 +89,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>fly.loadtest.NewClass</mainClass>
+                            <mainClass>com.game.engine.test.TestMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
