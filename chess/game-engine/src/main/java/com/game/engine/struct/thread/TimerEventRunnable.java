@@ -1,7 +1,5 @@
 package com.game.engine.struct.thread;
 
-import com.sun.xml.internal.ws.streaming.TidyXMLStreamReader;
-
 /**
  * 定时器执行器
  */
