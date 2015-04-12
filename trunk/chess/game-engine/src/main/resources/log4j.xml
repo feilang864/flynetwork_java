@@ -30,7 +30,7 @@
         <param name="MaxBackupIndex" value="10000" />
         <!-- 设置输出文件项目和格式 -->
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="[%d{MM-dd HH:mm:ss:SSS}:%-5p: %c:%-3L行] -> %m%n" />
+            <param name="ConversionPattern" value="[%d{MM-dd HH:mm:ss:SSSS}:%-5p: %c:%-3L行] -> %m%n" />
         </layout>
     </appender>
 
@@ -39,14 +39,14 @@
         <param name="File" value="c:/log/logicserver.log" />
         <param name="DatePattern" value="'gameserver.'yyyy-MM-dd'.log'" />
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="[%d{MM-dd HH:mm:ss:SSS}:%-5p: %c:%-3L行] -> %m%n" />
+            <param name="ConversionPattern" value="[%d{MM-dd HH:mm:ss:SSSS}:%-5p: %c:%-3L行] -> %m%n" />
         </layout>
     </appender>
 
     <!-- 输出到控制台中 -->
     <appender name="console" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="[%d{MM-dd HH:mm:ss:SSS}:%-5p: %c:%-3L行] -> %m%n" />
+            <param name="ConversionPattern" value="[%d{MM-dd HH:mm:ss:SSSS}:%-5p: %c:%-3L行] -> %m%n" />
         </layout>
     </appender>
 
