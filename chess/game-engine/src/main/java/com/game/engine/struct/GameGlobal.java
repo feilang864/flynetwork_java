@@ -19,15 +19,17 @@ public class GameGlobal {
     }
     private final ThreadGroup GlobeThreadGroup = new ThreadGroup("全局线程");
 
-    public ThreadGroup getGlobeThreadGroup() {
-        return GlobeThreadGroup;
-    }
-
     private final Object obj = new Object();
 
     private long staticID = 0;
 
-    private int serverID = new Random().nextInt(1000000);
+    private int serverID = new Random().nextInt(1000);
+
+    private boolean running = true;
+
+    public ThreadGroup getGlobeThreadGroup() {
+        return GlobeThreadGroup;
+    }
 
     public long getCreateId() {
         synchronized (obj) {
@@ -35,8 +37,6 @@ public class GameGlobal {
             return (serverID & 0xFFFF) << 48 | (System.currentTimeMillis() / 1000L & 0xFFFFFFFF) << 16 | staticID & 0xFFFF;
         }
     }
-
-    private boolean running = true;
 
     public boolean isRunning() {
         return running;
