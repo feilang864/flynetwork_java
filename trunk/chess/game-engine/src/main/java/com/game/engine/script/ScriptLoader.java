@@ -40,7 +40,7 @@ public class ScriptLoader {
     //输出文件夹
     private String outDir;
 
-    FlyFileMonitor fileMonitorOut;
+    MyFileMonitor fileMonitorOut;
 
     HashMap<String, IBaseScript> eventInstances = new HashMap<>(0);
 
@@ -111,7 +111,7 @@ public class ScriptLoader {
         this.sourceDir = new File(source).getPath();
         this.outDir = new File(source + "\\out").getPath();
 
-        fileMonitorOut = new FlyFileMonitor(2000, fly, this.outDir);
+        fileMonitorOut = new MyFileMonitor(2000, fly, this.outDir);
         fileMonitorOut.start();
 
     }
@@ -203,7 +203,7 @@ public class ScriptLoader {
      * 编译 java 源文件
      */
     public final void Compile() {
-        DeleteFileUtil.deleteDirectory(this.outDir);
+        MyFileMonitor.deleteDirectory(this.outDir);
         this.Compile("");
     }
     //</editor-fold>
