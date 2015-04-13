@@ -113,7 +113,6 @@ public class ScriptLoader {
 
         fileMonitorOut = new MyFileMonitor(2000, fly, this.outDir);
         fileMonitorOut.start();
-
     }
 
     public void dispose() {
@@ -270,6 +269,7 @@ public class ScriptLoader {
                 try {
                     Class<?> defineClass = defineClass(name, classData, 0, classData.length);
                     Class<?>[] interfaces = defineClass.getInterfaces();
+                    //读取加载的类的接口情况，是否实现了最基本的借口，如果不是，表示加载的本身自主类
                     IBaseScript newInstance = (IBaseScript) defineClass.newInstance();
                     for (Class<?> aInterface : interfaces) {
                         if (IBaseScript.class.isAssignableFrom(aInterface)) {
@@ -309,7 +309,6 @@ public class ScriptLoader {
 
         private String classNameToPath(String className) {
             return new File(outDir + File.separatorChar + className.replace('.', File.separatorChar) + ".class").getPath();
-            //return className;
         }
     }
     //</editor-fold>
