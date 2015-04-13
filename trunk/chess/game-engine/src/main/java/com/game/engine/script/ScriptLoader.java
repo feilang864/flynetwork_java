@@ -139,7 +139,7 @@ public class ScriptLoader {
         return str == null || str.length() <= 0 || "".equals(str.trim());
     }
 
-    //<editor-fold defaultstate="collapsed" desc="public final void Compile(String... fileNames)">
+    //<editor-fold desc="public final void Compile(String... fileNames)">
     /**
      *
      * @param fileNames 文件列表
@@ -197,7 +197,7 @@ public class ScriptLoader {
     }
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="public final void Compile()">
+    //<editor-fold desc="public final void Compile()">
     /**
      * 编译 java 源文件
      */
@@ -207,7 +207,7 @@ public class ScriptLoader {
     }
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="查找该目录下的所有的 java 文件 public void getFiles(File sourceFile, List<File> sourceFileList, String endName)">
+    //<editor-fold desc="查找该目录下的所有的 java 文件 public void getFiles(File sourceFile, List<File> sourceFileList, String endName)">
     /**
      * 查找该目录下的所有的 java 文件
      *
@@ -252,7 +252,7 @@ public class ScriptLoader {
         return null;
     }
 
-    //<editor-fold defaultstate="collapsed" desc="class ScriptClassLoader extends ClassLoader">
+    //<editor-fold desc="class ScriptClassLoader extends ClassLoader">
     class ScriptClassLoader extends ClassLoader {
 
         @Override
