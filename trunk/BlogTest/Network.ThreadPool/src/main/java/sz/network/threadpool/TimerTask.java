@@ -2,6 +2,11 @@ package sz.network.threadpool;
 
 /**
  * 定时器执行器
+ *
+ * @author 失足程序员
+ * @Blog http://www.cnblogs.com/ty408/
+ * @mail 492794628@qq.com
+ * @phone 13882122019
  */
 public abstract class TimerTask extends TaskModel {
 
