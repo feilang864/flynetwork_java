@@ -31,10 +31,11 @@ public class ScriptLoader {
         System.out.println(property);
         ScriptLoader scriptLoader = new ScriptLoader("D:\\222222\\");
         scriptLoader.Compile();
-        ArrayList<IBaseScript> scripts = scriptLoader.getScripts(IBaseScript.class.getName());
+        ArrayList<IBaseScript> scripts = scriptLoader.getScripts(IBaseScript.class);
         Thread.sleep(5000);
         scriptLoader.dispose();
     }
+
     //源文件夹
     private String sourceDir;
     //输出文件夹
@@ -42,9 +43,7 @@ public class ScriptLoader {
 
     MyFileMonitor fileMonitorOut;
 
-    HashMap<String, IBaseScript> eventInstances = new HashMap<>(0);
-
-    HashMap<String, HashSet<String>> eventNames = new HashMap<>(0);
+    HashMap<String, ArrayList<IBaseScript>> eventInstances = new HashMap<>(0);
 
     final FileAlterationListener fly;
 
@@ -121,18 +120,13 @@ public class ScriptLoader {
         }
     }
 
-    public ArrayList<IBaseScript> getScripts(String scriptName) {
-        ArrayList<IBaseScript> scripts = new ArrayList<>(0);
-        HashSet<String> names = eventNames.get(scriptName);
-        if (names != null) {
-            for (String name : names) {
-                IBaseScript instances = eventInstances.get(name);
-                if (instances != null) {
-                    scripts.add(instances);
-                }
-            }
+    public <T extends IBaseScript> ArrayList<T> getScripts(Class<T> clazz) {
+        ArrayList<T> retScripts = new ArrayList<>(0);
+        ArrayList<IBaseScript> scripts = new ArrayList<>(eventInstances.get(clazz.getName()));
+        for (IBaseScript script : scripts) {
+            retScripts.add((T) script);
         }
-        return scripts;
+        return retScripts;
     }
 
     final boolean stringIsEmpty(String str) {
@@ -273,11 +267,10 @@ public class ScriptLoader {
                     IBaseScript newInstance = (IBaseScript) defineClass.newInstance();
                     for (Class<?> aInterface : interfaces) {
                         if (IBaseScript.class.isAssignableFrom(aInterface)) {
-                            if (!eventNames.containsKey(aInterface.getName())) {
-                                eventNames.put(aInterface.getName(), new HashSet<String>(0));
+                            if (!eventInstances.containsKey(aInterface.getName())) {
+                                eventInstances.put(aInterface.getName(), new ArrayList<IBaseScript>(0));
                             }
-                            eventNames.get(aInterface.getName()).add(defineClass.getName());
-                            eventInstances.put(defineClass.getName(), newInstance);
+                            eventInstances.get(aInterface.getName()).add(newInstance);
                         }
                     }
                     return defineClass;
