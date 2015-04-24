@@ -12,6 +12,7 @@ package sz.network.threadpool;
 public class Test {
 
     public static void main(String[] args) {
+
         long thread = ThreadManager.getInstance().getThread("Test");
         ThreadManager.getInstance().addBackTask(new TaskModel() {
 

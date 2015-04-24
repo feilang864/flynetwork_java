@@ -8,8 +8,12 @@ package sz.pool;
 import java.util.HashMap;
 
 /**
+ * 辅助键值对存储
  *
- * @author Administrator
+ * @author 失足程序员
+ * @Blog http://www.cnblogs.com/ty408/
+ * @mail 492794628@qq.com
+ * @phone 13882122019
  */
 public class ObjectAttribute extends HashMap<String, Object> {
 

@@ -107,10 +107,6 @@ public class NettyTcpServer {
         } catch (InterruptedException ex) {
             log.error("开启Tcp服务端口 " + this.port + " 监听 失败:" + ex);
             System.exit(0);
-        } finally {
-            //关闭相关资源
-            //workerGroup.shutdownGracefully();
-            //bossGroup.shutdownGracefully();
         }
     }
 }

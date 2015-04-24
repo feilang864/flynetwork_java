@@ -7,7 +7,11 @@ package sz.scriptpool;
 
 /**
  *
- * @author Administrator
+ *
+ * @author 失足程序员
+ * @Blog http://www.cnblogs.com/ty408/
+ * @mail 492794628@qq.com
+ * @phone 13882122019
  */
 public interface IBaseScript {
 
