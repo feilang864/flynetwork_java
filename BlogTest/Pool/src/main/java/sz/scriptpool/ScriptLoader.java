@@ -1,14 +1,18 @@
 package sz.scriptpool;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
@@ -32,24 +36,24 @@ public class ScriptLoader {
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, Exception {
         String property = System.getProperty("user.dir");
-        System.out.println(property);
-        ScriptLoader scriptLoader = new ScriptLoader("D:\\222222\\");
+        ScriptLoader scriptLoader = new ScriptLoader("F:\\javatest\\tttt\\", property + "\\target\\classes\\out\\");
         scriptLoader.Compile();
-        ArrayList<IBaseScript> scripts = scriptLoader.getScripts(IBaseScript.class);
-        Thread.sleep(5000);
-        scriptLoader.dispose();
+        scriptLoader.loadClass();
+        scriptLoader.loadClass("wzh.Http.NewClass");
+        Iterator<IBaseScript> scripts = scriptLoader.getScripts(IBaseScript.class);
+        while (scripts.hasNext()) {
+            IBaseScript next = scripts.next();
+        }
     }
 
     //源文件夹
     private String sourceDir;
     //输出文件夹
     private String outDir;
+    //附加的jar包地址
+    private String jarsDir = "F:\\javatest\\mavenproject1\\target\\";
 
-    MyFileMonitor fileMonitorOut;
-
-    HashMap<String, ArrayList<IBaseScript>> eventInstances = new HashMap<>(0);
-
-    final FileAlterationListener fly;
+    HashMap<String, HashMap<String, IBaseScript>> scriptInstances = new HashMap<>(0);
 
     public ScriptLoader(String source) throws Exception {
         this(source, source + "\\out");
@@ -62,78 +66,61 @@ public class ScriptLoader {
      * @throws java.lang.Exception
      */
     public ScriptLoader(String source, String out) throws Exception {
-        this.fly = new FileAlterationListener() {
-
-            @Override
-            public void onStart(FileAlterationObserver fao) {
-            }
-
-            @Override
-            public void onDirectoryCreate(File file) {
-            }
-
-            @Override
-            public void onDirectoryChange(File file) {
-            }
-
-            @Override
-            public void onDirectoryDelete(File file) {
-            }
-
-            @Override
-            public void onFileCreate(File file) {
-                log.error("创建了新文件：" + file.getPath());
-                if (file.getPath().endsWith(".class")) {
-                    loadClass(file.getPath());
-                }
-            }
-
-            @Override
-            public void onFileChange(File file) {
-                log.error("更新了新文件：" + file.getPath());
-                if (file.getPath().endsWith(".class")) {
-                    String name = file.getPath().replace(outDir + "\\", "").replace(".class", "").replace(File.separatorChar, '.');
-                    loadClass(name);
-                }
-            }
-
-            @Override
-            public void onFileDelete(File file) {
-
-            }
-
-            @Override
-            public void onStop(FileAlterationObserver fao) {
-            }
-        };
-        if (stringIsEmpty(source)) {
+        if (stringIsNullEmpty(source)) {
             log.error("指定 输入 输出 目录为空");
             throw new Exception("目录为空");
         }
-
         this.sourceDir = new File(source).getPath();
-        this.outDir = new File(source + "\\out").getPath();
-
-        fileMonitorOut = new MyFileMonitor(2000, fly, this.outDir);
-        fileMonitorOut.start();
+        this.outDir = new File(out).getPath();
     }
 
-    public void dispose() {
-        if (fly != null) {
-            fileMonitorOut.dispose();
+    /**
+     *
+     * @param <T>
+     * @param t
+     * @return
+     */
+    public <T> Iterator<T> getScripts(Class<T> t) {
+        return new MyIterator<T>(t.getName());
+    }
+
+    //<editor-fold desc="自定义迭代器 public class MyIterator<T> implements Iterator<T>">
+    /**
+     *
+     * @param <T>
+     */
+    public class MyIterator<T> implements Iterator<T> {
+
+        Iterator<IBaseScript> iterator = null;
+
+        public MyIterator(String key) {
+            HashMap<String, IBaseScript> scripts = ScriptLoader.this.scriptInstances.get(key);
+            if (scripts != null) {
+                iterator = scripts.values().iterator();
+            }
+        }
+
+        @Override
+        public T next() {
+            //忽略是否存在键的问题
+            if (iterator == null) {
+                return null;
+            }
+            return (T) iterator.next();
+        }
+
+        @Override
+        public boolean hasNext() {
+            //忽略是否存在键的问题
+            if (iterator == null) {
+                return false;
+            }
+            return iterator.hasNext();
         }
     }
+    //</editor-fold>
 
-    public <T extends IBaseScript> ArrayList<T> getScripts(Class<T> clazz) {
-        ArrayList<T> retScripts = new ArrayList<>(0);
-        ArrayList<IBaseScript> scripts = new ArrayList<>(eventInstances.get(clazz.getName()));
-        for (IBaseScript script : scripts) {
-            retScripts.add((T) script);
-        }
-        return retScripts;
-    }
-
-    final boolean stringIsEmpty(String str) {
+    final boolean stringIsNullEmpty(String str) {
         return str == null || str.length() <= 0 || "".equals(str.trim());
     }
 
@@ -142,9 +129,9 @@ public class ScriptLoader {
      *
      * @param fileNames 文件列表
      */
-    public final void Compile(String... fileNames) {
+    public void Compile(String... fileNames) {
         if (null != fileNames) {
-            log.info("编译脚本文件");
+
             for (String fileName : fileNames) {
                 // 获取编译器实例
                 JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -160,6 +147,9 @@ public class ScriptLoader {
                         log.error(this.sourceDir + "目录下查找不到任何java文件");
                         return;
                     }
+                    for (File file : sourceFileList) {
+                        log.info("编译脚本文件：" + file.getPath());
+                    }
                     //创建输出目录，如果不存在的话
                     new java.io.File(this.outDir).mkdirs();
                     // 获取要编译的编译单元
@@ -171,16 +161,28 @@ public class ScriptLoader {
                      */
                     ArrayList<String> options = new ArrayList<>(0);
                     options.add("-g");
-                    //options.add("-verbose");
                     options.add("-encoding");
                     options.add("UTF-8");
                     options.add("-sourcepath");
-                    options.add(this.sourceDir); // jbsrc
+                    options.add(this.sourceDir); //指定文件目录
                     options.add("-d");
-                    options.add(this.outDir); // bin/server
+                    options.add(this.outDir); //指定输出目录
+
+                    File jarFile = new File(this.jarsDir);
+                    ArrayList<File> jarsList = new ArrayList<>();
+                    getFiles(this.jarsDir, jarsList, ".jar");
+                    String jarString = "";
+                    for (File jar : jarsList) {
+                        jarString += jar.getPath() + ";";
+                    }
+                    if (!stringIsNullEmpty(jarString)) {
+                        options.add("-classpath");
+                        options.add(jarString);//指定附加的jar包
+                    }
                     JavaCompiler.CompilationTask compilationTask = compiler.getTask(null, fileManager, null, options, null, compilationUnits);
                     // 运行编译任务
                     compilationTask.call();
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 } finally {
@@ -199,7 +201,7 @@ public class ScriptLoader {
     /**
      * 编译 java 源文件
      */
-    public final void Compile() {
+    public void Compile() {
         MyFileMonitor.deleteDirectory(this.outDir);
         this.Compile("");
     }
@@ -207,14 +209,24 @@ public class ScriptLoader {
 
     //<editor-fold desc="查找该目录下的所有的 java 文件 public void getFiles(File sourceFile, List<File> sourceFileList, String endName)">
     /**
+     *
+     * @param source
+     * @param sourceFileList
+     * @param endName
+     */
+    public void getFiles(String source, List<File> sourceFileList, final String endName) {
+        File sFile = new File(source);
+        getFiles(sFile, sourceFileList, endName);
+    }
+
+    /**
      * 查找该目录下的所有的 java 文件
      *
      * @param sourceFile ,单文件或者目录
      * @param sourceFileList 返回目录所包含的所有文件包括子目录
      * @param endName
-     * @throws Exception
      */
-    public void getFiles(File sourceFile, List<File> sourceFileList, final String endName) throws Exception {
+    public void getFiles(File sourceFile, List<File> sourceFileList, final String endName) {
         if (sourceFile.exists() && sourceFileList != null) {// 文件或者目录必须存在
             if (sourceFile.isDirectory()) {// 若file对象为目录
                 // 得到该目录下以.java结尾的文件或者目录
@@ -235,27 +247,43 @@ public class ScriptLoader {
                 }
             } else {// 若file对象为文件
                 sourceFileList.add(sourceFile);
-                log.info("获取文件：" + sourceFile.getPath());
             }
         }
     }
     //</editor-fold>
 
-    final Class<?> loadClass(String name) {
-        try {
-            ScriptClassLoader loader = new ScriptClassLoader();
-            return loader.loadClass(name);
-        } catch (ClassNotFoundException e) {
+    //<editor-fold desc="加载脚本 public void loadClass() throws Exception">
+    public void loadClass() throws Exception {
+        List<File> sourceFileList = new ArrayList<>(0);
+        //得到filePath目录下的所有java源文件
+        getFiles(this.outDir, sourceFileList, ".class");
+        String[] fileNames = new String[sourceFileList.size()];
+        for (int i = 0; i < sourceFileList.size(); i++) {
+            fileNames[i] = sourceFileList.get(i).getPath();
         }
-        return null;
+        loadClass(fileNames);
     }
 
-    //<editor-fold desc="class ScriptClassLoader extends ClassLoader">
+    public void loadClass(String... names) {
+        try {
+            ScriptClassLoader loader = new ScriptClassLoader();
+            for (String name : names) {
+                name = name.replace(outDir + "\\", "").replace(".class", "").replace(File.separatorChar, '.');
+                loader.loadClass(name);
+            }
+        } catch (ClassNotFoundException e) {
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="自定义文件加载器 class ScriptClassLoader extends ClassLoader">
     class ScriptClassLoader extends ClassLoader {
 
         @Override
         public Class<?> loadClass(String name) throws ClassNotFoundException {
+
             return super.loadClass(name, true);
+
         }
 
         @Override
@@ -271,10 +299,10 @@ public class ScriptLoader {
                     IBaseScript newInstance = (IBaseScript) defineClass.newInstance();
                     for (Class<?> aInterface : interfaces) {
                         if (IBaseScript.class.isAssignableFrom(aInterface)) {
-                            if (!eventInstances.containsKey(aInterface.getName())) {
-                                eventInstances.put(aInterface.getName(), new ArrayList<IBaseScript>(0));
+                            if (!scriptInstances.containsKey(aInterface.getName())) {
+                                scriptInstances.put(aInterface.getName(), new HashMap<String, IBaseScript>(0));
                             }
-                            eventInstances.get(aInterface.getName()).add(newInstance);
+                            scriptInstances.get(aInterface.getName()).put(defineClass.getName(), newInstance);
                         }
                     }
                     return defineClass;
@@ -287,17 +315,20 @@ public class ScriptLoader {
 
         private byte[] getClassData(String className) {
             String path = classNameToPath(className);
-            log.info("加载脚本文件 " + path);
+            log.info("加载脚本文件：" + path);
             try {
-                InputStream ins = new FileInputStream(path);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                int bufferSize = 4096;
-                byte[] buffer = new byte[bufferSize];
-                int bytesNumRead = 0;
-                while ((bytesNumRead = ins.read(buffer)) != -1) {
-                    baos.write(buffer, 0, bytesNumRead);
+                File file = new File(path);
+                if (file.exists()) {
+                    InputStream ins = new FileInputStream(path);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    int bufferSize = 4096;
+                    byte[] buffer = new byte[bufferSize];
+                    int bytesNumRead = 0;
+                    while ((bytesNumRead = ins.read(buffer)) != -1) {
+                        baos.write(buffer, 0, bytesNumRead);
+                    }
+                    return baos.toByteArray();
                 }
-                return baos.toByteArray();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -305,6 +336,7 @@ public class ScriptLoader {
         }
 
         private String classNameToPath(String className) {
+            //return className;
             return new File(outDir + File.separatorChar + className.replace('.', File.separatorChar) + ".class").getPath();
         }
     }
